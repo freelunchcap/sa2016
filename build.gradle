@@ -1,19 +1,23 @@
 group 'beijunyi.com'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-
 allprojects {
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = '1.7'
-        targetCompatibility = '1.7'
-    }
+  apply plugin: 'java'
 }
 
-repositories {
+subprojects {
+  sourceCompatibility = '1.7'
+  targetCompatibility = '1.7'
+
+  dependencies {
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+    testCompile 'junit:junit:4.11'
+  }
+
+  repositories {
     mavenCentral()
+  }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
+
+
