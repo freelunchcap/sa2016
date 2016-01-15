@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.extraction.serialization;
+package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class SprAdrnSet implements KryoSerializable {
 
   @Override
   public void read(@Nonnull Kryo kryo, @Nonnull Input input) {
-    sprAdrns = new ArrayList<SprAdrn>();
+    sprAdrns = new ArrayList<>();
     while(!input.eof())
       sprAdrns.add(kryo.readObject(input, SprAdrn.class));
   }

@@ -1,23 +1,31 @@
 package com.beijunyi.sa2016.extraction.cmd;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.extraction.context.EnvironmentService;
+import com.beijunyi.sa2016.extraction.context.EnvironmentContext;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 public class CommandService {
 
   private final Set<CommandHandler> handlers;
+  private final EnvironmentService environmentService;
 
   @Inject
-  public CommandService(@Nonnull Set<CommandHandler> handlers) {
+  public CommandService(@Nonnull Set<CommandHandler> handlers, @Nonnull EnvironmentService environmentService) {
     this.handlers = handlers;
+    this.environmentService = environmentService;
   }
 
   public void process(@Nonnull String[] args) {
     CommandParams params = readArgs(args);
+    environmentService.setContext(toContext(params));
     for(CommandHandler handler : handlers) {
       if(!handler.handle(params)) break;
     }
@@ -33,6 +41,19 @@ public class CommandService {
       cmd.usage();
     }
     return params;
+  }
+
+  @Nonnull
+  private static EnvironmentContext toContext(@Nonnull CommandParams params) {
+    String server = params.getServer();
+    String client = params.getClient();
+    String output = params.getOutput();
+    return new EnvironmentContext(toPath(server), toPath(client), toPath(output));
+  }
+
+  @Nullable
+  private static Path toPath(@Nullable String pathStr) {
+    return pathStr != null ? Paths.get(pathStr) : null;
   }
 
 }

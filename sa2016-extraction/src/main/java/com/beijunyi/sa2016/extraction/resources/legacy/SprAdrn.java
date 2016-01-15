@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.extraction.serialization;
+package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import javax.annotation.Nonnull;
 

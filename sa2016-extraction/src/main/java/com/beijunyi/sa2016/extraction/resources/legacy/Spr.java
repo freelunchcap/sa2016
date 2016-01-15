@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.extraction.serialization;
+package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Spr implements KryoSerializable {
     action = LE.uint16(input);
     duration = (int) LE.uint32(input);
     length = (int) LE.uint32(input);
-    frames = new ArrayList<SprFrame>(length);
+    frames = new ArrayList<>(length);
     for(int i = 0; i < length; i++)
       frames.add(kryo.readObject(input, SprFrame.class));
   }
