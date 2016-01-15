@@ -1,19 +1,17 @@
 package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.beijunyi.sa2016.extraction.context.EnvironmentContext;
 import com.beijunyi.sa2016.extraction.context.EnvironmentService;
+import com.beijunyi.sa2016.extraction.resources.ResourceSignature;
 
 public class LegacyResourceLoader {
 
@@ -26,17 +24,18 @@ public class LegacyResourceLoader {
 
   @Nonnull
   public Set<Path> load(@Nonnull LegacyResource type) throws IOException {
-    Path base = getResourceBase(type);
+    LegacyResourceLocation location = type.getLocation();
+    Path dir = resolveLocation(location);
     Set<Path> ret = new HashSet<>();
-    findResources(base.resolve(type.getRelativePath()), type, ret);
+    findResources(dir, location.isNested(), type.getSignature(), ret);
     return ret;
   }
 
   @Nonnull
-  private Path getResourceBase(@Nonnull LegacyResource type) {
+  private Path resolveLocation(@Nonnull LegacyResourceLocation location) {
     Path ret;
     EnvironmentContext context = environmentService.getContext();
-    switch(type.getBase()) {
+    switch(location.getBase()) {
       case SERVER:
         ret = context.getServer();
         break;
@@ -48,44 +47,26 @@ public class LegacyResourceLoader {
     }
     if(ret == null)
       throw new IllegalStateException();
-    return ret;
+    return ret.resolve(location.getPath());
   }
 
-  private static void findResources(@Nonnull Path dir, @Nonnull LegacyResource type, @Nonnull Set<Path> results) throws IOException {
+  private static void findResources(@Nonnull Path dir, boolean recursive, @Nonnull ResourceSignature signature, @Nonnull Set<Path> results) throws IOException {
     if(Files.isDirectory(dir))
       return;
     try(DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
-      findResources(files, type, results);
+      findResources(files, recursive, signature, results);
     }
   }
 
-  private static void findResources(@Nonnull Iterable<Path> files, @Nonnull LegacyResource type, @Nonnull Set<Path> results) throws IOException {
+  private static void findResources(@Nonnull Iterable<Path> files, boolean recursive, @Nonnull ResourceSignature signature, @Nonnull Set<Path> results) throws IOException {
     for(Path file : files) {
       if(Files.isDirectory(file)) {
-        if(type.isRecursive())
-          findResources(file, type, results);
+        if(recursive)
+          findResources(file, true, signature, results);
       } else {
-        if(matchesPattern(file, type) && matchesHeader(file, type))
+        if(signature.matches(file))
           results.add(file);
       }
-    }
-  }
-
-  private static boolean matchesPattern(@Nonnull Path file, @Nonnull LegacyResource type) {
-    Pattern pattern = type.getPattern();
-    if(pattern == null)
-      return true;
-    String filename = file.getFileName().toString();
-    return pattern.matcher(filename).matches();
-  }
-
-  private static boolean matchesHeader(@Nonnull Path file, @Nonnull LegacyResource type) throws IOException {
-    byte[] expected = type.getHeader();
-    if(expected == null)
-      return true;
-    try(InputStream input = Files.newInputStream(file)) {
-      byte[] actual = new byte[expected.length];
-      return input.read(actual) == expected.length && Arrays.equals(expected, actual);
     }
   }
 

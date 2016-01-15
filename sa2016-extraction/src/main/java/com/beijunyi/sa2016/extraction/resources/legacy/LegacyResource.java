@@ -1,55 +1,35 @@
 package com.beijunyi.sa2016.extraction.resources.legacy;
 
-import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceBase.CLIENT;
-import static java.util.regex.Pattern.compile;
+import com.beijunyi.sa2016.extraction.resources.ResourceSignature;
+
+import static com.beijunyi.sa2016.extraction.resources.ResourceSignature.regexPattern;
+import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceLocation.CLIENT_DATA;
 
 public enum LegacyResource {
-  ADRN(CLIENT, "data", false, compile("^adrn_(\\d+)\\.bin$"), null),
-  REAL(CLIENT, "data", false, compile("^real_(\\d+)\\.bin$"), null),
-  SPR_ADRN(CLIENT, "data", false, compile("^spradrn_(\\d+)\\.bin$"), null),
-  SPR(CLIENT, "data", false, compile("^spr_(\\d+)\\.bin$"), null),
+  ADRN(CLIENT_DATA, regexPattern("^adrn_(\\d+)\\.bin$")),
+  REAL(CLIENT_DATA, regexPattern("^real_(\\d+)\\.bin$")),
+  SPR_ADRN(CLIENT_DATA, regexPattern("^spradrn_(\\d+)\\.bin$")),
+  SPR(CLIENT_DATA, regexPattern("^spr_(\\d+)\\.bin$")),
   ;
 
-  private final LegacyResourceBase base;
-  private final String relativePath;
-  private final boolean recursive;
-  private final Pattern pattern;
-  private final byte[] header;
+  private final LegacyResourceLocation location;
+  private final ResourceSignature signature;
 
-  LegacyResource(@Nonnull LegacyResourceBase base, @Nonnull String relativePath, boolean recursive, @Nullable Pattern pattern, @Nullable byte[] header) {
-    this.base = base;
-    this.relativePath = relativePath;
-    this.recursive = recursive;
-    this.pattern = pattern;
-    this.header = header;
+  LegacyResource(@Nonnull LegacyResourceLocation location, @Nonnull ResourceSignature signature) {
+    this.location = location;
+    this.signature = signature;
   }
 
   @Nonnull
-  public LegacyResourceBase getBase() {
-    return base;
+  public LegacyResourceLocation getLocation() {
+    return location;
   }
 
   @Nonnull
-  public String getRelativePath() {
-    return relativePath;
-  }
-
-  public boolean isRecursive() {
-    return recursive;
-  }
-
-  @Nullable
-  public Pattern getPattern() {
-    return pattern;
-  }
-
-  @Nullable
-  public byte[] getHeader() {
-    return header;
+  public ResourceSignature getSignature() {
+    return signature;
   }
 
 }
