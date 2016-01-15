@@ -1,9 +1,10 @@
 package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -27,13 +28,36 @@ public class LegacyImageManager {
   }
 
   public int count() throws IOException {
-    loadArtifacts();
+    indexContents();
     return adrnMap.size();
   }
 
-  private void loadArtifacts() throws IOException {
+  private void indexContents() throws IOException {
     if(adrnMap == null || floorElementsMap == null) {
-      Path adrn = finder.findUnique(ADRN);
+      AdrnSet artifacts = readArtifact();
+      adrnMap = new HashMap<>();
+      floorElementsMap = new HashMap<>();
+      for(Adrn adrn : artifacts.getAdrns()) {
+        int uid = adrn.getUid();
+        int mapId = adrn.getMapId();
+        adrnMap.put(uid, adrn);
+        if(mapId != 0) {
+          Set<Integer> uids = floorElementsMap.get(mapId);
+          if(uids == null) {
+            uids = new HashSet<>();
+            floorElementsMap.put(mapId, uids);
+          }
+          uids.add(uid);
+        }
+      }
+    }
+  }
+
+  @Nonnull
+  private AdrnSet readArtifact() throws IOException {
+    Path file = finder.findUnique(ADRN);
+    try(InputStream stream = Files.newInputStream(file)) {
+      return kryo.readObject(new Input(stream), AdrnSet.class);
     }
   }
 

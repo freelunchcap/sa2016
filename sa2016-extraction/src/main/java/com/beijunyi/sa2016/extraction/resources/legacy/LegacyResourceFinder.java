@@ -9,17 +9,16 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.extraction.context.EnvironmentContext;
-import com.beijunyi.sa2016.extraction.context.EnvironmentService;
+import com.beijunyi.sa2016.extraction.cmd.EnvironmentContext;
 import com.beijunyi.sa2016.extraction.resources.ResourceSignature;
 
 public class LegacyResourceFinder {
 
-  private final EnvironmentService environment;
+  private final EnvironmentContext context;
 
   @Inject
-  public LegacyResourceFinder(@Nonnull EnvironmentService environment) {
-    this.environment = environment;
+  public LegacyResourceFinder(@Nonnull EnvironmentContext context) {
+    this.context = context;
   }
 
   @Nonnull
@@ -42,7 +41,6 @@ public class LegacyResourceFinder {
   @Nonnull
   private Path resolveLocation(@Nonnull LegacyResourceLocation location) {
     Path ret;
-    EnvironmentContext context = environment.getContext();
     switch(location.getBase()) {
       case SERVER:
         ret = context.getServer();
@@ -59,7 +57,7 @@ public class LegacyResourceFinder {
   }
 
   private static void findResources(@Nonnull Path dir, boolean recursive, @Nonnull ResourceSignature signature, @Nonnull Set<Path> results) throws IOException {
-    if(Files.isDirectory(dir))
+    if(!Files.isDirectory(dir))
       return;
     try(DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
       findResources(files, recursive, signature, results);

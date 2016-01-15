@@ -8,15 +8,16 @@ import com.google.inject.multibindings.Multibinder;
 
 public class CommandModule extends AbstractModule {
 
-  private static final Collection<Class<? extends CommandHandler>> HANDLERS = Arrays.asList(
-    CountHandler.class,
-    ExtractHandler.class
+  private static final Collection<Class<? extends Command>> HANDLERS = Arrays.<Class<? extends Command>>asList(
+    CountCommand.class, ExtractCommand.class
   );
 
   @Override
   protected void configure() {
-    Multibinder<CommandHandler> handlerBinder = Multibinder.newSetBinder(binder(), CommandHandler.class);
-    for(Class<? extends CommandHandler> handler : HANDLERS)
+    bind(EnvironmentContext.class).toInstance(new EnvironmentContext());
+
+    Multibinder<Command> handlerBinder = Multibinder.newSetBinder(binder(), Command.class);
+    for(Class<? extends Command> handler : HANDLERS)
       handlerBinder.addBinding().to(handler);
   }
 

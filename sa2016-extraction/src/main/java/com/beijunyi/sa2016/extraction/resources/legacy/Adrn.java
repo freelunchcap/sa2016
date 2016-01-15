@@ -11,7 +11,7 @@ import static com.beijunyi.sa2016.extraction.utils.IntegerReader.LE;
 
 public class Adrn implements KryoSerializable {
 
-  private int id;
+  private int uid;
   private long address;
   private int size;
   private int xOffset;
@@ -24,8 +24,8 @@ public class Adrn implements KryoSerializable {
   private String reference;
   private int map;
 
-  public int getId() {
-    return id;
+  public int getUid() {
+    return uid;
   }
 
   public long getAddress() {
@@ -69,7 +69,7 @@ public class Adrn implements KryoSerializable {
     return reference;
   }
 
-  public int getMap() {
+  public int getMapId() {
     return map;
   }
 
@@ -80,7 +80,7 @@ public class Adrn implements KryoSerializable {
 
   @Override
   public void read(@Nonnull Kryo kryo, @Nonnull Input input) {
-    id = LE.int32(input);
+    uid = LE.int32(input);
     address = LE.uint32(input);
     size = LE.int32(input);
     xOffset = LE.int32(input);

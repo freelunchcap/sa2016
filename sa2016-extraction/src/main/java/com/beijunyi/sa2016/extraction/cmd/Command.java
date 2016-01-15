@@ -3,8 +3,11 @@ package com.beijunyi.sa2016.extraction.cmd;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 
-public interface CommandHandler {
+public interface Command {
 
-  void handle(@Nonnull CommandParams params) throws IOException;
+  @Nonnull
+  String getName();
+
+  void call() throws IOException;
 
 }
