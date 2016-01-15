@@ -1,5 +1,6 @@
 package com.beijunyi.sa2016.extraction.cmd;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
@@ -23,12 +24,11 @@ public class CommandService {
     this.environmentService = environmentService;
   }
 
-  public void process(@Nonnull String[] args) {
+  public void process(@Nonnull String[] args) throws IOException {
     CommandParams params = readArgs(args);
-    environmentService.setContext(toContext(params));
-    for(CommandHandler handler : handlers) {
-      if(!handler.handle(params)) break;
-    }
+    environmentService.setContext(readContext(params));
+    for(CommandHandler handler : handlers)
+      handler.handle(params);
   }
 
   @Nonnull
@@ -44,7 +44,7 @@ public class CommandService {
   }
 
   @Nonnull
-  private static EnvironmentContext toContext(@Nonnull CommandParams params) {
+  private static EnvironmentContext readContext(@Nonnull CommandParams params) {
     String server = params.getServer();
     String client = params.getClient();
     String output = params.getOutput();

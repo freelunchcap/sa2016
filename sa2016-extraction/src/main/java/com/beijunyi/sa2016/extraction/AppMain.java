@@ -1,5 +1,6 @@
 package com.beijunyi.sa2016.extraction;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -14,14 +15,13 @@ import com.google.inject.Module;
 
 public class AppMain {
 
-  public static List<? extends Module> MODULES =
-    Arrays.asList(
-      new CommandModule(),
-      new ConfigModule(),
-      new SerializationModule()
-    );
+  public static List<? extends Module> MODULES = Arrays.asList(
+    new CommandModule(),
+    new ConfigModule(),
+    new SerializationModule()
+  );
 
-  public static void main(@Nonnull String[] args) {
+  public static void main(@Nonnull String[] args) throws IOException {
     Injector guice = Guice.createInjector(MODULES);
     guice.getInstance(CommandService.class).process(args);
   }

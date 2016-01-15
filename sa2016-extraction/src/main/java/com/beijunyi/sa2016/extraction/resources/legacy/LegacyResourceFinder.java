@@ -13,17 +13,17 @@ import com.beijunyi.sa2016.extraction.context.EnvironmentContext;
 import com.beijunyi.sa2016.extraction.context.EnvironmentService;
 import com.beijunyi.sa2016.extraction.resources.ResourceSignature;
 
-public class LegacyResourceLoader {
+public class LegacyResourceFinder {
 
-  private final EnvironmentService environmentService;
+  private final EnvironmentService environment;
 
   @Inject
-  public LegacyResourceLoader(@Nonnull EnvironmentService environmentService) {
-    this.environmentService = environmentService;
+  public LegacyResourceFinder(@Nonnull EnvironmentService environment) {
+    this.environment = environment;
   }
 
   @Nonnull
-  public Set<Path> load(@Nonnull LegacyResource type) throws IOException {
+  public Set<Path> find(@Nonnull LegacyResource type) throws IOException {
     LegacyResourceLocation location = type.getLocation();
     Path dir = resolveLocation(location);
     Set<Path> ret = new HashSet<>();
@@ -32,9 +32,17 @@ public class LegacyResourceLoader {
   }
 
   @Nonnull
+  public Path findUnique(@Nonnull LegacyResource type) throws IOException {
+    Set<Path> resources = find(type);
+    if(resources.size() != 1)
+      throw new IllegalStateException();
+    return resources.iterator().next();
+  }
+
+  @Nonnull
   private Path resolveLocation(@Nonnull LegacyResourceLocation location) {
     Path ret;
-    EnvironmentContext context = environmentService.getContext();
+    EnvironmentContext context = environment.getContext();
     switch(location.getBase()) {
       case SERVER:
         ret = context.getServer();

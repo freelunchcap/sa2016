@@ -1,19 +1,28 @@
 package com.beijunyi.sa2016.extraction.cmd;
 
+import java.util.List;
 import javax.annotation.Nullable;
 
 import com.beust.jcommander.Parameter;
 
 public class CommandParams {
 
-  @Parameter(names = "--server")
+  @Parameter(names = "-count", variableArity = true)
+  private List<String> count;
+
+  @Parameter(names = "-server")
   private String server;
 
-  @Parameter(names = "--client")
+  @Parameter(names = "-client")
   private String client;
 
-  @Parameter(names = "--output")
+  @Parameter(names = "-output")
   private String output;
+
+  @Nullable
+  public List<String> getCount() {
+    return count;
+  }
 
   @Nullable
   public String getServer() {
