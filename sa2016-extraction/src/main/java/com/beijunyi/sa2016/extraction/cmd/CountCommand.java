@@ -24,10 +24,6 @@ public class CountCommand extends AbstractCommand implements Command {
     this.floors = floors;
   }
 
-  public void setTypes(@Nonnull Set<String> types) {
-    this.types = types;
-  }
-
   @Nonnull
   @Override
   public String getName() {
