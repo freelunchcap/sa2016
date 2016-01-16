@@ -13,7 +13,7 @@ import com.esotericsoftware.kryo.io.Input;
 
 import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResource.ADRN;
 
-public class LegacyImageManager {
+public class ImageManager {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -22,22 +22,22 @@ public class LegacyImageManager {
   private Map<Integer, Set<Integer>> floorElementsMap;
 
   @Inject
-  public LegacyImageManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
+  public ImageManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
     this.kryo = kryo;
     this.finder = finder;
   }
 
   public int count() throws IOException {
-    indexContents();
+    indexResources();
     return adrnMap.size();
   }
 
-  private void indexContents() throws IOException {
+  private void indexResources() throws IOException {
     if(adrnMap == null || floorElementsMap == null) {
-      AdrnSet artifacts = readArtifact();
       adrnMap = new HashMap<>();
       floorElementsMap = new HashMap<>();
-      for(Adrn adrn : artifacts.getAdrns()) {
+      AdrnSet resources = readResources();
+      for(Adrn adrn : resources.getAdrns()) {
         int uid = adrn.getUid();
         int mapId = adrn.getMapId();
         adrnMap.put(uid, adrn);
@@ -54,7 +54,7 @@ public class LegacyImageManager {
   }
 
   @Nonnull
-  private AdrnSet readArtifact() throws IOException {
+  private AdrnSet readResources() throws IOException {
     Path file = finder.findUnique(ADRN);
     try(InputStream stream = Files.newInputStream(file)) {
       return kryo.readObject(new Input(stream), AdrnSet.class);

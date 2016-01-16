@@ -4,9 +4,7 @@ import java.nio.file.Path;
 import javax.annotation.Nullable;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
 
-@Parameters(separators = "=")
 public class EnvironmentContext {
 
   @Parameter(names = "--server")

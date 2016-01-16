@@ -5,9 +5,11 @@ import javax.annotation.Nonnull;
 import com.beijunyi.sa2016.extraction.resources.ResourceSignature;
 
 import static com.beijunyi.sa2016.extraction.resources.ResourceSignature.regexPattern;
-import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceLocation.CLIENT_DATA;
+import static com.beijunyi.sa2016.extraction.resources.ResourceSignature.stringHeader;
+import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceLocation.*;
 
 public enum LegacyResource {
+  LS2MAP(SERVER_DATA_MAP, stringHeader("LS2MAP")),
   ADRN(CLIENT_DATA, regexPattern("^adrn_(\\d+)\\.bin$")),
   REAL(CLIENT_DATA, regexPattern("^real_(\\d+)\\.bin$")),
   SPR_ADRN(CLIENT_DATA, regexPattern("^spradrn_(\\d+)\\.bin$")),

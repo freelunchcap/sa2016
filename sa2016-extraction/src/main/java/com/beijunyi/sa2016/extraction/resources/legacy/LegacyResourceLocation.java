@@ -2,10 +2,13 @@ package com.beijunyi.sa2016.extraction.resources.legacy;
 
 import javax.annotation.Nonnull;
 
+import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceBase.SERVER;
 import static com.beijunyi.sa2016.extraction.resources.legacy.LegacyResourceBase.CLIENT;
 
 public enum LegacyResourceLocation {
-  CLIENT_DATA(CLIENT, "data", false);
+  SERVER_DATA_MAP(SERVER, "data/map", true),
+  CLIENT_DATA(CLIENT, "data", false),
+  ;
 
   private final LegacyResourceBase base;
   private final String path;
