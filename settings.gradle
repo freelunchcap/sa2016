@@ -1,3 +1,3 @@
 rootProject.name = 'sa2016'
-include 'sa2016-extraction'
+include 'sa2016-tools'
 
