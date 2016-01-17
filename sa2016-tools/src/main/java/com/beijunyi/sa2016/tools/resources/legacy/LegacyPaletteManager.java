@@ -1,7 +1,6 @@
 package com.beijunyi.sa2016.tools.resources.legacy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -9,13 +8,16 @@ import java.util.regex.Matcher;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.ResourceManager;
+import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Palet;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.*;
+import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.*;
+import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_PALETTE;
 
-public class LegacyPaletteManager {
+public class LegacyPaletteManager implements ResourceManager<Integer, Palet> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -28,13 +30,21 @@ public class LegacyPaletteManager {
     this.finder = finder;
   }
 
+  @Nonnull
+  @Override
+  public ResourceType getResourceType() {
+    return LEGACY_PALETTE;
+  }
+
+  @Override
   public int count() throws IOException {
     indexResources();
     return paletMap.size();
   }
 
   @Nonnull
-  public Palet getPalet(int id) throws IOException {
+  @Override
+  public Palet getResource(@Nonnull Integer id) throws IOException {
     indexResources();
     Palet ret = paletMap.get(id);
     if(ret == null)

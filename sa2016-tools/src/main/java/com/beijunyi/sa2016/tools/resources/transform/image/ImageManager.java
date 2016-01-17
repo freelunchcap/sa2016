@@ -28,7 +28,7 @@ public class ImageManager {
     synchronized(this) {
       ret = images.get(id);
       if(ret == null) {
-        LegacyImageObject legacyImg = legacy.getImage(id);
+        LegacyImageObject legacyImg = legacy.getResource(id);
         ret = ImageTransformer.transform(legacyImg);
         images.put(id, ret);
       }

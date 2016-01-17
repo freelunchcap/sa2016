@@ -11,9 +11,11 @@ import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+
 public class Palet implements KryoSerializable {
 
-  public static final Pattern PALET_PATTEN = Pattern.compile("^palet_(\\d+)\\.sap");
+  public static final Pattern PALET_PATTEN = Pattern.compile("^palet_(\\d+)\\.sap", CASE_INSENSITIVE);
 
   private static final int PALETTE_COLORS = 236;
 

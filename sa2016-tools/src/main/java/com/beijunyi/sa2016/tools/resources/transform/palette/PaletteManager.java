@@ -28,7 +28,7 @@ public class PaletteManager {
     synchronized(this) {
       ret = palettes.get(id);
       if(ret == null) {
-        Palet legacyPalet = legacy.getPalet(id);
+        Palet legacyPalet = legacy.getResource(id);
         ret = PaletteTransformer.transform(legacyPalet);
         palettes.put(id, ret);
       }

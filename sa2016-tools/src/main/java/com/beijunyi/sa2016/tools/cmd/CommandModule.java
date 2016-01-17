@@ -8,8 +8,12 @@ import com.google.inject.multibindings.Multibinder;
 
 public class CommandModule extends AbstractModule {
 
-  private static final Collection<Class<? extends Command>> HANDLERS = Arrays.<Class<? extends Command>>asList(
-    CountCommand.class, ExtractCommand.class, FloorPackCommand.class
+  private static final Collection<Class<? extends Command>> HANDLERS
+    = Arrays.<Class<? extends Command>>asList(
+                                               CountCommand.class,
+                                               ExportCommand.class,
+                                               ExtractCommand.class,
+                                               FloorPackCommand.class
   );
 
   @Override

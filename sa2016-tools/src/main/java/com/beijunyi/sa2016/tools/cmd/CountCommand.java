@@ -5,23 +5,21 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
-import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
+import com.beijunyi.sa2016.tools.resources.ResourceManager;
+import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beust.jcommander.Parameter;
 
 public class CountCommand extends AbstractCommand implements Command {
 
-  private final LegacyImageManager images;
-  private final LegacyFloorManager floors;
+  private final Set<ResourceManager> resourceManagers;
 
   @Parameter(names = "--type", variableArity = true)
   private Set<String> types;
 
   @Inject
-  public CountCommand(@Nonnull EnvironmentContext context, @Nonnull LegacyImageManager images, @Nonnull LegacyFloorManager floors) {
+  public CountCommand(@Nonnull EnvironmentContext context, @Nonnull Set<ResourceManager> resourceManagers) {
     super(context);
-    this.images = images;
-    this.floors = floors;
+    this.resourceManagers = resourceManagers;
   }
 
   @Nonnull
@@ -32,10 +30,11 @@ public class CountCommand extends AbstractCommand implements Command {
 
   @Override
   public void call() throws IOException {
-    if(types == null || types.contains("image"))
-      System.out.println("Images: " + images.count());
-    if(types == null || types.contains("floor"))
-      System.out.println("Floors: " + floors.count());
+    for(ResourceManager resourceManager : resourceManagers) {
+      ResourceType type = resourceManager.getResourceType();
+      if(types == null || types.contains(resourceManager.toString()))
+        System.out.println("Resource " + type + ": " + resourceManager.count());
+    }
   }
 
 }

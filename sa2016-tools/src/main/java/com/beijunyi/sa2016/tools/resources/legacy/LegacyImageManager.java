@@ -1,25 +1,25 @@
 package com.beijunyi.sa2016.tools.resources.legacy;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.ResourceManager;
+import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.*;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.*;
+import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.*;
+import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_IMAGE;
 import static java.nio.file.StandardOpenOption.READ;
 
-public class LegacyImageManager {
+public class LegacyImageManager implements ResourceManager<Integer, LegacyImageObject> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -34,13 +34,21 @@ public class LegacyImageManager {
     this.finder = finder;
   }
 
+  @Nonnull
+  @Override
+  public ResourceType getResourceType() {
+    return LEGACY_IMAGE;
+  }
+
+  @Override
   public int count() throws IOException {
     indexResources();
     return adrnMap.size();
   }
 
   @Nonnull
-  public LegacyImageObject getImage(int id) throws IOException {
+  @Override
+  public LegacyImageObject getResource(@Nonnull Integer id) throws IOException {
     indexResources();
     Adrn adrn = adrnMap.get(id);
     Real real = readRealData(adrn);

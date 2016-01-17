@@ -22,7 +22,7 @@ public class LegacyResourceFinder {
   }
 
   @Nonnull
-  public Set<Path> find(@Nonnull LegacyResource type) throws IOException {
+  public Set<Path> find(@Nonnull LegacyResourceFile type) throws IOException {
     LegacyResourceLocation location = type.getLocation();
     Path dir = resolveLocation(location);
     Set<Path> ret = new HashSet<>();
@@ -31,7 +31,7 @@ public class LegacyResourceFinder {
   }
 
   @Nonnull
-  public Path findUnique(@Nonnull LegacyResource type) throws IOException {
+  public Path findUnique(@Nonnull LegacyResourceFile type) throws IOException {
     Set<Path> resources = find(type);
     if(resources.size() != 1)
       throw new IllegalStateException();

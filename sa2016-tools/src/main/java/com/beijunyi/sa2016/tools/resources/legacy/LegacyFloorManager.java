@@ -1,21 +1,23 @@
 package com.beijunyi.sa2016.tools.resources.legacy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.ResourceManager;
+import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.LS2MAP;
+import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.LS2MAP;
+import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_FLOOR;
 import static java.util.Collections.unmodifiableCollection;
 
-public class LegacyFloorManager {
+public class LegacyFloorManager implements ResourceManager<Integer, Ls2Map> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -28,9 +30,23 @@ public class LegacyFloorManager {
     this.finder = finder;
   }
 
+  @Nonnull
+  @Override
+  public ResourceType getResourceType() {
+    return LEGACY_FLOOR;
+  }
+
+  @Override
   public int count() throws IOException {
     indexResources();
     return floorMap.size();
+  }
+
+  @Nonnull
+  @Override
+  public Ls2Map getResource(@Nonnull Integer id) throws IOException {
+    indexResources();
+    return floorMap.get(id);
   }
 
   @Nonnull
