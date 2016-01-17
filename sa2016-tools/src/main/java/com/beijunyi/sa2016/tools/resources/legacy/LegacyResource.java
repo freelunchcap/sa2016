@@ -14,6 +14,7 @@ public enum LegacyResource {
   REAL(CLIENT_DATA, regexPattern("^real_(\\d+)\\.bin$")),
   SPR_ADRN(CLIENT_DATA, regexPattern("^spradrn_(\\d+)\\.bin$")),
   SPR(CLIENT_DATA, regexPattern("^spr_(\\d+)\\.bin$")),
+  PALET(CLIENT_DATA_PAL, regexPattern("^palet_(\\d+)\\.sap")),
   ;
 
   private final LegacyResourceLocation location;

@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+
 public class ResourceSignature {
 
   private final Pattern pattern;
@@ -21,7 +23,7 @@ public class ResourceSignature {
 
   @Nonnull
   public static ResourceSignature regexPattern(@Nonnull String regex) {
-    return new ResourceSignature(Pattern.compile(regex), null);
+    return new ResourceSignature(Pattern.compile(regex, CASE_INSENSITIVE), null);
   }
 
   @Nonnull

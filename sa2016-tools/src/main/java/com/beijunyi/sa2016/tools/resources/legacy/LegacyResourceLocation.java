@@ -8,6 +8,7 @@ import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceBase.CLIE
 public enum LegacyResourceLocation {
   SERVER_DATA_MAP(SERVER, "data/map", true),
   CLIENT_DATA(CLIENT, "data", false),
+  CLIENT_DATA_PAL(CLIENT, "data/pal", false),
   ;
 
   private final LegacyResourceBase base;

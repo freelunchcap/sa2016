@@ -19,9 +19,9 @@ public class FloorPackAnalyzer {
   }
 
   @Nonnull
-  public Collection<FloorPack> createFloorPacks(@Nonnull FloorElementType type) throws IOException {
+  public List<FloorPack> createFloorPacks(@Nonnull FloorElementType type) throws IOException {
     Collection<Ls2Map> floors = manager.getAllFloors();
-    Collection<FloorPack> ret = new LinkedList<>();
+    List<FloorPack> ret = new LinkedList<>();
     for(Ls2Map floor : floors)
       processFloor(floor, ret, type);
     return ret;
