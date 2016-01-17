@@ -12,6 +12,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.LS2MAP;
+import static java.util.Collections.unmodifiableCollection;
 
 public class FloorManager {
 
@@ -29,6 +30,12 @@ public class FloorManager {
   public int count() throws IOException {
     indexResources();
     return floorMap.size();
+  }
+
+  @Nonnull
+  public Collection<Ls2Map> getAllFloors() throws IOException {
+    indexResources();
+    return unmodifiableCollection(floorMap.values());
   }
 
   private void indexResources() throws IOException {

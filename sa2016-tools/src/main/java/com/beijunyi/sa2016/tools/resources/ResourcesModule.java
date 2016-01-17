@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import com.esotericsoftware.kryo.Kryo;
 import com.google.inject.AbstractModule;
 
-public class SerializationModule extends AbstractModule {
+public class ResourcesModule extends AbstractModule {
 
   @Override
   protected void configure() {

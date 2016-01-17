@@ -3,5 +3,6 @@ dependencies {
   compile 'com.google.code.gson:gson:2.5'
   compile 'com.google.inject:guice:4.0'
   compile 'com.google.inject.extensions:guice-multibindings:4.0'
+  compile 'com.google.guava:guava:19.0'
   compile 'com.esotericsoftware.kryo:kryo:2.24.0'
 }
