@@ -33,6 +33,15 @@ public class LegacyPaletteManager {
     return paletMap.size();
   }
 
+  @Nonnull
+  public Palet getPalet(int id) throws IOException {
+    indexResources();
+    Palet ret = paletMap.get(id);
+    if(ret == null)
+      throw new IllegalStateException();
+    return ret;
+  }
+
   private void indexResources() throws IOException {
     if(paletMap == null) {
       paletMap = readResources();
@@ -49,8 +58,8 @@ public class LegacyPaletteManager {
       if(!matcher.matches())
         throw new IllegalStateException();
       int id = Integer.valueOf(matcher.group(1));
-      try(InputStream stream = Files.newInputStream(file)) {
-        ret.put(id, kryo.readObject(new Input(stream), Palet.class));
+      try(Input input = new Input(Files.newInputStream(file))) {
+        ret.put(id, kryo.readObject(input, Palet.class));
       }
     }
     return ret;

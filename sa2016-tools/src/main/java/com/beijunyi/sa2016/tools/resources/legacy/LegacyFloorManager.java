@@ -54,8 +54,8 @@ public class LegacyFloorManager {
     Collection<Ls2Map> ret = new ArrayList<>();
     Set<Path> files = finder.find(LS2MAP);
     for(Path file : files) {
-      try(InputStream stream = Files.newInputStream(file)) {
-        ret.add(kryo.readObject(new Input(stream), Ls2Map.class));
+      try(Input input = new Input(Files.newInputStream(file))) {
+        ret.add(kryo.readObject(input, Ls2Map.class));
       }
     }
     return ret;
