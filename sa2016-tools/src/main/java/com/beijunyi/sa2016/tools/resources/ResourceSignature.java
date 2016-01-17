@@ -22,8 +22,13 @@ public class ResourceSignature {
   }
 
   @Nonnull
+  public static ResourceSignature regexPattern(@Nonnull Pattern pattern) {
+    return new ResourceSignature(pattern, null);
+  }
+
+  @Nonnull
   public static ResourceSignature regexPattern(@Nonnull String regex) {
-    return new ResourceSignature(Pattern.compile(regex, CASE_INSENSITIVE), null);
+    return regexPattern(Pattern.compile(regex, CASE_INSENSITIVE));
   }
 
   @Nonnull

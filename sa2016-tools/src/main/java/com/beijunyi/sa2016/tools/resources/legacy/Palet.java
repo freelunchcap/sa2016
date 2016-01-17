@@ -2,6 +2,7 @@ package com.beijunyi.sa2016.tools.resources.legacy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
@@ -11,6 +12,8 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 public class Palet implements KryoSerializable {
+
+  public static final Pattern PALET_PATTEN = Pattern.compile("^palet_(\\d+)\\.sap");
 
   private static final int PALETTE_COLORS = 236;
 

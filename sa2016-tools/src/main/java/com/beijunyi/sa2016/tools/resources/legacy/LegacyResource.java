@@ -7,6 +7,7 @@ import com.beijunyi.sa2016.tools.resources.ResourceSignature;
 import static com.beijunyi.sa2016.tools.resources.ResourceSignature.regexPattern;
 import static com.beijunyi.sa2016.tools.resources.ResourceSignature.stringHeader;
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceLocation.*;
+import static com.beijunyi.sa2016.tools.resources.legacy.Palet.PALET_PATTEN;
 
 public enum LegacyResource {
   LS2MAP(SERVER_DATA_MAP, stringHeader("LS2MAP")),
@@ -14,7 +15,7 @@ public enum LegacyResource {
   REAL(CLIENT_DATA, regexPattern("^real_(\\d+)\\.bin$")),
   SPR_ADRN(CLIENT_DATA, regexPattern("^spradrn_(\\d+)\\.bin$")),
   SPR(CLIENT_DATA, regexPattern("^spr_(\\d+)\\.bin$")),
-  PALET(CLIENT_DATA_PAL, regexPattern("^palet_(\\d+)\\.sap")),
+  PALET(CLIENT_DATA_PAL, regexPattern(PALET_PATTEN)),
   ;
 
   private final LegacyResourceLocation location;
