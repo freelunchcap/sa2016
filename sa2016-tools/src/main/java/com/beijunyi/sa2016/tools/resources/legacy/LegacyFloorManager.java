@@ -8,13 +8,14 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.LS2MAP;
 import static java.util.Collections.unmodifiableCollection;
 
-public class FloorManager {
+public class LegacyFloorManager {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -22,7 +23,7 @@ public class FloorManager {
   private Map<Integer, Ls2Map> floorMap;
 
   @Inject
-  public FloorManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
+  public LegacyFloorManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
     this.kryo = kryo;
     this.finder = finder;
   }

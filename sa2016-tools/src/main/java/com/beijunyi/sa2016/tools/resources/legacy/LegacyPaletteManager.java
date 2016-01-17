@@ -9,12 +9,13 @@ import java.util.regex.Matcher;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.legacy.structs.Palet;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.*;
 
-public class PaletteManager {
+public class LegacyPaletteManager {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -22,7 +23,7 @@ public class PaletteManager {
   private Map<Integer, Palet> paletMap;
 
   @Inject
-  public PaletteManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
+  public LegacyPaletteManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
     this.kryo = kryo;
     this.finder = finder;
   }

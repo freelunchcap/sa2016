@@ -1,20 +1,20 @@
-package com.beijunyi.sa2016.tools.transform.floor;
+package com.beijunyi.sa2016.tools.resources.transform.floor;
 
 import java.io.IOException;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.resources.legacy.FloorManager;
-import com.beijunyi.sa2016.tools.resources.legacy.Ls2Map;
+import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
+import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
 import com.google.common.primitives.Ints;
 
 public class FloorPackAnalyzer {
 
-  private final FloorManager manager;
+  private final LegacyFloorManager manager;
 
   @Inject
-  public FloorPackAnalyzer(@Nonnull FloorManager manager) {
+  public FloorPackAnalyzer(@Nonnull LegacyFloorManager manager) {
     this.manager = manager;
   }
 

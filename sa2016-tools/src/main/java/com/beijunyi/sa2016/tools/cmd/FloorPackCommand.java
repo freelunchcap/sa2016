@@ -5,10 +5,8 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.resources.legacy.FloorManager;
-import com.beijunyi.sa2016.tools.resources.legacy.ImageManager;
-import com.beijunyi.sa2016.tools.transform.floor.FloorElementType;
-import com.beijunyi.sa2016.tools.transform.floor.FloorPackAnalyzer;
+import com.beijunyi.sa2016.tools.resources.transform.floor.FloorElementType;
+import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackAnalyzer;
 import com.beust.jcommander.Parameter;
 
 public class FloorPackCommand extends AbstractCommand implements Command {

@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.resources.legacy;
+package com.beijunyi.sa2016.tools.resources.legacy.structs;
 
 import java.nio.charset.Charset;
 

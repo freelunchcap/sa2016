@@ -1,8 +1,7 @@
-package com.beijunyi.sa2016.tools.resources.legacy;
+package com.beijunyi.sa2016.tools.resources.legacy.structs;
 
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.utils.IntegerReader;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;

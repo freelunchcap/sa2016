@@ -5,20 +5,20 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.resources.legacy.FloorManager;
-import com.beijunyi.sa2016.tools.resources.legacy.ImageManager;
+import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
+import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
 import com.beust.jcommander.Parameter;
 
 public class CountCommand extends AbstractCommand implements Command {
 
-  private final ImageManager images;
-  private final FloorManager floors;
+  private final LegacyImageManager images;
+  private final LegacyFloorManager floors;
 
   @Parameter(names = "--type", variableArity = true)
   private Set<String> types;
 
   @Inject
-  public CountCommand(@Nonnull EnvironmentContext context, @Nonnull ImageManager images, @Nonnull FloorManager floors) {
+  public CountCommand(@Nonnull EnvironmentContext context, @Nonnull LegacyImageManager images, @Nonnull LegacyFloorManager floors) {
     super(context);
     this.images = images;
     this.floors = floors;

@@ -7,7 +7,7 @@ import com.beijunyi.sa2016.tools.resources.ResourceSignature;
 import static com.beijunyi.sa2016.tools.resources.ResourceSignature.regexPattern;
 import static com.beijunyi.sa2016.tools.resources.ResourceSignature.stringHeader;
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceLocation.*;
-import static com.beijunyi.sa2016.tools.resources.legacy.Palet.PALET_PATTEN;
+import static com.beijunyi.sa2016.tools.resources.legacy.structs.Palet.PALET_PATTEN;
 
 public enum LegacyResource {
   LS2MAP(SERVER_DATA_MAP, stringHeader("LS2MAP")),

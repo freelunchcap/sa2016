@@ -8,12 +8,14 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.resources.legacy.structs.Adrn;
+import com.beijunyi.sa2016.tools.resources.legacy.structs.AdrnSet;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResource.ADRN;
 
-public class ImageManager {
+public class LegacyImageManager {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -22,7 +24,7 @@ public class ImageManager {
   private Map<Integer, Set<Integer>> floorElementsMap;
 
   @Inject
-  public ImageManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
+  public LegacyImageManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
     this.kryo = kryo;
     this.finder = finder;
   }

@@ -1,11 +1,9 @@
-package com.beijunyi.sa2016.tools.transform.image;
+package com.beijunyi.sa2016.tools.resources.transform.image;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.annotation.Nonnull;
-
-import com.beijunyi.sa2016.tools.utils.BitConverter;
 
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 
