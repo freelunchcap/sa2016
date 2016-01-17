@@ -9,12 +9,12 @@ import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
 import com.google.common.primitives.Ints;
 
-public class FloorPackAnalyzer {
+public class FloorPackManager {
 
   private final LegacyFloorManager manager;
 
   @Inject
-  public FloorPackAnalyzer(@Nonnull LegacyFloorManager manager) {
+  public FloorPackManager(@Nonnull LegacyFloorManager manager) {
     this.manager = manager;
   }
 

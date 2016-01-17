@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 
 public class FloorPack {
 
+  public static final Comparator<FloorPack> BY_PACK_SIZE = new FloorPackComparator();
+
   private final Set<Integer> images = new HashSet<>();
   private final Set<Integer> floors = new HashSet<>();
 
