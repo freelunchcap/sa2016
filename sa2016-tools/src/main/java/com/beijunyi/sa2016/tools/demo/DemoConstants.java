@@ -7,7 +7,7 @@ import com.beijunyi.sa2016.tools.cmd.EnvironmentContext;
 
 public class DemoConstants {
 
-  public static final int DEMO_PALETTE = 0;
+  public static final int DEMO_PALETTE = 1;
   public static final String DEMO_IMAGE_FORMAT = "png";
 
   @Nonnull

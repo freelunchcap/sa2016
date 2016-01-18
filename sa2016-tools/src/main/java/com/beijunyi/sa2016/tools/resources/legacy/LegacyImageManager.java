@@ -28,7 +28,7 @@ public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
 
   private Map<Integer, Adrn> adrnMap;
   private Map<Integer, Set<Integer>> floorElementsMap;
-  private FileChannel realChannel;
+  private Path real;
 
   @Inject
   public LegacyImageManager(@Nonnull Kryo kryo, @Nonnull LegacyResourceFinder finder) {
@@ -69,7 +69,7 @@ public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
   private void indexResources() throws IOException {
     if(adrnMap == null || floorElementsMap == null) {
       AdrnSet resources = openAdrn();
-      realChannel = openReal();
+      real = finder.findUnique(REAL);
       adrnMap = new HashMap<>();
       floorElementsMap = new HashMap<>();
       for(Adrn adrn : resources.getAdrns()) {
@@ -97,15 +97,10 @@ public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
   }
 
   @Nonnull
-  private FileChannel openReal() throws IOException {
-    Path real = finder.findUnique(REAL);
-    return FileChannel.open(real, READ);
-  }
-
-  @Nonnull
   private Real readRealData(@Nonnull Adrn adrn) throws IOException {
-    realChannel.position(adrn.getAddress());
-    try(Input input = new Input(Channels.newInputStream(realChannel))) {
+    FileChannel channel = FileChannel.open(real, READ);
+    channel.position(adrn.getAddress());
+    try(Input input = new Input(Channels.newInputStream(channel))) {
       return kryo.readObject(input, Real.class);
     }
   }
