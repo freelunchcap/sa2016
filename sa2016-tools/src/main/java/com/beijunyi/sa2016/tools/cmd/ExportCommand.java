@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-public class ExportCommand extends AbstractCommand implements Command {
+public class ExportCommand extends Command {
 
   @Inject
   public ExportCommand(@Nonnull EnvironmentContext context) {

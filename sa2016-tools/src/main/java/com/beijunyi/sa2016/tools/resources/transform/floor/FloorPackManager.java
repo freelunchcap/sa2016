@@ -6,28 +6,30 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
+import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
 import com.google.common.primitives.Ints;
 
 public class FloorPackManager {
 
-  private final LegacyFloorManager manager;
+  private final LegacyFloorManager floors;
+  private final LegacyImageManager images;
 
   @Inject
-  public FloorPackManager(@Nonnull LegacyFloorManager manager) {
-    this.manager = manager;
+  public FloorPackManager(@Nonnull LegacyFloorManager floors, @Nonnull LegacyImageManager images) {
+    this.floors = floors;
+    this.images = images;
   }
 
   @Nonnull
   public List<FloorPack> createFloorPacks(@Nonnull FloorElementType type) throws IOException {
-    Collection<Ls2Map> floors = manager.getAllFloors();
     List<FloorPack> ret = new LinkedList<>();
-    for(Ls2Map floor : floors)
+    for(Ls2Map floor : floors.getAllFloors())
       processFloor(floor, ret, type);
     return ret;
   }
 
-  private static void processFloor(@Nonnull Ls2Map floor, @Nonnull Collection<FloorPack> packs, @Nonnull FloorElementType type) {
+  private void processFloor(@Nonnull Ls2Map floor, @Nonnull Collection<FloorPack> packs, @Nonnull FloorElementType type) throws IOException {
     List<FloorPack> candidates = new ArrayList<>();
     Set<Integer> images = getImages(floor, type);
     if(images.isEmpty())
@@ -51,7 +53,7 @@ public class FloorPackManager {
   }
 
   @Nonnull
-  private static Set<Integer> getImages(@Nonnull Ls2Map floor, @Nonnull FloorElementType type) {
+  private Set<Integer> getImages(@Nonnull Ls2Map floor, @Nonnull FloorElementType type) throws IOException {
     int[] ids;
     switch(type) {
       case TILE:
@@ -63,8 +65,14 @@ public class FloorPackManager {
       default:
         throw new IllegalStateException();
     }
-    Set<Integer> ret = new HashSet<>(Ints.asList(ids));
-    ret.remove(0);
+    return toImageIds(ids);
+  }
+
+  @Nonnull
+  private Set<Integer> toImageIds(@Nonnull int[] floorElementIds) throws IOException {
+    Set<Integer> ret = new HashSet<>();
+    for(int id : floorElementIds)
+      ret.addAll(images.getMappedImageIds(id));
     return ret;
   }
 

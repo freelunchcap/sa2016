@@ -17,7 +17,7 @@ import com.esotericsoftware.kryo.io.Input;
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.*;
 import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_PALETTE;
 
-public class LegacyPaletteManager implements ResourceManager<Integer, Palet> {
+public class LegacyPaletteManager implements ResourceManager<Palet> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -44,7 +44,7 @@ public class LegacyPaletteManager implements ResourceManager<Integer, Palet> {
 
   @Nonnull
   @Override
-  public Palet getResource(@Nonnull Integer id) throws IOException {
+  public Palet getResource(int id) throws IOException {
     indexResources();
     Palet ret = paletMap.get(id);
     if(ret == null)

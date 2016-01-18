@@ -9,7 +9,7 @@ import com.beijunyi.sa2016.tools.resources.transform.floor.FloorElementType;
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackManager;
 import com.beust.jcommander.Parameter;
 
-public class FloorPackCommand extends AbstractCommand implements Command {
+public class FloorPackCommand extends Command {
 
   private final FloorPackManager analyzer;
 

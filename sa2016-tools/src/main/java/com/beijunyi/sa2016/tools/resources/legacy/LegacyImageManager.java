@@ -18,8 +18,10 @@ import com.esotericsoftware.kryo.io.Input;
 import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.*;
 import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_IMAGE;
 import static java.nio.file.StandardOpenOption.READ;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableSet;
 
-public class LegacyImageManager implements ResourceManager<Integer, LegacyImageObject> {
+public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -48,11 +50,20 @@ public class LegacyImageManager implements ResourceManager<Integer, LegacyImageO
 
   @Nonnull
   @Override
-  public LegacyImageObject getResource(@Nonnull Integer id) throws IOException {
+  public LegacyImageObject getResource(int id) throws IOException {
     indexResources();
     Adrn adrn = adrnMap.get(id);
     Real real = readRealData(adrn);
     return new LegacyImageObject(adrn , real);
+  }
+
+  @Nonnull
+  public Set<Integer> getMappedImageIds(int floorElementId) throws IOException {
+    indexResources();
+    Set<Integer> ret = floorElementsMap.get(floorElementId);
+    if(ret == null)
+      return emptySet();
+    return unmodifiableSet(ret);
   }
 
   private void indexResources() throws IOException {

@@ -9,7 +9,7 @@ import com.beijunyi.sa2016.tools.resources.ResourceManager;
 import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beust.jcommander.Parameter;
 
-public class CountCommand extends AbstractCommand implements Command {
+public class CountCommand extends Command {
 
   private final Set<ResourceManager> resourceManagers;
 

@@ -17,7 +17,7 @@ import static com.beijunyi.sa2016.tools.resources.legacy.LegacyResourceFile.LS2M
 import static com.beijunyi.sa2016.tools.resources.ResourceType.LEGACY_FLOOR;
 import static java.util.Collections.unmodifiableCollection;
 
-public class LegacyFloorManager implements ResourceManager<Integer, Ls2Map> {
+public class LegacyFloorManager implements ResourceManager<Ls2Map> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -44,7 +44,7 @@ public class LegacyFloorManager implements ResourceManager<Integer, Ls2Map> {
 
   @Nonnull
   @Override
-  public Ls2Map getResource(@Nonnull Integer id) throws IOException {
+  public Ls2Map getResource(int id) throws IOException {
     indexResources();
     return floorMap.get(id);
   }
