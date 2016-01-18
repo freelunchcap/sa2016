@@ -21,6 +21,7 @@ import com.beijunyi.sa2016.tools.resources.transform.image.ImageManager;
 import com.beijunyi.sa2016.tools.resources.transform.image.ImageObject;
 import com.beijunyi.sa2016.tools.resources.transform.palette.Palette;
 import com.beijunyi.sa2016.tools.resources.transform.palette.PaletteManager;
+import com.beijunyi.sa2016.tools.utils.IOUtils;
 
 import static com.beijunyi.sa2016.tools.demo.DemoConstants.DEMO_IMAGE_FORMAT;
 import static com.beijunyi.sa2016.tools.demo.DemoConstants.DEMO_PALETTE;
@@ -51,9 +52,13 @@ public class FloorPackDemo implements ResourceDemo {
   @Override
   public void outputResourceDemo() throws IOException {
     Palette palette = palettes.getPalette(DEMO_PALETTE);
+    int id = 1;
+    for(FloorPack pack : FloorPackManager.STATIC_PACKS) {
+      Path packDir = getFloorPackDemoDir(id++);
+      outputFloorPack(packDir, pack, palette);
+    }
     List<FloorPack> packs = floorPacks.createFloorPacks(FloorElementType.TILE);
     Collections.sort(packs, BY_PACK_SIZE);
-    int id = 1;
     for(FloorPack pack : packs) {
       Path packDir = getFloorPackDemoDir(id++);
       outputFloorPack(packDir, pack, palette);
@@ -61,6 +66,7 @@ public class FloorPackDemo implements ResourceDemo {
   }
 
   private void outputFloorPack(@Nonnull Path path, @Nonnull FloorPack pack, @Nonnull Palette palette) throws IOException {
+    IOUtils.forceDelete(path);
     Files.createDirectories(path);
     for(int imageId : pack.getImages()) {
       Path imagePath = path.resolve(imageId + "." + DEMO_IMAGE_FORMAT);

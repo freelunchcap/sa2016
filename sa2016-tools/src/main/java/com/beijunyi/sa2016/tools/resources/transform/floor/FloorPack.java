@@ -7,31 +7,37 @@ public class FloorPack {
 
   public static final Comparator<FloorPack> BY_PACK_SIZE = new FloorPackComparator();
 
-  private final Set<Integer> images = new HashSet<>();
-  private final Set<Integer> floors = new HashSet<>();
+  private final Set<Integer> images;
+
+  private FloorPack(@Nonnull Set<Integer> images) {
+    this.images = images;
+  }
+
+  @Nonnull
+  public static FloorPack dynamicPack() {
+    return new FloorPack(new HashSet<Integer>());
+  }
+
+  @Nonnull
+  public static FloorPack staticPack(@Nonnull Set<Integer> images) {
+    return new FloorPack(images);
+  }
 
   public void merge(@Nonnull FloorPack other) {
     images.addAll(other.getImages());
-    floors.addAll(other.getFloors());
   }
 
   public boolean hasAnyImages(@Nonnull Set<Integer> mapImages) {
     return !Collections.disjoint(images, mapImages);
   }
 
-  public void addImages(@Nonnull Collection<Integer> newImages, int floor) {
+  public void addImages(@Nonnull Collection<Integer> newImages) {
     images.addAll(newImages);
-    floors.add(floor);
   }
 
   @Nonnull
   public Set<Integer> getImages() {
     return images;
-  }
-
-  @Nonnull
-  public Set<Integer> getFloors() {
-    return floors;
   }
 
 }
