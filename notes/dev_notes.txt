@@ -1,0 +1,1 @@
+https://github.com/pabiagioli/shiro-guice-async-webapp
