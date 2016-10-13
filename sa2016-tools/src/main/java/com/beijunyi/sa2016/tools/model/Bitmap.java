@@ -1,16 +1,16 @@
-package com.beijunyi.sa2016.tools.resources.transform.image;
+package com.beijunyi.sa2016.tools.model;
 
 import javax.annotation.Nonnull;
 
 public class Bitmap {
 
   private final int width;
-  private final int heigh;
+  private final int height;
   private final byte[] pixels;
 
-  public Bitmap(int width, int heigh, @Nonnull byte[] pixels) {
+  public Bitmap(int width, int height, @Nonnull byte[] pixels) {
     this.width = width;
-    this.heigh = heigh;
+    this.height = height;
     this.pixels = pixels;
   }
 
@@ -18,8 +18,8 @@ public class Bitmap {
     return width;
   }
 
-  public int getHeigh() {
-    return heigh;
+  public int getHeight() {
+    return height;
   }
 
   @Nonnull

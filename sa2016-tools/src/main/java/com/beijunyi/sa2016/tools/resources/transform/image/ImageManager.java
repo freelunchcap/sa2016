@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.model.Frame;
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
 
@@ -13,7 +14,7 @@ public class ImageManager {
 
   private final LegacyImageManager legacy;
 
-  private Map<Integer, ImageObject> images = new HashMap<>();
+  private Map<Integer, Frame> images = new HashMap<>();
 
   @Inject
   public ImageManager(@Nonnull LegacyImageManager legacy) {
@@ -21,8 +22,8 @@ public class ImageManager {
   }
 
   @Nonnull
-  public ImageObject getImage(int id) throws IOException {
-    ImageObject ret = images.get(id);
+  public Frame getImage(int id) throws IOException {
+    Frame ret = images.get(id);
     if(ret != null)
       return ret;
     synchronized(this) {

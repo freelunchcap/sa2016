@@ -2,6 +2,8 @@ package com.beijunyi.sa2016.tools.resources.transform.image;
 
 import javax.annotation.Nonnull;
 
+import com.beijunyi.sa2016.tools.model.Bitmap;
+import com.beijunyi.sa2016.tools.model.Frame;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Adrn;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Real;
@@ -12,7 +14,7 @@ import static java.lang.System.arraycopy;
 public class ImageTransformer {
 
   @Nonnull
-  public static ImageObject transform(@Nonnull LegacyImageObject legacy) {
+  public static Frame transform(@Nonnull LegacyImageObject legacy) {
     Adrn adrn = legacy.getAdrn();
     Real real = legacy.getReal();
     int width = adrn.getWidth();
@@ -20,7 +22,7 @@ public class ImageTransformer {
     byte[] pixels = real.getMajor() == 1 ? decode(real.getData(), width * height) : real.getData();
     verticalFlip(pixels, width, height);
     Bitmap bitmap = new Bitmap(width, height, pixels);
-    return new ImageObject(adrn.getxOffset(), adrn.getyOffset(), bitmap);
+    return new Frame(adrn.getxOffset(), adrn.getyOffset(), bitmap);
   }
 
   @Nonnull

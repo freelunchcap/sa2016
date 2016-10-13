@@ -1,14 +1,14 @@
-package com.beijunyi.sa2016.tools.resources.transform.image;
+package com.beijunyi.sa2016.tools.model;
 
 import javax.annotation.Nonnull;
 
-public class ImageObject {
+public class Frame {
 
   private final int x;
   private final int y;
   private final Bitmap bitmap;
 
-  public ImageObject(int x, int y, @Nonnull Bitmap bitmap) {
+  public Frame(int x, int y, @Nonnull Bitmap bitmap) {
     this.x = x;
     this.y = y;
     this.bitmap = bitmap;

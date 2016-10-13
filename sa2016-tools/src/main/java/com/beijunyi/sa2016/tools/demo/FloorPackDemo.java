@@ -16,9 +16,9 @@ import com.beijunyi.sa2016.tools.resources.ResourceType;
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorElementType;
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPack;
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackManager;
-import com.beijunyi.sa2016.tools.resources.transform.image.Bitmap;
+import com.beijunyi.sa2016.tools.model.Bitmap;
 import com.beijunyi.sa2016.tools.resources.transform.image.ImageManager;
-import com.beijunyi.sa2016.tools.resources.transform.image.ImageObject;
+import com.beijunyi.sa2016.tools.model.Frame;
 import com.beijunyi.sa2016.tools.resources.transform.palette.Palette;
 import com.beijunyi.sa2016.tools.resources.transform.palette.PaletteManager;
 import com.beijunyi.sa2016.tools.utils.IOUtils;
@@ -70,12 +70,12 @@ public class FloorPackDemo implements ResourceDemo {
     Files.createDirectories(path);
     for(int imageId : pack.getImages()) {
       Path imagePath = path.resolve(imageId + "." + DEMO_IMAGE_FORMAT);
-      ImageObject imageObj = images.getImage(imageId);
+      Frame imageObj = images.getImage(imageId);
       outputImage(imagePath, imageObj, palette);
     }
   }
 
-  private void outputImage(@Nonnull Path path, @Nonnull ImageObject imageObj, @Nonnull Palette palette) throws IOException {
+  private void outputImage(@Nonnull Path path, @Nonnull Frame imageObj, @Nonnull Palette palette) throws IOException {
     Bitmap bitmap = imageObj.getBitmap();
     RenderedImage rendered = palette.render(bitmap);
     try(OutputStream stream = Files.newOutputStream(path)) {
