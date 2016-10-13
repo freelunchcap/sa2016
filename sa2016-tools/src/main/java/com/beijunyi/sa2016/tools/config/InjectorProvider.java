@@ -1,30 +1,24 @@
 package com.beijunyi.sa2016.tools.config;
 
+import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 
 import com.beijunyi.sa2016.tools.api.ApiModule;
-import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
-
-import static com.google.inject.Guice.createInjector;
+import com.google.common.collect.ImmutableList;
+import com.google.inject.Module;
+import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
 
 @WebListener
-public class InjectorProvider extends GuiceServletContextListener {
+public class InjectorProvider extends GuiceResteasyBootstrapServletContextListener {
 
   public InjectorProvider() {
     System.currentTimeMillis();
   }
 
   @Override
-  protected Injector getInjector() {
-    return GuiceHolder.INSTANCE;
+  protected List<? extends Module> getModules(ServletContext context) {
+    return ImmutableList.of(new ApiModule());
   }
-
-  private static class GuiceHolder {
-    private static final Injector INSTANCE = createInjector(
-      new ApiModule()
-    );
-  }
-
 
 }

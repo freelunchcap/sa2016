@@ -6,10 +6,6 @@ import javax.ws.rs.Path;
 @Path("/api/characters")
 public class CharactersApi {
 
-  public CharactersApi() {
-    System.currentTimeMillis();
-  }
-
   @GET
   @Path("list")
   public String list() {
