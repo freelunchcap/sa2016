@@ -6,7 +6,7 @@ import java.awt.image.RenderedImage;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.model.Bitmap;
+import com.beijunyi.sa2016.tools.assets.model.Bitmap;
 import com.beijunyi.sa2016.tools.utils.BitConverter;
 
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;

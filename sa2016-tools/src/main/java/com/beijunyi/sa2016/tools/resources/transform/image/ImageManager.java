@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.model.Frame;
+import com.beijunyi.sa2016.tools.assets.model.Frame;
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
 

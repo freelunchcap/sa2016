@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.model;
+package com.beijunyi.sa2016.tools.assets.model;
 
 import javax.annotation.Nonnull;
 

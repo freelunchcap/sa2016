@@ -1,10 +1,10 @@
-package com.beijunyi.sa2016.tools.model;
+package com.beijunyi.sa2016.tools.assets.model;
 
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-public class Animation {
+public class Animation implements Asset {
 
   private final String id;
   private final int duration;
@@ -18,6 +18,7 @@ public class Animation {
     this.audios = audios;
   }
 
+  @Override
   public String getId() {
     return id;
   }

@@ -2,8 +2,8 @@ package com.beijunyi.sa2016.tools.resources.transform.image;
 
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.model.Bitmap;
-import com.beijunyi.sa2016.tools.model.Frame;
+import com.beijunyi.sa2016.tools.assets.model.Bitmap;
+import com.beijunyi.sa2016.tools.assets.model.Frame;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Adrn;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
 import com.beijunyi.sa2016.tools.resources.legacy.structs.Real;

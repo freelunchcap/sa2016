@@ -1,6 +1,6 @@
-package com.beijunyi.sa2016.tools.model;
+package com.beijunyi.sa2016.tools.assets.model;
 
-public class Audio {
+public class Audio implements Asset {
 
   private final String id;
   private final String format;
@@ -12,6 +12,7 @@ public class Audio {
     this.bytes = bytes;
   }
 
+  @Override
   public String getId() {
     return id;
   }
