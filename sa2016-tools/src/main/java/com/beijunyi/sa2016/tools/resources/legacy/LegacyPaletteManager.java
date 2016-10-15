@@ -67,7 +67,7 @@ public class LegacyPaletteManager implements ResourceManager<Palet> {
       Matcher matcher = Palet.PALET_PATTEN.matcher(filename);
       if(!matcher.matches())
         throw new IllegalStateException();
-      int id = Integer.valueOf(matcher.group(1));
+      int id = Integer.parseInt(matcher.group(1));
       try(Input input = new Input(Files.newInputStream(file))) {
         ret.put(id, kryo.readObject(input, Palet.class));
       }
