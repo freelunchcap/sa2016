@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 
 import com.beijunyi.sa2016.tools.api.ApiModule;
-import com.beijunyi.sa2016.tools.cache.CacheModule;
+import com.beijunyi.sa2016.repository.CacheModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Module;
 import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;

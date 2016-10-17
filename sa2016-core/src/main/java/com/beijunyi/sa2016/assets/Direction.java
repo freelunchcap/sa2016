@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.assets.model;
+package com.beijunyi.sa2016.assets;
 
 public enum Direction {
 

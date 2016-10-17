@@ -1,4 +1,6 @@
-package com.beijunyi.sa2016.tools.assets.model;
+package com.beijunyi.sa2016.assets;
+
+import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableTable;
 
@@ -12,6 +14,7 @@ public class Character implements Asset {
     this.animations = animations;
   }
 
+  @Nonnull
   @Override
   public String getId() {
     return id;

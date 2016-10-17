@@ -18,7 +18,7 @@ import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPack;
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackManager;
 import com.beijunyi.sa2016.tools.assets.model.Bitmap;
 import com.beijunyi.sa2016.tools.resources.transform.image.ImageManager;
-import com.beijunyi.sa2016.tools.assets.model.Frame;
+import com.beijunyi.sa2016.assets.Frame;
 import com.beijunyi.sa2016.tools.resources.transform.palette.Palette;
 import com.beijunyi.sa2016.tools.resources.transform.palette.PaletteManager;
 import com.beijunyi.sa2016.tools.utils.IOUtils;
@@ -76,7 +76,7 @@ public class FloorPackDemo implements ResourceDemo {
   }
 
   private void outputImage(@Nonnull Path path, @Nonnull Frame imageObj, @Nonnull Palette palette) throws IOException {
-    Bitmap bitmap = imageObj.getBitmap();
+    Bitmap bitmap = imageObj.getImage();
     RenderedImage rendered = palette.render(bitmap);
     try(OutputStream stream = Files.newOutputStream(path)) {
       ImageIO.write(rendered, DEMO_IMAGE_FORMAT, stream);

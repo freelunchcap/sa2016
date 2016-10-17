@@ -1,4 +1,6 @@
-package com.beijunyi.sa2016.tools.assets.model;
+package com.beijunyi.sa2016.assets;
+
+import javax.annotation.Nonnull;
 
 public class Audio implements Asset {
 
@@ -12,6 +14,7 @@ public class Audio implements Asset {
     this.bytes = bytes;
   }
 
+  @Nonnull
   @Override
   public String getId() {
     return id;

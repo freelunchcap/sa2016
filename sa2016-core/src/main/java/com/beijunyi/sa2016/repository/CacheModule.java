@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.cache;
+package com.beijunyi.sa2016.repository;
 
 import com.beijunyi.sa2016.AppConstants;
 import com.google.inject.AbstractModule;

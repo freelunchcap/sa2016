@@ -2,7 +2,7 @@ package com.beijunyi.sa2016.tools.extractors;
 
 import java.util.List;
 
-import com.beijunyi.sa2016.tools.assets.model.Asset;
+import com.beijunyi.sa2016.assets.Asset;
 
 public abstract class AssetsExtractor<A extends Asset> {
 
