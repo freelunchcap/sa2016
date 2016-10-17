@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.tools.api.ApiModule;
 import com.beijunyi.sa2016.tools.cmd.CommandModule;
+import com.beijunyi.sa2016.tools.cmd.CommandService;
 import com.beijunyi.sa2016.tools.demo.DemoModule;
 import com.beijunyi.sa2016.tools.resources.ResourcesModule;
 import com.google.inject.Guice;
@@ -27,7 +28,7 @@ public class AppMain {
 
   public static void main(@Nonnull String[] args) throws IOException {
     Injector guice = Guice.createInjector(MODULES);
-//    guice.getInstance(CommandService.class).process(args);
+    guice.getInstance(CommandService.class).process(args);
   }
 
 }

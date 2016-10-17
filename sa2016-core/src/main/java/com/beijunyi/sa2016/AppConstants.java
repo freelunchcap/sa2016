@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools;
+package com.beijunyi.sa2016;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
