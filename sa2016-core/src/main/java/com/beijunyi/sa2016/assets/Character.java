@@ -7,10 +7,12 @@ import com.google.common.collect.ImmutableTable;
 public class Character implements Asset {
 
   private final String id;
-  private final ImmutableTable<Direction, Action, String> animations;
+  private final int actions;
+  private final ImmutableTable<Action, Direction, String> animations;
 
-  public Character(String id, ImmutableTable<Direction, Action, String> animations) {
+  public Character(String id, int actions, ImmutableTable<Action, Direction, String> animations) {
     this.id = id;
+    this.actions = actions;
     this.animations = animations;
   }
 
@@ -20,7 +22,12 @@ public class Character implements Asset {
     return id;
   }
 
-  public ImmutableTable<Direction, Action, String> getAnimations() {
+  public int getActions() {
+    return actions;
+  }
+
+  @Nonnull
+  public ImmutableTable<Action, Direction, String> getAnimations() {
     return animations;
   }
 

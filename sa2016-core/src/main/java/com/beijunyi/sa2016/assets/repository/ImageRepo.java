@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.repository;
+package com.beijunyi.sa2016.assets.repository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

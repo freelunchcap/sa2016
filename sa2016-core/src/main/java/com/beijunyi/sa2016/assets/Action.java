@@ -11,7 +11,7 @@ public enum Action {
   HAPPY,
   ANGRY,
   SAD,
-  DEFENCE,
+  DEFENSE,
   NOD,
   TOSS
 }

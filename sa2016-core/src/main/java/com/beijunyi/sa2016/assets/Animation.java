@@ -13,13 +13,15 @@ public class Animation implements Asset {
 
   private final String id;
   private final int duration;
-  private final ImmutableList<String> frames;
+  private final int frames;
+  private final ImmutableList<String> images;
   private final ImmutableList<String> audios;
 
-  public Animation(String id, int duration, ImmutableList<String> frames, ImmutableList<String> audios) {
+  public Animation(String id, int duration, int frames, ImmutableList<String> images, ImmutableList<String> audios) {
     this.id = id;
     this.duration = duration;
     this.frames = frames;
+    this.images = images;
     this.audios = audios;
   }
 
@@ -33,9 +35,13 @@ public class Animation implements Asset {
     return duration;
   }
 
-  @Nonnull
-  public List<String> getFrames() {
+  public int getFrames() {
     return frames;
+  }
+
+  @Nonnull
+  public List<String> getImages() {
+    return images;
   }
 
   @Nonnull
