@@ -1,5 +1,8 @@
 package com.beijunyi.sa2016.assets.repository;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.beijunyi.sa2016.assets.Asset;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -27,16 +30,20 @@ public abstract class AssetRepo<A extends Asset> {
     store.put(id, stream.toByteArray());
   }
 
+  @Nullable
   public A get(String id) {
     byte[] data = store.get(id);
     if(data == null) return null;
     return kryo.readObject(new Input(data), type());
   }
 
+  @Nonnull
   protected abstract String namespace();
 
+  @Nonnull
   protected abstract Class<A> type();
 
+  @Nonnull
   private HTreeMap<String, byte[]> createStore(DB cache) {
     return cache.hashMap(namespace())
              .keySerializer(STRING_ASCII)

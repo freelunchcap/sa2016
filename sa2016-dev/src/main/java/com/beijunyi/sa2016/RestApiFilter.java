@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.config;
+package com.beijunyi.sa2016;
 
 import javax.servlet.annotation.WebServlet;
 

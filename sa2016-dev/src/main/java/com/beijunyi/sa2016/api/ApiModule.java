@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.api;
+package com.beijunyi.sa2016.api;
 
 import java.util.Collection;
 

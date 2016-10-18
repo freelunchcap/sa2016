@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.api;
+package com.beijunyi.sa2016.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

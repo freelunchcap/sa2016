@@ -4,28 +4,29 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.beijunyi.sa2016.assets.Animation;
 import com.beijunyi.sa2016.assets.Image;
-import com.esotericsoftware.kryo.*;
-import org.mapdb.*;
+import com.esotericsoftware.kryo.Kryo;
+import org.mapdb.DB;
 
 @Singleton
-public class ImageRepo extends AssetRepo<Image> {
+public class AnimationRepo extends AssetRepo<Animation> {
 
   @Inject
-  public ImageRepo(DB cache, Kryo kryo) {
+  public AnimationRepo(DB cache, Kryo kryo) {
     super(cache, kryo);
   }
 
   @Nonnull
   @Override
   protected String namespace() {
-    return "images";
+    return "animations";
   }
 
   @Nonnull
   @Override
-  protected Class<Image> type() {
-    return Image.class;
+  protected Class<Animation> type() {
+    return Animation.class;
   }
 
 

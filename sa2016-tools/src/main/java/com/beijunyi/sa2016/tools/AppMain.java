@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.api.ApiModule;
+import com.beijunyi.sa2016.api.ApiModule;
 import com.beijunyi.sa2016.tools.cmd.CommandModule;
 import com.beijunyi.sa2016.tools.cmd.CommandService;
 import com.beijunyi.sa2016.tools.demo.DemoModule;
