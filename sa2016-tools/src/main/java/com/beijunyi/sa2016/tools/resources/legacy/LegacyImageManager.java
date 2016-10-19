@@ -9,9 +9,9 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.legacy.*;
 import com.beijunyi.sa2016.tools.resources.ResourceManager;
 import com.beijunyi.sa2016.tools.resources.ResourceType;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.*;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 

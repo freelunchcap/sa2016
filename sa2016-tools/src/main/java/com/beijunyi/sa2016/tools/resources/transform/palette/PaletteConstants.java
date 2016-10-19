@@ -3,9 +3,9 @@ package com.beijunyi.sa2016.tools.resources.transform.palette;
 import java.util.Arrays;
 import java.util.List;
 
-import com.beijunyi.sa2016.tools.resources.legacy.structs.PaletColor;
+import com.beijunyi.sa2016.tools.legacy.PaletColor;
 
-import static com.beijunyi.sa2016.tools.resources.legacy.structs.PaletColor.forRGBA;
+import static com.beijunyi.sa2016.tools.legacy.PaletColor.forRGBA;
 
 public class PaletteConstants {
 

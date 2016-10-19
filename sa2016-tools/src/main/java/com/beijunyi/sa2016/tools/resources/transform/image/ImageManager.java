@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import com.beijunyi.sa2016.assets.Frame;
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
+import com.beijunyi.sa2016.tools.legacy.LegacyImageObject;
 
 public class ImageManager {
 

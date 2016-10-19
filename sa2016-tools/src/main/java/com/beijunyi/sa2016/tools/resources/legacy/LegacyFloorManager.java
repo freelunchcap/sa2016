@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.resources.ResourceManager;
 import com.beijunyi.sa2016.tools.resources.ResourceType;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
+import com.beijunyi.sa2016.tools.legacy.Ls2Map;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 

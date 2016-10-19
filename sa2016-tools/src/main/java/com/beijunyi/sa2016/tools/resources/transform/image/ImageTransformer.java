@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.tools.assets.model.Bitmap;
 import com.beijunyi.sa2016.assets.Frame;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Adrn;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.LegacyImageObject;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Real;
+import com.beijunyi.sa2016.tools.legacy.Adrn;
+import com.beijunyi.sa2016.tools.legacy.LegacyImageObject;
+import com.beijunyi.sa2016.tools.legacy.Real;
 
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 import static java.lang.System.arraycopy;

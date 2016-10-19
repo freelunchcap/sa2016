@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyPaletteManager;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Palet;
+import com.beijunyi.sa2016.tools.legacy.Palet;
 
 public class PaletteManager {
 

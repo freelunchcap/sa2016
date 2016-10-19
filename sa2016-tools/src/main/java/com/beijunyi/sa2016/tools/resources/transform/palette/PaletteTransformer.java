@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Palet;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.PaletColor;
+import com.beijunyi.sa2016.tools.legacy.Palet;
+import com.beijunyi.sa2016.tools.legacy.PaletColor;
 
 public class PaletteTransformer {
 

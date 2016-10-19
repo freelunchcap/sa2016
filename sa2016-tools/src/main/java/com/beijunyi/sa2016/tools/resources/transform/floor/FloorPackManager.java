@@ -7,9 +7,8 @@ import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyFloorManager;
 import com.beijunyi.sa2016.tools.resources.legacy.LegacyImageManager;
-import com.beijunyi.sa2016.tools.resources.legacy.structs.Ls2Map;
+import com.beijunyi.sa2016.tools.legacy.Ls2Map;
 import com.google.common.collect.Range;
-import com.google.common.primitives.Ints;
 
 import static com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackConstants.STATIC_TILE_PACKS;
 

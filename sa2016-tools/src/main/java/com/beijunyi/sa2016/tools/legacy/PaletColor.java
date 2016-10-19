@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.resources.legacy.structs;
+package com.beijunyi.sa2016.tools.legacy;
 
 import java.awt.*;
 import javax.annotation.Nonnull;
