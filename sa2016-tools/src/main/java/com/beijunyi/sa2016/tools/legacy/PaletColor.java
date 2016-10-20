@@ -1,21 +1,16 @@
 package com.beijunyi.sa2016.tools.legacy;
 
-import java.awt.*;
-import javax.annotation.Nonnull;
+public class PaletColor {
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoSerializable;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
+  private final int blue;
+  private final int green;
+  private final int red;
 
-import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
-
-public class PaletColor implements KryoSerializable {
-
-  private int blue;
-  private int green;
-  private int red;
-  private int alpha;
+  public PaletColor(int red, int green, int blue) {
+    this.blue = blue;
+    this.green = green;
+    this.red = red;
+  }
 
   public int getBlue() {
     return blue;
@@ -29,35 +24,4 @@ public class PaletColor implements KryoSerializable {
     return red;
   }
 
-  public int getAlpha() {
-    return alpha;
-  }
-
-  @Nonnull
-  public static PaletColor forRGBA(int r, int g, int b, int a) {
-    PaletColor ret = new PaletColor();
-    ret.red = r;
-    ret.green = g;
-    ret.blue = b;
-    ret.alpha = a;
-    return ret;
-  }
-
-  @Nonnull
-  public Color toColor() {
-    return new Color(red, green, blue, alpha);
-  }
-
-  @Override
-  public void write(@Nonnull Kryo kryo, @Nonnull Output output) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void read(@Nonnull Kryo kryo, @Nonnull Input input) {
-    blue = LE.uint8(input);
-    green = LE.uint8(input);
-    red =  LE.uint8(input);
-    alpha = 255;
-  }
 }

@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableCollection;
 
 public class AdrnSet {
 
-  private ImmutableCollection<Adrn> adrns;
+  private final ImmutableCollection<Adrn> adrns;
 
   public AdrnSet(ImmutableCollection<Adrn> adrns) {
     this.adrns = adrns;

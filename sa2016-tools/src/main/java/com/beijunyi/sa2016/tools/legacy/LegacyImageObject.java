@@ -7,7 +7,7 @@ public class LegacyImageObject {
   private final Adrn adrn;
   private final Real real;
 
-  public LegacyImageObject(@Nonnull Adrn adrn, @Nonnull Real real) {
+  public LegacyImageObject(Adrn adrn, Real real) {
     this.adrn = adrn;
     this.real = real;
   }
