@@ -71,20 +71,21 @@ public class ImageRenderer {
   }
 
   @Nonnull
-  public RenderedImage render(Real real) {
+  public RenderedImage render(ImageAsset image) {
+    Real real = image.getReal();
     int width = real.getWidth();
     int height = real.getHeight();
     byte[] bitmap = new byte[width * height];
     readBitmap(real, bitmap);
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage ret = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     for(int i = 0; i < width * height; i++) {
       int color = uint8(bitmap[i]);
-      if(color != 0) image.setRGB(i % width, i / width, colors.get(color).getRGB());
+      if(color != 0) ret.setRGB(i % width, i / width, colors.get(color).getRGB());
     }
-    return image;
+    return ret;
   }
 
-  public static void readBitmap(Real real, byte[] bitmap) {
+  private static void readBitmap(Real real, byte[] bitmap) {
     if(real.getMajor() == 1)
       readBitmap(real.getData(), bitmap);
     else

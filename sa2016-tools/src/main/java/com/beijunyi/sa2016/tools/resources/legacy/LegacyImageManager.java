@@ -9,6 +9,7 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.beijunyi.sa2016.tools.converters.ImageAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
 import com.beijunyi.sa2016.tools.resources.ResourceManager;
 import com.beijunyi.sa2016.tools.resources.ResourceType;
@@ -21,7 +22,7 @@ import static java.nio.file.StandardOpenOption.READ;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
 
-public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
+public class LegacyImageManager implements ResourceManager<ImageAsset> {
 
   private final Kryo kryo;
   private final LegacyResourceFinder finder;
@@ -50,11 +51,11 @@ public class LegacyImageManager implements ResourceManager<LegacyImageObject> {
 
   @Nonnull
   @Override
-  public LegacyImageObject getResource(int id) throws IOException {
+  public ImageAsset getResource(int id) throws IOException {
     indexResources();
     Adrn adrn = adrnMap.get(id);
     Real real = readRealData(adrn);
-    return new LegacyImageObject(adrn , real);
+    return new ImageAsset(adrn , real);
   }
 
   @Nonnull

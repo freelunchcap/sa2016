@@ -1,13 +1,16 @@
-package com.beijunyi.sa2016.tools.legacy;
+package com.beijunyi.sa2016.tools.converters;
 
 import javax.annotation.Nonnull;
 
-public class LegacyImageObject {
+import com.beijunyi.sa2016.tools.legacy.Adrn;
+import com.beijunyi.sa2016.tools.legacy.Real;
+
+public class ImageAsset {
 
   private final Adrn adrn;
   private final Real real;
 
-  public LegacyImageObject(Adrn adrn, Real real) {
+  public ImageAsset(Adrn adrn, Real real) {
     this.adrn = adrn;
     this.real = real;
   }
