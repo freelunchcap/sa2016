@@ -24,10 +24,10 @@ public abstract class AssetRepo<A extends Asset> {
     this.kryo = kryo;
   }
 
-  public void put(String id, A asset) {
+  public void put(A asset) {
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
     kryo.writeObject(new Output(stream), asset);
-    store.put(id, stream.toByteArray());
+    store.put(asset.getId(), stream.toByteArray());
   }
 
   @Nullable

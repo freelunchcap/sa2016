@@ -1,13 +1,22 @@
 package com.beijunyi.sa2016.tools.converters;
 
+import java.awt.image.RenderedImage;
+import java.io.IOException;
 import java.util.Iterator;
+import javax.annotation.Nonnull;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.repository.ImageRepo;
+import com.beijunyi.sa2016.tools.legacy.Adrn;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+
+import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
 
 @Singleton
-public class ImageExtractor {
+public class ImageExtractor implements AssetExtractor {
 
   private final ImageLocator locator;
   private final ImageRenderer renderer;
@@ -20,10 +29,29 @@ public class ImageExtractor {
     this.repo = repo;
   }
 
-  public void extractAll() {
-    Iterator<ImageAsset> image = locator.imageResources();
-    while(image.hasNext()) {
+  @Nonnull
+  @Override
+  public String name() {
+    return "images";
+  }
 
+  @Override
+  public void extract() {
+    Iterator<ImageAsset> assets = locator.imageAssets();
+    while(assets.hasNext()) {
+      ImageAsset next = assets.next();
+      RenderedImage image = renderer.render(next);
+      saveImage(next, image);
+    }
+  }
+
+  private void saveImage(ImageAsset raw, RenderedImage rendered) {
+    try(ByteOutputStream stream = new ByteOutputStream()) {
+      ImageIO.write(rendered, IMAGE_FORMAT, stream);
+      Adrn meta = raw.getAdrn();
+      repo.put(new Image(raw.getId(), IMAGE_FORMAT, meta.getWidth(), meta.getHeight(), meta.getXOffset(), meta.getYOffset(), stream.getBytes()));
+    } catch(IOException e) {
+      throw new IllegalStateException(e);
     }
   }
 

@@ -41,7 +41,7 @@ public class ImageLocator {
   }
 
   @Nonnull
-  public Iterator<ImageAsset> imageResources() {
+  public Iterator<ImageAsset> imageAssets() {
     return new ImageAssetIterator(adrns.values().iterator());
   }
 

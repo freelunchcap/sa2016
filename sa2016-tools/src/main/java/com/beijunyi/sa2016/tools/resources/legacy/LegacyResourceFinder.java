@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.beijunyi.sa2016.tools.cmd.EnvironmentContext;
 import com.beijunyi.sa2016.tools.resources.ResourceSignature;
 
 public class LegacyResourceFinder {

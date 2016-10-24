@@ -7,5 +7,6 @@ public class ToolsContext {
 
   public static final Path SERVER_RESOURCES = Paths.get(System.getProperty("sa.server", "server"));
   public static final Path CLIENT_RESOURCES = Paths.get(System.getProperty("sa.client", "client"));
+  public static final String IMAGE_FORMAT = System.getProperty("sa.image.format", "png");
 
 }

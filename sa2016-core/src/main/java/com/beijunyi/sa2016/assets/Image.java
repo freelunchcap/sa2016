@@ -12,13 +12,13 @@ public class Image implements Asset {
   private final int height;
   private final byte[] data;
 
-  public Image(String id, String format, int x, int y, int width, int height, byte[] data) {
+  public Image(String id, String format, int width, int height, int x, int y, byte[] data) {
     this.id = id;
     this.format = format;
-    this.x = x;
-    this.y = y;
     this.width = width;
     this.height = height;
+    this.x = x;
+    this.y = y;
     this.data = data;
   }
 
@@ -33,20 +33,20 @@ public class Image implements Asset {
     return format;
   }
 
-  public int getX() {
-    return x;
-  }
-
-  public int getY() {
-    return y;
-  }
-
   public int getWidth() {
     return width;
   }
 
   public int getHeight() {
     return height;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
   }
 
   public byte[] getData() {

@@ -13,10 +13,10 @@ public class ImageSerializer extends Serializer<Image> {
   public void write(Kryo kryo, Output output, Image image) {
     output.writeAscii(image.getId());
     output.writeAscii(image.getFormat());
-    output.writeShort(image.getX());
-    output.writeShort(image.getY());
     output.writeShort(image.getWidth());
     output.writeShort(image.getHeight());
+    output.writeShort(image.getX());
+    output.writeShort(image.getY());
     output.writeInt(image.getData().length);
     output.writeBytes(image.getData());
   }
