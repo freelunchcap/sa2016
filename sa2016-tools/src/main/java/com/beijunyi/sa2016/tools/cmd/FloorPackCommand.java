@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.resources.transform.floor.FloorElementType;
-import com.beijunyi.sa2016.tools.resources.transform.floor.FloorPackManager;
 import com.beust.jcommander.Parameter;
 
 public class FloorPackCommand extends Command {

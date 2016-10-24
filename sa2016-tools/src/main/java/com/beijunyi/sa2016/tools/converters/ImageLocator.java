@@ -15,7 +15,7 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.beijunyi.sa2016.tools.legacy.Real;
-import com.beijunyi.sa2016.tools.resources.ResourceProvider;
+import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableMap;
@@ -33,7 +33,7 @@ public class ImageLocator {
   private final Kryo kryo;
 
   @Inject
-  public ImageLocator(ResourceProvider resources, Kryo kryo) throws IOException {
+  public ImageLocator(ResourcesProvider resources, Kryo kryo) throws IOException {
     this.adrns = readAdrns(resources.getClientResource(ADRN), kryo);
     this.tileIdMap = indexTiles(adrns.values());
     this.real = FileChannel.open(resources.getClientResource(REAL), READ);
@@ -42,7 +42,7 @@ public class ImageLocator {
 
   @Nonnull
   public Iterator<ImageAsset> imageResources() {
-    return new RealIterator(adrns.values().iterator());
+    return new ImageAssetIterator(adrns.values().iterator());
   }
 
   @Nullable
@@ -84,11 +84,11 @@ public class ImageLocator {
     return builder.build();
   }
 
-  class RealIterator implements Iterator<ImageAsset> {
+  class ImageAssetIterator implements Iterator<ImageAsset> {
 
     final Iterator<Adrn> adrn;
 
-    RealIterator(Iterator<Adrn> adrn) {
+    ImageAssetIterator(Iterator<Adrn> adrn) {
       this.adrn = adrn;
     }
 

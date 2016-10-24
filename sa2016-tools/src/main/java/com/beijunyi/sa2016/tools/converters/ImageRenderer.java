@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.*;
-import com.beijunyi.sa2016.tools.resources.ResourceProvider;
+import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableList;
@@ -66,7 +66,7 @@ public class ImageRenderer {
   private final ImmutableList<Color> colors;
 
   @Inject
-  public ImageRenderer(ResourceProvider resources, Kryo kryo) throws IOException {
+  public ImageRenderer(ResourcesProvider resources, Kryo kryo) throws IOException {
     colors = readPalette(resources.getClientResource(PALET), kryo);
   }
 
