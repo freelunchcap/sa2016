@@ -9,8 +9,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.mapdb.BTreeMap;
 import org.mapdb.DB;
-import org.mapdb.HTreeMap;
 
 import static org.mapdb.Serializer.BYTE_ARRAY;
 import static org.mapdb.Serializer.STRING_ASCII;
@@ -18,7 +18,7 @@ import static org.mapdb.Serializer.STRING_ASCII;
 public abstract class AssetRepo<A extends Asset> {
 
   private static final Kryo KRYO = KryoFactory.getInstance();
-  private final HTreeMap<String, byte[]> store;
+  private final BTreeMap<String, byte[]> store;
 
   AssetRepo(DB cache) {
     this.store = createStore(cache);
@@ -44,8 +44,8 @@ public abstract class AssetRepo<A extends Asset> {
   protected abstract Class<A> type();
 
   @Nonnull
-  private HTreeMap<String, byte[]> createStore(DB cache) {
-    return cache.hashMap(namespace())
+  private BTreeMap<String, byte[]> createStore(DB cache) {
+    return cache.treeMap(namespace())
              .keySerializer(STRING_ASCII)
              .valueSerializer(BYTE_ARRAY)
              .create();
