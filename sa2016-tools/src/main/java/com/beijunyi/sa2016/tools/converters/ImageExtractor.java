@@ -12,11 +12,15 @@ import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
 
 @Singleton
 public class ImageExtractor implements AssetExtractor {
+
+  private static final Logger LOG = LoggerFactory.getLogger(ImageExtractor.class);
 
   private final ImageLocator locator;
   private final ImageRenderer renderer;
@@ -40,8 +44,12 @@ public class ImageExtractor implements AssetExtractor {
     Iterator<ImageAsset> assets = locator.imageAssets();
     while(assets.hasNext()) {
       ImageAsset next = assets.next();
-      RenderedImage image = renderer.render(next);
-      saveImage(next, image);
+      try {
+        RenderedImage image = renderer.render(next);
+        saveImage(next, image);
+      } catch(Exception e) {
+        LOG.warn("Could not render {}", next.getId());
+      }
     }
   }
 

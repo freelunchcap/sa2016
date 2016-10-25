@@ -23,7 +23,8 @@ public class CommandService {
   public void process(String[] args) throws IOException {
     commander.parse(args);
     Command command = lookup.get(commander.getParsedCommand());
-    command.call();
+    if(command == null) commander.usage();
+    else command.call();
   }
 
   @Nonnull

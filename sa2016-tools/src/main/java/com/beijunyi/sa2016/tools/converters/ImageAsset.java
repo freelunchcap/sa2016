@@ -1,5 +1,6 @@
 package com.beijunyi.sa2016.tools.converters;
 
+import java.util.Base64;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.tools.legacy.Adrn;
@@ -8,30 +9,32 @@ import com.google.common.primitives.Ints;
 
 import static java.util.Base64.getEncoder;
 
-public class ImageAsset {
+class ImageAsset {
+
+  private static final Base64.Encoder ENCODER = getEncoder().withoutPadding();
 
   private final String id;
   private final Adrn adrn;
   private final Real real;
 
-  public ImageAsset(Adrn adrn, Real real) {
-    this.id = getEncoder().encodeToString(Ints.toByteArray(adrn.getUid()));
+  ImageAsset(Adrn adrn, Real real) {
+    this.id = ENCODER.encodeToString(Ints.toByteArray(adrn.getUid()));
     this.adrn = adrn;
     this.real = real;
   }
 
   @Nonnull
-  public String getId() {
+  String getId() {
     return id;
   }
 
   @Nonnull
-  public Adrn getAdrn() {
+  Adrn getAdrn() {
     return adrn;
   }
 
   @Nonnull
-  public Real getReal() {
+  Real getReal() {
     return real;
   }
 
