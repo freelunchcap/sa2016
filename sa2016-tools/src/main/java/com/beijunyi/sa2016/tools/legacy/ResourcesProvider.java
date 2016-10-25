@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
 import com.google.common.collect.*;
 
@@ -15,6 +16,7 @@ import static com.beijunyi.sa2016.tools.ToolsContext.CLIENT_RESOURCES;
 import static com.beijunyi.sa2016.tools.ToolsContext.SERVER_RESOURCES;
 import static com.google.common.collect.Iterables.getOnlyElement;
 
+@Singleton
 public class ResourcesProvider {
 
   private final ImmutableMultimap<ClientResource, Path> client = indexResources(CLIENT_RESOURCES, ClientResource.values());

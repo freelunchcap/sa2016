@@ -1,5 +1,5 @@
 @ParametersAreNonnullByDefault
-package com.beijunyi.sa2016.assets.repository;
+package com.beijunyi.sa2016.assets.repositories;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

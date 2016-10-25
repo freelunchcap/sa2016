@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.*;
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
+import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableList;
@@ -63,11 +64,12 @@ public class ImageRenderer {
     new Color(255, 255, 255, 255)
   );
 
+  private static final Kryo KRYO = KryoFactory.getInstance();
   private final ImmutableList<Color> colors;
 
   @Inject
-  public ImageRenderer(ResourcesProvider resources, Kryo kryo) throws IOException {
-    colors = readPalette(resources.getClientResource(PALET), kryo);
+  public ImageRenderer(ResourcesProvider resources) throws IOException {
+    colors = readPalette(resources.getClientResource(PALET));
   }
 
   @Nonnull
@@ -186,10 +188,10 @@ public class ImageRenderer {
   }
 
   @Nonnull
-  private static ImmutableList<Color> readPalette(Path file, Kryo kryo) throws IOException {
+  private static ImmutableList<Color> readPalette(Path file) throws IOException {
     Palet palet;
     try(Input input = new Input(Files.newInputStream(file))) {
-      palet = kryo.readObject(input, Palet.class);
+      palet = KRYO.readObject(input, Palet.class);
     }
     return readPalette(palet);
   }

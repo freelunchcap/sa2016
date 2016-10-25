@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.beijunyi.sa2016.tools.legacy.Real;
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
+import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableMap;
@@ -27,17 +28,16 @@ import static java.nio.file.StandardOpenOption.READ;
 @Singleton
 public class ImageLocator {
 
+  private static final Kryo KRYO = KryoFactory.getInstance();
   private final ImmutableMap<Integer, Adrn> adrns;
   private final ImmutableMap<Integer, Integer> tileIdMap;
   private final SeekableByteChannel real;
-  private final Kryo kryo;
 
   @Inject
-  public ImageLocator(ResourcesProvider resources, Kryo kryo) throws IOException {
-    this.adrns = readAdrns(resources.getClientResource(ADRN), kryo);
+  public ImageLocator(ResourcesProvider resources) throws IOException {
+    this.adrns = readAdrns(resources.getClientResource(ADRN));
     this.tileIdMap = indexTiles(adrns.values());
     this.real = FileChannel.open(resources.getClientResource(REAL), READ);
-    this.kryo = kryo;
   }
 
   @Nonnull
@@ -58,7 +58,7 @@ public class ImageLocator {
       try {
         real.position(adrn.getAddress());
         Input input = new Input(Channels.newInputStream(real));
-        return new ImageAsset(adrn, kryo.readObject(input, Real.class));
+        return new ImageAsset(adrn, KRYO.readObject(input, Real.class));
       } catch(IOException e) {
         return null;
       }
@@ -66,11 +66,11 @@ public class ImageLocator {
   }
 
   @Nonnull
-  private static ImmutableMap<Integer, Adrn> readAdrns(Path file, Kryo kryo) throws IOException {
+  private static ImmutableMap<Integer, Adrn> readAdrns(Path file) throws IOException {
     ImmutableMap.Builder<Integer, Adrn> adrns = ImmutableMap.builder();
     try(Input input = new Input(Files.newInputStream(file))) {
       while(!input.eof()) {
-        Adrn adrn = kryo.readObject(input, Adrn.class);
+        Adrn adrn = KRYO.readObject(input, Adrn.class);
         adrns.put(adrn.getUid(), adrn);
       }
     }

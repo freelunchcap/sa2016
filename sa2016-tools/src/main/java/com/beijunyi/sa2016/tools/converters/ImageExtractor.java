@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Image;
-import com.beijunyi.sa2016.assets.repository.ImageRepo;
+import com.beijunyi.sa2016.assets.repositories.ImageRepo;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 

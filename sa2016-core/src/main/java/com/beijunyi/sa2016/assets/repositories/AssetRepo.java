@@ -1,9 +1,10 @@
-package com.beijunyi.sa2016.assets.repository;
+package com.beijunyi.sa2016.assets.repositories;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.beijunyi.sa2016.assets.Asset;
+import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -16,17 +17,16 @@ import static org.mapdb.Serializer.STRING_ASCII;
 
 public abstract class AssetRepo<A extends Asset> {
 
+  private static final Kryo KRYO = KryoFactory.getInstance();
   private final HTreeMap<String, byte[]> store;
-  private final Kryo kryo;
 
-  public AssetRepo(DB cache, Kryo kryo) {
+  AssetRepo(DB cache) {
     this.store = createStore(cache);
-    this.kryo = kryo;
   }
 
   public void put(A asset) {
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    kryo.writeObject(new Output(stream), asset);
+    KRYO.writeObject(new Output(stream), asset);
     store.put(asset.getId(), stream.toByteArray());
   }
 
@@ -34,7 +34,7 @@ public abstract class AssetRepo<A extends Asset> {
   public A get(String id) {
     byte[] data = store.get(id);
     if(data == null) return null;
-    return kryo.readObject(new Input(data), type());
+    return KRYO.readObject(new Input(data), type());
   }
 
   @Nonnull

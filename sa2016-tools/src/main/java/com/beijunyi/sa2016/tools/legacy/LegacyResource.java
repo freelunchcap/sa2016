@@ -34,7 +34,7 @@ interface LegacyResource {
 
   default boolean filenameMatches(Path path) {
     PathMatcher expect = pattern();
-    return expect == null || expect.matches(path);
+    return expect == null || expect.matches(path.getFileName());
   }
 
   default boolean headerMatches(Path path) {

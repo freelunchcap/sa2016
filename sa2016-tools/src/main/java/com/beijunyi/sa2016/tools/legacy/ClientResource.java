@@ -10,7 +10,7 @@ public enum ClientResource implements LegacyResource {
   REAL("data", "real_*.bin"),
   SPR("data", "spr_*.bin"),
   SPRADRN("data", "spradrn_*.bin"),
-  PALET("data/pal", "palet_*.sap");
+  PALET("data/pal", "palet_0.sap");
 
   private final String path;
   private final String pattern;
@@ -29,7 +29,7 @@ public enum ClientResource implements LegacyResource {
   @Nullable
   @Override
   public PathMatcher pattern() {
-    return FileSystems.getDefault().getPathMatcher(pattern);
+    return FileSystems.getDefault().getPathMatcher("glob:" + pattern);
   }
 
   @Nullable

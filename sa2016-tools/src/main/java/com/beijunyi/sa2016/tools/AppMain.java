@@ -2,9 +2,8 @@ package com.beijunyi.sa2016.tools;
 
 import java.io.IOException;
 
-import com.beijunyi.sa2016.tools.cmd.CommandModule;
+import com.beijunyi.sa2016.CoreModule;
 import com.beijunyi.sa2016.tools.cmd.CommandService;
-import com.beijunyi.sa2016.tools.converters.ExtractorModule;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Guice;
@@ -16,8 +15,8 @@ public class AppMain {
   private static final ImmutableCollection<? extends Module> MODULES
     = ImmutableSet.of
         (
-          new CommandModule(),
-          new ExtractorModule()
+          new CoreModule(),
+          new ToolsModule()
         );
 
   public static void main(String[] args) throws IOException {
