@@ -6,7 +6,7 @@ import com.google.inject.AbstractModule;
 
 public class ApiModule extends AbstractModule {
 
-  private static final ImmutableCollection<Class<?>> API_SERVICES = ImmutableList.of(CharactersApi.class);
+  private static final ImmutableCollection<Class<?>> API_SERVICES = ImmutableList.of(CharactersApi.class, ImageApi.class);
 
   @Override
   protected void configure() {

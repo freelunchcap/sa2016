@@ -11,7 +11,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableTable;
 
-public class CharacterSerializer extends Serializer<Character> {
+class CharacterSerializer extends Serializer<Character> {
 
   @Override
   public void write(Kryo kryo, Output output, Character character) {

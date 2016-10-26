@@ -10,7 +10,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class SprFrameSerializer extends Serializer<SprFrame> {
+class SprFrameSerializer extends Serializer<SprFrame> {
 
   @Override
   public void write(Kryo kryo, Output output, SprFrame object) {

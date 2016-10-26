@@ -11,7 +11,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.BE;
 
-public class Ls2MapSerializer extends Serializer<Ls2Map> {
+class Ls2MapSerializer extends Serializer<Ls2Map> {
 
   private static final Charset GBK = Charset.forName("GBK");
 

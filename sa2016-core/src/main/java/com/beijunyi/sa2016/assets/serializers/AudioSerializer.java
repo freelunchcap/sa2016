@@ -8,7 +8,7 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-public class AudioSerializer extends Serializer<Audio> {
+class AudioSerializer extends Serializer<Audio> {
 
   @Override
   public void write(Kryo kryo, Output output, Audio audio) {

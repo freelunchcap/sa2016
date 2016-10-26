@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class SprSerializer extends Serializer<Spr> {
+class SprSerializer extends Serializer<Spr> {
 
   @Override
   public void write(Kryo kryo, Output output, Spr object) {

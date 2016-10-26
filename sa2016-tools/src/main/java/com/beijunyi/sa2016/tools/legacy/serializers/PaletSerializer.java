@@ -8,7 +8,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
 
-public class PaletSerializer extends Serializer<Palet> {
+class PaletSerializer extends Serializer<Palet> {
 
   @Override
   public void write(Kryo kryo, Output output, Palet object) {

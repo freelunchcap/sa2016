@@ -9,7 +9,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
 
-public class AnimationSerializer extends Serializer<Animation> {
+class AnimationSerializer extends Serializer<Animation> {
 
   @Override
   public void write(Kryo kryo, Output output, Animation animation) {

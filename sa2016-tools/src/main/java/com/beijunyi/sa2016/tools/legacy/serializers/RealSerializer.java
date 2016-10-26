@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class RealSerializer extends Serializer<Real> {
+class RealSerializer extends Serializer<Real> {
 
   private static final Logger LOG = LoggerFactory.getLogger(RealSerializer.class);
 
@@ -28,7 +28,7 @@ public class RealSerializer extends Serializer<Real> {
     int height = (int) LE.uint32(input);
     int expected;
     if(major == 1) {
-      expected = (int) LE.uint32(input);
+      expected = (int) LE.uint32(input) - 16; // data length = total size - header size
     } else {
       expected = width * height;
       input.skip(4);

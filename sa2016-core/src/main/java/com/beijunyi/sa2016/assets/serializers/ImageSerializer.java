@@ -8,7 +8,8 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-public class ImageSerializer extends Serializer<Image> {
+class ImageSerializer extends Serializer<Image> {
+
   @Override
   public void write(Kryo kryo, Output output, Image image) {
     output.writeAscii(image.getId());
@@ -24,14 +25,14 @@ public class ImageSerializer extends Serializer<Image> {
   @Nonnull
   @Override
   public Image read(Kryo kryo, Input input, Class<Image> type) {
-    return new Image(
-                      input.readString(),
-                      input.readString(),
-                      input.readShort(),
-                      input.readShort(),
-                      input.readShort(),
-                      input.readShort(),
-                      input.readBytes(input.readInt())
-    );
+    String id = input.readString();
+    String format = input.readString();
+    int width = input.readShort();
+    int height = input.readShort();
+    int x = input.readShort();
+    int y = input.readShort();
+    byte[] data = new byte[input.readInt()];
+    input.readBytes(data);
+    return new Image(id, format, width, height, x, y, data);
   }
 }

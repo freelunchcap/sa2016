@@ -48,7 +48,7 @@ public class ImageExtractor implements AssetExtractor {
         RenderedImage image = renderer.render(next);
         saveImage(next, image);
       } catch(Exception e) {
-        LOG.warn("Could not render {}", next.getId());
+        LOG.warn("Could not render {}", next.getId(), e);
       }
     }
   }

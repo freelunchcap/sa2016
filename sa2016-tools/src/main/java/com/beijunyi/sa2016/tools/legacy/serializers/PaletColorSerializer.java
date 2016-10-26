@@ -8,7 +8,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class PaletColorSerializer extends Serializer<PaletColor> {
+class PaletColorSerializer extends Serializer<PaletColor> {
 
   @Override
   public void write(Kryo kryo, Output output, PaletColor object) {

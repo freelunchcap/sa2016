@@ -10,7 +10,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class AdrnSerializer extends Serializer<Adrn> {
+class AdrnSerializer extends Serializer<Adrn> {
 
   @Override
   public void write(Kryo kryo, Output output, Adrn object) {

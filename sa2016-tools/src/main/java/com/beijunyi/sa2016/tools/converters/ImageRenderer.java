@@ -73,7 +73,7 @@ public class ImageRenderer {
   }
 
   @Nonnull
-  public RenderedImage render(ImageAsset image) {
+  RenderedImage render(ImageAsset image) {
     Real real = image.getReal();
     int width = real.getWidth();
     int height = real.getHeight();
