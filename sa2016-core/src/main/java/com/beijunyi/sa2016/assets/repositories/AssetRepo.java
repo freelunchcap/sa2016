@@ -33,7 +33,9 @@ public abstract class AssetRepo<A extends Asset> {
 
   public void put(A asset) {
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    KRYO.writeObject(new Output(stream), asset);
+    Output output = new Output(stream);
+    KRYO.writeObject(output, asset);
+    output.flush();
     store.put(asset.getId(), stream.toByteArray());
   }
 

@@ -49,6 +49,7 @@ public class Image implements Asset {
     return y;
   }
 
+  @Nonnull
   public byte[] getData() {
     return data;
   }
