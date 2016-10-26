@@ -31,7 +31,13 @@ public class ExtractCommand extends Command {
   @Override
   public void call() {
     lookup.values().forEach(AssetExtractor::extract);
-    store.commit();
-  }
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      @Override
+      public void run() {
+        store.commit();
+        store.close();
+      }
+    });
 
+  }
 }

@@ -4,12 +4,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/images")
 @Singleton
@@ -32,6 +32,7 @@ public class ImageApi {
   @GET
   @Path("list")
   @Nonnull
+  @Produces(APPLICATION_JSON)
   public Response list(@Nullable @QueryParam("previous") String previous, @Nullable @QueryParam("limit") Integer limit) {
     return Response.ok(repo.list(previous, limit)).build();
   }

@@ -26,11 +26,6 @@ class RealSerializer extends Serializer<Real> {
     int minor = LE.uint8(input);
     int width = (int) LE.uint32(input);
     int height = (int) LE.uint32(input);
-    if(width <= 0 || height <= 0) {
-      LOG.warn("Invalid image dimension: width {}, height {}", width, height);
-      width = 0;
-      height = 0;
-    }
     int expected;
     if(major == 1) {
       expected = (int) LE.uint32(input) - 16; // data length = total size - header size

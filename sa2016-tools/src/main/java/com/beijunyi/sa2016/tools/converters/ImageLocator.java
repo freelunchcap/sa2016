@@ -18,6 +18,7 @@ import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,45 +28,29 @@ import static com.beijunyi.sa2016.tools.legacy.ClientResource.REAL;
 import static java.nio.file.StandardOpenOption.READ;
 
 @Singleton
-public class ImageLocator {
+class ImageLocator {
 
   private static final Logger LOG = LoggerFactory.getLogger(ImageLocator.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
   private final ImmutableMap<Integer, Adrn> adrns;
   private final ImmutableMap<Integer, Integer> tileIdMap;
-  private final SeekableByteChannel real;
 
   @Inject
   public ImageLocator(ResourcesProvider resources) throws IOException {
     this.adrns = readAdrns(resources.getClientResource(ADRN));
     this.tileIdMap = indexTiles(adrns.values());
-    this.real = FileChannel.open(resources.getClientResource(REAL), READ);
   }
 
   @Nonnull
-  public Iterator<ImageAsset> imageAssets() {
-    return new ImageAssetIterator(adrns.values().iterator());
+  public ImmutableCollection<Adrn> imageAssets() {
+    return adrns.values();
   }
 
   @Nullable
-  public ImageAsset getTileImage(int tileId) {
+  public Adrn getTileImage(int tileId) {
     int imageId = tileIdMap.get(tileId);
-    Adrn adrn = adrns.get(imageId);
-    return getImage(adrn);
-  }
-
-  @Nullable
-  private ImageAsset getImage(Adrn adrn) {
-    synchronized(real) {
-      try {
-        real.position(adrn.getAddress());
-        Input input = new Input(Channels.newInputStream(real));
-        return new ImageAsset(adrn, KRYO.readObject(input, Real.class));
-      } catch(IOException e) {
-        return null;
-      }
-    }
+    return adrns.get(imageId);
   }
 
   @Nonnull
@@ -98,26 +83,6 @@ public class ImageLocator {
       }
     }
     return builder.build();
-  }
-
-  class ImageAssetIterator implements Iterator<ImageAsset> {
-
-    final Iterator<Adrn> adrn;
-
-    ImageAssetIterator(Iterator<Adrn> adrn) {
-      this.adrn = adrn;
-    }
-
-    @Override
-    public boolean hasNext() {
-      return adrn.hasNext();
-    }
-
-    @Nullable
-    @Override
-    public ImageAsset next() {
-      return getImage(adrn.next());
-    }
   }
 
 }

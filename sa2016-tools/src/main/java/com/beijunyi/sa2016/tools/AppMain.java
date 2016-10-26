@@ -1,9 +1,11 @@
 package com.beijunyi.sa2016.tools;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.beijunyi.sa2016.CoreModule;
 import com.beijunyi.sa2016.tools.cmd.CommandService;
+import com.beijunyi.sa2016.utils.ThreadPoolFactory;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Guice;
@@ -19,9 +21,16 @@ public class AppMain {
           new ToolsModule()
         );
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     Injector guice = Guice.createInjector(MODULES);
     guice.getInstance(CommandService.class).process(args);
+    shutdownThreadPool();
+  }
+
+  private static void shutdownThreadPool() throws Exception {
+    ExecutorService threads = ThreadPoolFactory.getInstance();
+    threads.shutdown();
+    threads.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
   }
 
 }
