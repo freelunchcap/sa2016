@@ -10,6 +10,7 @@ dependencies {
   compile 'org.webjars.bower:angular:1.5.8'
   compile 'org.webjars.bower:bootstrap:3.3.7'
   compile 'org.webjars.bower:angular-bootstrap:2.2.0'
+  compile 'org.webjars.bower:angular-ui-router:0.3.1'
 
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
