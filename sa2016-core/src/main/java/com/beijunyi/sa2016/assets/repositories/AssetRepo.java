@@ -44,11 +44,11 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   @Nonnull
-  public ImmutableList<A> list(@Nullable String previous, @Nullable Integer limit) {
-    Iterator<Map.Entry<String, byte[]>> iterator = store.entryIterator(previous, false, null, false);
-    int remain = limit == null ? -1 : limit;
+  public ImmutableList<A> list(@Nullable String start, @Nullable String dir, @Nullable Integer max) {
+    Iterator<Map.Entry<String, byte[]>> iterator = iterate(start, dir);
+    int remain = max == null ? 10 : max;
     ImmutableList.Builder<A> ret = ImmutableList.builder();
-    while(remain != 0 && iterator.hasNext()) {
+    while(remain-- > 0 && iterator.hasNext()) {
       Map.Entry<String, byte[]> entry = iterator.next();
       A asset = readObject(entry.getValue());
       if(asset == null) {
@@ -56,7 +56,6 @@ public abstract class AssetRepo<A extends Asset> {
       } else {
         ret.add(asset);
       }
-      if(remain > 0) remain--;
     }
     return ret.build();
   }
@@ -64,6 +63,20 @@ public abstract class AssetRepo<A extends Asset> {
   @Nullable
   public A get(String id) {
     return readObject(store.get(id));
+  }
+
+  @Nonnull
+  private Iterator<Map.Entry<String, byte[]>> iterate(@Nullable String start, @Nullable String dir) {
+    if(dir == null) dir = "gte";
+    dir = dir.toLowerCase();
+    boolean inclusive = dir.endsWith("e");
+    if(dir.startsWith("gt"))
+      return store.entryIterator(start, inclusive, null, false);
+    if(dir.startsWith("lt"))
+      return store.descendingEntryIterator(start, inclusive, null, false);
+    else {
+      throw new IllegalArgumentException(dir);
+    }
   }
 
   @Nullable

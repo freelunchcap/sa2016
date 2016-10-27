@@ -2,8 +2,9 @@ APP.config(function($stateProvider) {
 
   $stateProvider.state('assets.images', {
     title: 'Images',
-    url: '/assets/images',
-    template: '/assets/partial.html'
+    url: '/images',
+    templateUrl: '/assets/images/partial.html?' + new Date(),
+    controller: 'ImagesCtrl'
   });
   
 });

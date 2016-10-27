@@ -3,7 +3,8 @@ APP.config(function($stateProvider) {
   $stateProvider.state('assets', {
     title: 'Assets',
     url: '/assets',
-    template: '/assets/partial.html'
+    templateUrl: '/assets/partial.html',
+    controller: 'AssetsCtrl'
   });
 
 });
