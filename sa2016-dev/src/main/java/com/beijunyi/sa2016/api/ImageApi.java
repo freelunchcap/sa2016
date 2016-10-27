@@ -35,7 +35,7 @@ public class ImageApi {
   @Produces(APPLICATION_JSON)
   public Response list(@Nullable @QueryParam("start") String start,
                           @Nullable @QueryParam("dir") String dir,
-                          @Nullable @QueryParam("limit") Integer max) {
+                          @Nullable @QueryParam("max") Integer max) {
     return Response.ok(repo.list(start, dir, max)).build();
   }
 

@@ -6,5 +6,11 @@ APP.config(function($stateProvider) {
     templateUrl: '/assets/images/partial.html?' + new Date(),
     controller: 'ImagesCtrl'
   });
+
+  $stateProvider.state('assets.images.image', {
+    url: '/:id',
+    templateUrl: '/assets/images/partial.html?' + new Date(),
+    controller: 'ImagesCtrl'
+  });
   
 });

@@ -73,7 +73,7 @@ public abstract class AssetRepo<A extends Asset> {
     if(dir.startsWith("gt"))
       return store.entryIterator(start, inclusive, null, false);
     if(dir.startsWith("lt"))
-      return store.descendingEntryIterator(start, inclusive, null, false);
+      return store.descendingEntryIterator(null, false, start, inclusive);
     else {
       throw new IllegalArgumentException(dir);
     }

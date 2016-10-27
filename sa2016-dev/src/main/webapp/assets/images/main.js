@@ -3,6 +3,9 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
   const PAGE_SIZE = 100;
 
   $scope.grid = makeGrid();
+  
+  var top = false;
+  var bottom = false;
 
   function makeGrid() {
     return {
@@ -24,11 +27,25 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
   }
 
   function scrollDown() {
-    console.log('down');
+    var data = $scope.grid.data;
+    var last = data[data.length - 1];
+    ImagesAPI.list(last.id, 'gt', PAGE_SIZE)
+      .success(function(after) {
+        $scope.grid.data = data.concat(after);
+        bottom |= after.length < PAGE_SIZE;
+        $scope.grid.infiniteScroll.dataLoaded(!top, !bottom);
+      });
   }
 
   function scrollUp() {
-    console.log('up');
+    var data = $scope.grid.data;
+    var first = data[0];
+    ImagesAPI.list(first.id, 'lt', PAGE_SIZE)
+      .success(function(before) {
+        $scope.grid.data = before.concat(data);
+        top |= before.length < PAGE_SIZE;
+        $scope.grid.infiniteScroll.dataLoaded(!top, !bottom);
+      });
   }
 
   function initData() {
@@ -39,7 +56,7 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
   }
 
   initData().then(function() {
-    $scope.grid.infiniteScroll.resetScroll(false, false);
+    $scope.grid.infiniteScroll.resetScroll(true, true);
   })
 
 });
