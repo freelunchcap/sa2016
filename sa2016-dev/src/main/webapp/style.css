@@ -1,0 +1,5 @@
+nav+div[ui-view] {
+  margin-top: 51px;
+  height: calc(100% - 51px);
+  width: 100%;
+}

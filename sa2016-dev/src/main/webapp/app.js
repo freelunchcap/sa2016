@@ -1,1 +1,1 @@
-angular.module('dev', ['ui.router']);
+APP = angular.module('dev', ['ui.router']);
