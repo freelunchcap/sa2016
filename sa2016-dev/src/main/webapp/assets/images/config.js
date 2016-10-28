@@ -8,9 +8,7 @@ APP.config(function($stateProvider) {
   });
 
   $stateProvider.state('assets.images.image', {
-    url: '/:id',
-    templateUrl: '/assets/images/partial.html?' + new Date(),
-    controller: 'ImagesCtrl'
+    url: '/:id'
   });
   
 });

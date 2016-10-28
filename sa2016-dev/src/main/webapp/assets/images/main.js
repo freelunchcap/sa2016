@@ -1,4 +1,4 @@
-APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
+APP.controller('ImagesCtrl', function($scope, $state, $timeout, ImagesAPI) {
 
   const PAGE_SIZE = 100;
 
@@ -12,6 +12,9 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
       infiniteScrollRowsFromEnd: PAGE_SIZE / 2,
       infiniteScrollUp: true,
       infiniteScrollDown: true,
+      multiSelect: false,
+      enableRowHeaderSelection: false,
+      noUnselect: true,
       columnDefs: [
         {name: 'id', title: 'ID'},
         {name: 'width', title: 'Width'},
@@ -20,8 +23,6 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
       data: [],
       onRegisterApi: function(api) {
         angular.extend($scope.grid, api);
-        api.infiniteScroll.on.needLoadMoreData($scope, scrollDown);
-        api.infiniteScroll.on.needLoadMoreDataTop($scope, scrollUp);
       }
     };
   }
@@ -31,6 +32,7 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
     var last = data[data.length - 1];
     ImagesAPI.list(last.id, 'gt', PAGE_SIZE)
       .success(function(after) {
+        $scope.grid.infiniteScroll.saveScrollPercentage();
         $scope.grid.data = data.concat(after);
         bottom |= after.length < PAGE_SIZE;
         $scope.grid.infiniteScroll.dataLoaded(!top, !bottom);
@@ -42,21 +44,45 @@ APP.controller('ImagesCtrl', function($scope, ImagesAPI) {
     var first = data[0];
     ImagesAPI.list(first.id, 'lt', PAGE_SIZE)
       .success(function(before) {
-        $scope.grid.data = before.concat(data);
+        $scope.grid.infiniteScroll.saveScrollPercentage();
+        $scope.grid.data = before.reverse().concat(data);
         top |= before.length < PAGE_SIZE;
         $scope.grid.infiniteScroll.dataLoaded(!top, !bottom);
       });
   }
 
   function initData() {
-    return ImagesAPI.list(null, 'gt', PAGE_SIZE)
+    return ImagesAPI.list($state.params.id, 'gte', PAGE_SIZE)
       .success(function(data) {
         $scope.grid.data = $scope.grid.data.concat(data);
       });
   }
 
+  function setupScrolling(grid) {
+    var scroll = grid.infiniteScroll;
+    scroll.on.needLoadMoreData($scope, scrollDown);
+    scroll.on.needLoadMoreDataTop($scope, scrollUp);
+  }
+
+  function viewImage(row) {
+    var image = row.entity;
+    $state.go('assets.images.image', {
+      id: image.id
+    });
+  }
+
+  function setupSelection(grid) {
+    var selection = grid.selection;
+    selection.on.rowSelectionChanged($scope, viewImage);
+  }
+
   initData().then(function() {
-    $scope.grid.infiniteScroll.resetScroll(true, true);
+    setupScrolling($scope.grid);
+    setupSelection($scope.grid);
+    $timeout(function() {
+      $scope.grid.infiniteScroll.resetScroll(true, true);
+      $scope.grid.selection.selectRow($scope.grid.data[0]);
+    });
   })
 
 });

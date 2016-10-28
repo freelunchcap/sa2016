@@ -39,10 +39,6 @@ public abstract class AssetRepo<A extends Asset> {
     store.put(asset.getId(), stream.toByteArray());
   }
 
-  public int count() {
-    return store.size();
-  }
-
   @Nonnull
   public ImmutableList<A> list(@Nullable String start, @Nullable String dir, @Nullable Integer max) {
     Iterator<Map.Entry<String, byte[]>> iterator = iterate(start, dir);
