@@ -19,49 +19,50 @@ import com.google.common.collect.ImmutableList;
 
 import static com.beijunyi.sa2016.tools.legacy.ClientResource.PALET;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
+import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.arraycopy;
 
 @Singleton
-public class ImageRenderer {
+class ImageRenderer {
 
   private static final ImmutableList<Color> FIXED_HEAD
     = ImmutableList.of(
-    new Color(0, 0, 0, 0),
-    new Color(0, 4, 132, 255),
-    new Color(0, 134, 0, 255),
-    new Color(0, 134, 132, 255),
-    new Color(132, 4, 0, 255),
-    new Color(132, 4, 132, 255),
-    new Color(132, 134, 0, 255),
-    new Color(192, 192, 192, 255),
-    new Color(198, 223, 198, 255),
-    new Color(247, 207, 165, 255),
-    new Color(0, 4, 222, 255),
-    new Color(0, 93, 255, 255),
-    new Color(165, 255, 255, 255),
-    new Color(214, 93, 0, 255),
-    new Color(255, 215, 82, 255),
-    new Color(41, 231, 41, 255)
+    new Color(  0,   0,   0),
+    new Color(132,   4,   0),
+    new Color(  0, 134,   0),
+    new Color(132, 134,   0),
+    new Color(  0,   4, 132),
+    new Color(132,   4, 132),
+    new Color(  0, 134, 132),
+    new Color(192, 192, 192),
+    new Color(198, 223, 198),
+    new Color(165, 207, 247),
+    new Color(222,   4,   0),
+    new Color(255,  93,   0),
+    new Color(255, 255, 165),
+    new Color(  0,  93, 214),
+    new Color( 82, 215, 255),
+    new Color( 41, 231,  41)
   );
 
   private static final ImmutableList<Color> FIXED_TAIL
     = ImmutableList.of(
-    new Color(148, 199, 247, 255),
-    new Color(90, 166, 231, 255),
-    new Color(66, 125, 198, 255),
-    new Color(24, 85, 156, 255),
-    new Color(49, 69, 66, 255),
-    new Color(24, 36, 41, 255),
-    new Color(247, 255, 255, 255),
-    new Color(165, 166, 165, 255),
-    new Color(132, 134, 132, 255),
-    new Color(0, 4, 255, 255),
-    new Color(0, 255, 0, 255),
-    new Color(0, 255, 255, 255),
-    new Color(255, 4, 0, 255),
-    new Color(255, 4, 255, 255),
-    new Color(255, 255, 0, 255),
-    new Color(255, 255, 255, 255)
+    new Color(247, 199, 148),
+    new Color(231, 166,  90),
+    new Color(198, 125,  66),
+    new Color(156,  85,  24),
+    new Color( 66,  69,  49),
+    new Color( 41,  36,  24),
+    new Color(255, 255, 247),
+    new Color(165, 166, 165),
+    new Color(132, 134, 132),
+    new Color(255,   4,   0),
+    new Color(  0, 255,   0),
+    new Color(255, 255,   0),
+    new Color(  0,   4, 255),
+    new Color(255,   4, 255),
+    new Color(  0, 255, 255),
+    new Color(255, 255, 255)
   );
 
   private static final Kryo KRYO = KryoFactory.getInstance();
@@ -79,10 +80,10 @@ public class ImageRenderer {
     int height = real.getHeight();
     byte[] bitmap = new byte[width * height];
     readBitmap(real, bitmap);
-    BufferedImage ret = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage ret = new BufferedImage(width, height, TYPE_INT_ARGB);
     for(int i = 0; i < width * height; i++) {
       int color = uint8(bitmap[i]);
-      if(color != 0) ret.setRGB(i % width, i / width, colors.get(color).getRGB());
+      if(color != 0) ret.setRGB(i % width, height - 1 - i / width, colors.get(color).getRGB());
     }
     return ret;
   }
@@ -92,7 +93,6 @@ public class ImageRenderer {
       readBitmap(real.getData(), bitmap);
     else
       arraycopy(real.getData(), 0, bitmap, 0, bitmap.length);
-    verticalFlip(bitmap, real.getWidth(), real.getHeight());
   }
 
   private static void readBitmap(byte[] src, byte[] bitmap) {
@@ -178,15 +178,6 @@ public class ImageRenderer {
     }
   }
 
-  private static void verticalFlip(byte[] data, int width, int height) {
-    byte[] buf = new byte[width];
-    for(int i = 0; i < height / 2; i++) {
-      arraycopy(data, i * width, buf, 0, width);
-      arraycopy(data, (height - i - 1) * width, data, i * width, width);
-      arraycopy(buf, 0, data, (height - i - 1) * width, width);
-    }
-  }
-
   @Nonnull
   private static ImmutableList<Color> readPalette(Path file) throws IOException {
     Palet palet;
@@ -200,15 +191,9 @@ public class ImageRenderer {
   private static ImmutableList<Color> readPalette(Palet palet) {
     ImmutableList.Builder<Color> builder = ImmutableList.builder();
     builder.addAll(FIXED_HEAD);
-    for(PaletColor pColor : palet.getColors())
-      builder.add(toColor(pColor));
+    builder.addAll(palet.getColors());
     builder.addAll(FIXED_TAIL);
     return builder.build();
-  }
-
-  @Nonnull
-  private static Color toColor(PaletColor pColor) {
-    return new Color(pColor.getRed(), pColor.getGreen(), pColor.getBlue(), 255);
   }
 
 }

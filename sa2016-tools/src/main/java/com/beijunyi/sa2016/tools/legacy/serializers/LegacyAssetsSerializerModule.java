@@ -16,7 +16,6 @@ public class LegacyAssetsSerializerModule extends AbstractModule {
   private static void registerSerializers(Kryo kryo) {
     kryo.register(Adrn.class, new AdrnSerializer());
     kryo.register(Ls2Map.class, new Ls2MapSerializer());
-    kryo.register(PaletColor.class, new PaletColorSerializer());
     kryo.register(Palet.class, new PaletSerializer());
     kryo.register(Real.class, new RealSerializer());
     kryo.register(SprAdrn.class, new SprAdrnSerializer());
