@@ -66,8 +66,9 @@ APP.controller('ImagesCtrl', function($scope, $state, $timeout, ImagesAPI) {
 
   function viewImage(row) {
     var image = row.entity;
-    $state.go('assets.images.image', {
-      id: image.id
+    $state.go('assets.images.canvas', {
+      id: image.id,
+      format: image.format
     });
   }
 

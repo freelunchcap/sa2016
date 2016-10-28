@@ -7,8 +7,10 @@ APP.config(function($stateProvider) {
     controller: 'ImagesCtrl'
   });
 
-  $stateProvider.state('assets.images.image', {
-    url: '/:id'
+  $stateProvider.state('assets.images.canvas', {
+    url: '/:id?format',
+    templateUrl: '/assets/images/canvas.html?' + new Date(),
+    controller: 'ImageCanvasCtrl'
   });
   
 });

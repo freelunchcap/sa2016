@@ -27,7 +27,7 @@ public class ImageApi {
   }
 
   @GET
-  @Path("image/{id}.{format}")
+  @Path("{id}.{format}")
   @Nonnull
   @Produces("image/*")
   public Response get(@PathParam("id") String id, @PathParam("format") String format) {
