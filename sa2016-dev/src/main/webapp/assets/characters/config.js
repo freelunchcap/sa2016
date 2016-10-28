@@ -6,5 +6,11 @@ APP.config(function($stateProvider) {
     templateUrl: '/assets/characters/partial.html',
     controller: 'CharactersCtrl'
   });
+
+  $stateProvider.state('assets.characters.canvas', {
+    url: '/characters',
+    templateUrl: '/assets/characters/canvas.html',
+    controller: 'CharacterCanvasCtrl'
+  });
   
 });

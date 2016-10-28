@@ -1,19 +1,9 @@
-APP.service('ImagesAPI', function($http) {
+APP.service('ImagesAPI', function(API) {
 
-  const END_POINT = '/api/images';
+  const END_POINT = '/images';
 
-  function list(start, dir, max) {
-    var url = END_POINT + '/list';
-    var params = [];
-    if(start != null) params.push('start=' + start);
-    if(dir != null) params.push('dir=' + dir);
-    if(max != null) params.push('max=' + max);
-    if(params.length > 0) url += '?' + params.join('&');
-    return $http.get(url);
-  }
-  
   return {
-    list: list
+    list: API.list(END_POINT)
   }
 
 });

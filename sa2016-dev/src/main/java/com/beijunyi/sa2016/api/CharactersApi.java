@@ -1,15 +1,35 @@
 package com.beijunyi.sa2016.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+
+import com.beijunyi.sa2016.assets.Character;
+import com.beijunyi.sa2016.assets.repositories.CharacterRepo;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.ok;
 
 @Path("/api/characters")
 public class CharactersApi {
 
+  private final CharacterRepo repo;
+
+  @Inject
+  public CharactersApi(CharacterRepo repo) {
+    this.repo = repo;
+  }
+
   @GET
   @Path("list")
-  public String list() {
-    return "Hello world";
+  @Nonnull
+  @Produces(APPLICATION_JSON)
+  public Response list(@Nullable @QueryParam("start") String start,
+                        @Nullable @QueryParam("dir") String dir,
+                        @Nullable @QueryParam("max") Integer max) {
+    return ok(repo.list(start, dir, max)).build();
   }
 
 }
