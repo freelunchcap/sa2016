@@ -9,6 +9,8 @@ import com.beust.jcommander.JCommander;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import static com.google.common.collect.Maps.uniqueIndex;
+
 public class CommandService {
 
   private final JCommander commander;
@@ -17,7 +19,7 @@ public class CommandService {
   @Inject
   public CommandService(Set<Command> commands) {
     this.commander = setupCommander(commands);
-    this.lookup = Maps.uniqueIndex(commands, Command::getName);
+    this.lookup = uniqueIndex(commands, Command::getName);
   }
 
   public void process(String[] args) throws IOException {

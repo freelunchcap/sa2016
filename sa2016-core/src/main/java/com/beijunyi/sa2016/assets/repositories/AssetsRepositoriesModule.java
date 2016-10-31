@@ -18,7 +18,9 @@ public class AssetsRepositoriesModule extends AbstractModule {
   @Nonnull
   private static DB makeFileCache() {
     Path assets = AppConstants.APP_HOME.resolve("assets.bin");
-    return DBMaker.fileDB(assets.toFile()).make();
+    return DBMaker.fileDB(assets.toFile())
+             .checksumHeaderBypass()
+             .make();
   }
 
 

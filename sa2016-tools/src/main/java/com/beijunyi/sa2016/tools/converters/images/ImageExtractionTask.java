@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters;
+package com.beijunyi.sa2016.tools.converters.images;
 
 import java.awt.image.RenderedImage;
 import java.io.IOException;
@@ -29,35 +29,35 @@ class ImageExtractionTask implements Runnable {
   private static final Logger LOG = LoggerFactory.getLogger(ImageExtractionTask.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final Adrn adrn;
+  private final Adrn entry;
   private final Path archive;
   private final ImageRenderer renderer;
   private final ImageRepo repo;
 
-  ImageExtractionTask(Path archive, Adrn adrn, ImageRenderer renderer, ImageRepo repo) {
+  ImageExtractionTask(Path archive, Adrn entry, ImageRenderer renderer, ImageRepo repo) {
     this.archive = archive;
-    this.adrn = adrn;
+    this.entry = entry;
     this.renderer = renderer;
     this.repo = repo;
   }
 
   @Override
   public void run() {
-    ImageAsset asset = readAsset();
+    ImageAsset legacy = readAsset();
     try {
-      RenderedImage image = renderer.render(asset);
-      saveImage(asset, image);
+      RenderedImage image = renderer.render(legacy);
+      saveImage(legacy, image);
     } catch(Exception e) {
-      LOG.warn("Could not render {}", asset.getId(), e);
+      LOG.warn("Could not render {}", legacy.getId(), e);
     }
   }
 
   @Nonnull
   private ImageAsset readAsset() {
     try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
-      channel.position(adrn.getAddress());
+      channel.position(entry.getAddress());
       Input input = new Input(Channels.newInputStream(channel));
-      return new ImageAsset(adrn, KRYO.readObject(input, Real.class));
+      return new ImageAsset(entry, KRYO.readObject(input, Real.class));
     } catch(IOException e) {
       throw new IllegalStateException(e);
     }

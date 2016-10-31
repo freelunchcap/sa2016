@@ -1,9 +1,6 @@
-package com.beijunyi.sa2016.tools.converters;
+package com.beijunyi.sa2016.tools.converters.images;
 
 import java.io.IOException;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -13,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.Adrn;
-import com.beijunyi.sa2016.tools.legacy.Real;
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
@@ -24,8 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.beijunyi.sa2016.tools.legacy.ClientResource.ADRN;
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.REAL;
-import static java.nio.file.StandardOpenOption.READ;
 
 @Singleton
 class ImageLocator {
@@ -33,28 +27,28 @@ class ImageLocator {
   private static final Logger LOG = LoggerFactory.getLogger(ImageLocator.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final ImmutableMap<Integer, Adrn> adrns;
-  private final ImmutableMap<Integer, Integer> tileIdMap;
+  private final ImmutableMap<Integer, Adrn> lookup;
+  private final ImmutableMap<Integer, Integer> tiles;
 
   @Inject
   public ImageLocator(ResourcesProvider resources) throws IOException {
-    this.adrns = readAdrns(resources.getClientResource(ADRN));
-    this.tileIdMap = indexTiles(adrns.values());
+    this.lookup = readIndex(resources.getClientResource(ADRN));
+    this.tiles = indexTiles(lookup.values());
   }
 
   @Nonnull
-  public ImmutableCollection<Adrn> imageAssets() {
-    return adrns.values();
+  ImmutableCollection<Adrn> imageAssets() {
+    return lookup.values();
   }
 
   @Nullable
   public Adrn getTileImage(int tileId) {
-    int imageId = tileIdMap.get(tileId);
-    return adrns.get(imageId);
+    int imageId = tiles.get(tileId);
+    return lookup.get(imageId);
   }
 
   @Nonnull
-  private static ImmutableMap<Integer, Adrn> readAdrns(Path file) throws IOException {
+  private static ImmutableMap<Integer, Adrn> readIndex(Path file) throws IOException {
     ImmutableMap.Builder<Integer, Adrn> adrns = ImmutableMap.builder();
     Set<Integer> keys = new HashSet<>();
     try(Input input = new Input(Files.newInputStream(file))) {

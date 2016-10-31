@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters;
+package com.beijunyi.sa2016.tools.converters.images;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -24,8 +24,8 @@ class ImageExtractionTaskFactory {
   }
 
   @Nonnull
-  ImageExtractionTask newTask(Adrn adrn) {
-    return new ImageExtractionTask(resources.getClientResource(ClientResource.REAL), adrn, renderer, repo);
+  ImageExtractionTask newExtraction(Adrn entry) {
+    return new ImageExtractionTask(resources.getClientResource(ClientResource.REAL), entry, renderer, repo);
   }
 
 }
