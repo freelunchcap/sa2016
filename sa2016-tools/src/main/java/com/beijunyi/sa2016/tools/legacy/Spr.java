@@ -10,9 +10,9 @@ public class Spr {
   private final int action;
   private final int duration;
   private final int length;
-  private final ImmutableList<SprFrame> frames;
+  private final ImmutableList<Frame> frames;
 
-  public Spr(int direction, int action, int duration, int length, ImmutableList<SprFrame> frames) {
+  public Spr(int direction, int action, int duration, int length, ImmutableList<Frame> frames) {
     this.direction = direction;
     this.action = action;
     this.duration = duration;
@@ -37,8 +37,40 @@ public class Spr {
   }
 
   @Nonnull
-  public ImmutableList<SprFrame> getFrames() {
+  public ImmutableList<Frame> getFrames() {
     return frames;
   }
-  
+
+  public static class Frame {
+
+    private final int image;
+    private final int unknown;
+    private final int impactAudio;
+    private final int dodgeAudio;
+
+    public Frame(int image, int unknown, int impactAudio, int dodgeAudio) {
+      this.image = image;
+      this.unknown = unknown;
+      this.impactAudio = impactAudio;
+      this.dodgeAudio = dodgeAudio;
+    }
+
+    public int getImage() {
+      return image;
+    }
+
+    public int getUnknown() {
+      return unknown;
+    }
+
+    public int getImpactAudio() {
+      return impactAudio;
+    }
+
+    public int getDodgeAudio() {
+      return dodgeAudio;
+    }
+
+  }
+
 }

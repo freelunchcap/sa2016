@@ -75,7 +75,7 @@ class ImageRenderer {
 
   @Nonnull
   RenderedImage render(ImageAsset image) {
-    Real real = image.getReal();
+    Real real = image.getData();
     int width = real.getWidth();
     int height = real.getHeight();
     byte[] bitmap = new byte[width * height];

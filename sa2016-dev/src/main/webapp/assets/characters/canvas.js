@@ -1,3 +1,3 @@
-APP.controller('CharactersCanvasCtrl', function($scope, $state) {
+APP.controller('CharacterCanvasCtrl', function($scope, $state) {
   
 });

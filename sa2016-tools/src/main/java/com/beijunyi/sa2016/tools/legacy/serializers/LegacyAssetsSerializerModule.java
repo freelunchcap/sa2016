@@ -19,7 +19,6 @@ public class LegacyAssetsSerializerModule extends AbstractModule {
     kryo.register(Palet.class, new PaletSerializer());
     kryo.register(Real.class, new RealSerializer());
     kryo.register(SprAdrn.class, new SprAdrnSerializer());
-    kryo.register(SprFrame.class, new SprFrameSerializer());
     kryo.register(Spr.class, new SprSerializer());
   }
 

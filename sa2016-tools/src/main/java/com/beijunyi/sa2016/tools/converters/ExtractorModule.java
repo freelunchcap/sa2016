@@ -17,7 +17,7 @@ public class ExtractorModule extends AbstractModule {
   @Override
   protected void configure() {
     Multibinder<AssetExtractor> binder = Multibinder.newSetBinder(binder(), AssetExtractor.class);
-    EXTRACTORS.forEach(binder.addBinding()::to);
+    for(Class<? extends AssetExtractor> e : EXTRACTORS) binder.addBinding().to(e);
   }
 
 }

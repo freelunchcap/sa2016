@@ -14,10 +14,10 @@ public class CharacterExtractor implements AssetExtractor {
   private static final ExecutorService THREADS = ThreadPoolFactory.getInstance();
 
   private final CharacterLocator locator;
-  private final CharacterExtrationTaskFactory tasks;
+  private final CharacterExtractionTaskFactory tasks;
 
   @Inject
-  public CharacterExtractor(CharacterLocator locator, CharacterExtrationTaskFactory tasks) {
+  public CharacterExtractor(CharacterLocator locator, CharacterExtractionTaskFactory tasks) {
     this.locator = locator;
     this.tasks = tasks;
   }

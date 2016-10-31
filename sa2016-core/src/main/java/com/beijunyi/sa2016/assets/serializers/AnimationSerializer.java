@@ -15,9 +15,11 @@ class AnimationSerializer extends Serializer<Animation> {
   public void write(Kryo kryo, Output output, Animation animation) {
     output.writeString(animation.getId());
     output.writeShort(animation.getDuration());
-    output.writeShort(animation.getFrames());
-    animation.getImages().forEach(output::writeAscii);
-    animation.getAudios().forEach(output::writeAscii);
+    output.writeShort(animation.getFrames().size());
+    animation.getFrames().forEach((f) -> {
+      output.writeAscii(f.getImage());
+      output.writeAscii(f.getAudio());
+    });
   }
 
   @Nonnull
@@ -25,11 +27,13 @@ class AnimationSerializer extends Serializer<Animation> {
   public Animation read(Kryo kryo, Input input, Class<Animation> type) {
     String id = input.readString();
     int duration = input.readShort();
-    int frames = input.readShort();
-    ImmutableList.Builder<String> images = ImmutableList.builder();
-    for(int f = 0; f < frames; f++) images.add(input.readString());
-    ImmutableList.Builder<String> audios = ImmutableList.builder();
-    for(int f = 0; f < frames; f++) audios.add(input.readString());
-    return new Animation(id, duration, frames, images.build(), audios.build());
+    int count = input.readShort();
+    ImmutableList.Builder<Animation.Frame> frames = ImmutableList.builder();
+    while(count > 0) {
+      String image = input.readString();
+      String audio = input.readString();
+      frames.add(new Animation.Frame(image, audio));
+    }
+    return new Animation(id, duration, frames.build());
   }
 }

@@ -16,8 +16,9 @@ class CharacterSerializer extends Serializer<Character> {
   @Override
   public void write(Kryo kryo, Output output, Character character) {
     output.writeAscii(character.getId());
-    output.writeShort(character.getActions());
-    for(int a = 0; a < character.getActions(); a++) {
+    int actions = character.getAnimations().rowKeySet().size();
+    output.writeShort(actions);
+    for(int a = 0; a < actions; a++) {
       Action action = Action.values()[a];
       for(Direction direction : Direction.values()) {
         output.writeAscii(character.getAnimations().get(action, direction));
@@ -34,10 +35,11 @@ class CharacterSerializer extends Serializer<Character> {
     for(int a = 0; a < actions; a++) {
       Action action = Action.values()[a];
       for(Direction direction : Direction.values()) {
-        animations.put(action, direction, input.readString());
+        String animation = input.readString();
+        animations.put(action, direction, animation);
       }
     }
-    return new Character(id, actions, animations.build());
+    return new Character(id, animations.build());
   }
 
 }

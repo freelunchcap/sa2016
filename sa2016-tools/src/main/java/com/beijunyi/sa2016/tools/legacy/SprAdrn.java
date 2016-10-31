@@ -4,13 +4,13 @@ public class SprAdrn {
 
   private final int id;
   private final long address;
-  private final int actions;
+  private final int animations;
   private final int sound;
 
-  public SprAdrn(int id, long address, int actions, int sound) {
+  public SprAdrn(int id, long address, int animations, int sound) {
     this.id = id;
     this.address = address;
-    this.actions = actions;
+    this.animations = animations;
     this.sound = sound;
   }
 
@@ -22,8 +22,8 @@ public class SprAdrn {
     return address;
   }
 
-  public int getActions() {
-    return actions;
+  public int getAnimations() {
+    return animations;
   }
 
   public int getSound() {

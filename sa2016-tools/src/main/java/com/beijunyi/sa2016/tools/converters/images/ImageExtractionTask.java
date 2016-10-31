@@ -66,7 +66,7 @@ class ImageExtractionTask implements Runnable {
   private void saveImage(ImageAsset raw, RenderedImage rendered) {
     try(ByteOutputStream stream = new ByteOutputStream()) {
       ImageIO.write(rendered, IMAGE_FORMAT, stream);
-      Adrn meta = raw.getAdrn();
+      Adrn meta = raw.getIndex();
       repo.put(new Image(raw.getId(), IMAGE_FORMAT, meta.getWidth(), meta.getHeight(), meta.getXOffset(), meta.getYOffset(), stream.getBytes()));
     } catch(IOException e) {
       throw new IllegalStateException(e);

@@ -4,25 +4,18 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
 
 public class Animation implements Asset {
 
   private final String id;
   private final int duration;
-  private final int frames;
-  private final ImmutableList<String> images;
-  private final ImmutableList<String> audios;
+  private final ImmutableList<Frame> frames;
 
-  public Animation(String id, int duration, int frames, ImmutableList<String> images, ImmutableList<String> audios) {
+  public Animation(String id, int duration, ImmutableList<Frame> frames) {
     this.id = id;
     this.duration = duration;
     this.frames = frames;
-    this.images = images;
-    this.audios = audios;
   }
 
   @Nonnull
@@ -35,18 +28,30 @@ public class Animation implements Asset {
     return duration;
   }
 
-  public int getFrames() {
+  @Nonnull
+  public List<Frame> getFrames() {
     return frames;
   }
 
-  @Nonnull
-  public List<String> getImages() {
-    return images;
-  }
 
-  @Nonnull
-  public List<String> getAudios() {
-    return audios;
+  public static class Frame {
+    private final String image;
+    private final String audio;
+
+    public Frame(String image, String audio) {
+      this.image = image;
+      this.audio = audio;
+    }
+
+    @Nonnull
+    public String getImage() {
+      return image;
+    }
+
+    @Nonnull
+    public String getAudio() {
+      return audio;
+    }
   }
 
 }

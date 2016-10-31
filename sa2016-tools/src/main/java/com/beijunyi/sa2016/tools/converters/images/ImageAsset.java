@@ -9,13 +9,13 @@ import com.beijunyi.sa2016.tools.utils.Base62;
 class ImageAsset {
 
   private final String id;
-  private final Adrn adrn;
-  private final Real real;
+  private final Adrn index;
+  private final Real data;
 
-  ImageAsset(Adrn adrn, Real real) {
-    this.id = Base62.encode(adrn.getUid());
-    this.adrn = adrn;
-    this.real = real;
+  ImageAsset(Adrn index, Real data) {
+    this.id = Base62.encode(index.getUid());
+    this.index = index;
+    this.data = data;
   }
 
   @Nonnull
@@ -24,13 +24,13 @@ class ImageAsset {
   }
 
   @Nonnull
-  Adrn getAdrn() {
-    return adrn;
+  Adrn getIndex() {
+    return index;
   }
 
   @Nonnull
-  Real getReal() {
-    return real;
+  Real getData() {
+    return data;
   }
 
 }

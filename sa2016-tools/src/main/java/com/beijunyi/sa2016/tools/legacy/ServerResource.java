@@ -41,4 +41,5 @@ public enum ServerResource implements LegacyResource{
   public boolean recursive() {
     return recursive;
   }
+
 }

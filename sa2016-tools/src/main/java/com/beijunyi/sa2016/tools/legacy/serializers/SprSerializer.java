@@ -3,7 +3,6 @@ package com.beijunyi.sa2016.tools.legacy.serializers;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.tools.legacy.Spr;
-import com.beijunyi.sa2016.tools.legacy.SprFrame;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -26,9 +25,14 @@ class SprSerializer extends Serializer<Spr> {
     int action = LE.uint16(input);
     int duration = (int) LE.uint32(input);
     int length = (int) LE.uint32(input);
-    ImmutableList.Builder<SprFrame> frames = ImmutableList.builder();
-    for(int i = 0; i < length; i++)
-      frames.add(kryo.readObject(input, SprFrame.class));
+    ImmutableList.Builder<Spr.Frame> frames = ImmutableList.builder();
+    for(int i = 0; i < length; i++) {
+      int image = (int) LE.uint32(input);
+      int unknown = (int) LE.uint32(input);
+      int impact = LE.uint8(input);
+      int dodge = LE.uint8(input);
+      frames.add(new Spr.Frame(image, unknown, impact, dodge));
+    }
     return new Spr(direction, action, duration, length, frames.build());
   }
 }

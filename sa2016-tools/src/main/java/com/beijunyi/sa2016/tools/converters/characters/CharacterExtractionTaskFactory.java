@@ -8,14 +8,14 @@ import com.beijunyi.sa2016.tools.legacy.SprAdrn;
 
 import static com.beijunyi.sa2016.tools.legacy.ClientResource.SPR;
 
-class CharacterExtrationTaskFactory {
+class CharacterExtractionTaskFactory {
 
   private final ResourcesProvider resources;
   private final CharacterFactory characters;
   private final CharacterRepo repo;
 
   @Inject
-  public CharacterExtrationTaskFactory(ResourcesProvider resources, CharacterFactory characters, CharacterRepo repo) {
+  public CharacterExtractionTaskFactory(ResourcesProvider resources, CharacterFactory characters, CharacterRepo repo) {
     this.resources = resources;
     this.characters = characters;
     this.repo = repo;
