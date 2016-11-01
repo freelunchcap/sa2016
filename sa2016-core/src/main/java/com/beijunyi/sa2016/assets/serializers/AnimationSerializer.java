@@ -29,7 +29,7 @@ class AnimationSerializer extends Serializer<Animation> {
     int duration = input.readShort();
     int count = input.readShort();
     ImmutableList.Builder<Animation.Frame> frames = ImmutableList.builder();
-    while(count > 0) {
+    while(count-- > 0) {
       String image = input.readString();
       String audio = input.readString();
       frames.add(new Animation.Frame(image, audio));

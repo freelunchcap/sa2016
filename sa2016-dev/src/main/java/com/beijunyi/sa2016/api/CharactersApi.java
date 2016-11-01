@@ -6,9 +6,9 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import com.beijunyi.sa2016.assets.Character;
 import com.beijunyi.sa2016.assets.repositories.CharacterRepo;
 
+import static com.beijunyi.sa2016.models.CharacterView.view;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
@@ -29,7 +29,16 @@ public class CharactersApi {
   public Response list(@Nullable @QueryParam("start") String start,
                         @Nullable @QueryParam("dir") String dir,
                         @Nullable @QueryParam("max") Integer max) {
-    return ok(repo.list(start, dir, max)).build();
+    return ok(view(repo.list(start, dir, max))).build();
   }
+
+  @GET
+  @Path("animations/{id}")
+  @Nonnull
+  @Produces(APPLICATION_JSON)
+  public Response animation(@PathParam("id") String id) {
+    return ok(view(repo.get(id))).build();
+  }
+
 
 }
