@@ -2,6 +2,7 @@ apply plugin: 'war'
 
 dependencies {
   compile project(':sa2016-core')
+  compile project(':sa2016-js')
 
   compile 'org.jboss.resteasy:resteasy-guice:3.0.19.Final'
   compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.19.Final'
