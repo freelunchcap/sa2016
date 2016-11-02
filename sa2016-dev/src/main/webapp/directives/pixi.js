@@ -3,10 +3,13 @@
 APP.directive('pixi', function ($parse) {
   return {
     restrict: 'A',
-    scope: false,
+    scope: {
+      width: '@',
+      height: '@'
+    },
     controller: function postLink($scope, $element, $attrs) {
       var self = this;
-      var renderer = new PIXI.WebGLRenderer(800, 600, {
+      var renderer = new PIXI.WebGLRenderer($scope.width, $scope.height, {
         view: $element[0]
       });
 
@@ -17,7 +20,8 @@ APP.directive('pixi', function ($parse) {
       function prepareAnimation(data) {
         var offset = calculateOffset(data);
         var clip = makeMovieClip(offset, data);
-        return angular.extend(clip, offset);
+        clip.play();
+        return clip;
       }
 
       function calculateOffset(data) {
@@ -41,6 +45,8 @@ APP.directive('pixi', function ($parse) {
         var clip = new PIXI.extras.MovieClip(textures);
         var duration = data.animation.duration;
         clip.animationSpeed = frames.length / duration * (1000 / 60 * 2);
+        clip.anchor.x = -offset.x;
+        clip.anchor.y = -offset.y;
         return clip;
       }
 
@@ -58,14 +64,11 @@ APP.directive('pixi', function ($parse) {
 
         // This creates a texture from a 'bunny.png' image.
         bunny = prepareAnimation(data);
-        bunny.play();
+        // bunny.play();
 
         // Setup the position and scale of the bunny
-        bunny.position.x = 400;
-        bunny.position.y = 300;
-
-        bunny.scale.x = 2;
-        bunny.scale.y = 2;
+        bunny.position.x = 200;
+        bunny.position.y = 150;
 
         // Add the bunny to the scene we are building.
         stage.addChild(bunny);
