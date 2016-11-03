@@ -1,13 +1,21 @@
-function Animation(data) {
-  this.data = data;
+function Animation() {
+  PIXI.extras.MovieClip.call(this, [PIXI.Texture.EMPTY]);
 }
 
-Animation.prototype.render = function() {
+SA.Animation = Animation;
+SA.Animation.prototype = Object.create(PIXI.extras.MovieClip.prototype);
 
-  var data = this.data;
-  var offset = calculateOffset();
-  var images = indexImages();
-  return makeMovieClip();
+SA.Animation.load = function(id) {
+  var data = SA.AnimationLoader.load(id);
+  var animation = new SA.Animation();
+  data.then(init);
+
+  function init() {
+    var offset = calculateOffset();
+    var images = indexImages();
+    addTextures(offset, images);
+    animation.play();
+  }
 
   function calculateOffset() {
     var ret = {x: 0, y: 0};
@@ -26,27 +34,24 @@ Animation.prototype.render = function() {
     return ret;
   }
 
-  function makeMovieClip() {
-    var textures = [];
+  function addTextures(offset, images) {
+    animation.textures.pop();
     var frames = data.animation.frames;
-
     frames.forEach(function(frame) {
       var image = images[frame.image];
-      textures.push(makeTexture(image));
+      animation.textures.push(makeTexture(offset, image));
     });
-    var clip = new PIXI.extras.MovieClip(textures);
     var duration = data.animation.duration;
-    clip.animationSpeed = frames.length / duration * (1000 / 60);
-    clip.anchor.x = -offset.x;
-    clip.anchor.y = -offset.y;
-    return clip;
+    animation.animationSpeed = frames.length / duration * (1000 / 60);
+    animation.anchor.x = -offset.x;
+    animation.anchor.y = -offset.y;
   }
 
-  function makeTexture(image) {
+  function makeTexture(offset, image) {
     var base = PIXI.BaseTexture.fromImage('data:image/png;base64,' + image.data);
     var frame = new PIXI.Rectangle(image.x - offset.x, image.y - offset.y, image.width, image.height);
     return new PIXI.Texture(base, null, null, frame);
   }
 
-
+  return animation;
 };
