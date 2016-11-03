@@ -44,23 +44,17 @@ public class Spr {
   public static class Frame {
 
     private final int image;
-    private final int unknown;
     private final int impactAudio;
     private final int dodgeAudio;
 
-    public Frame(int image, int unknown, int impactAudio, int dodgeAudio) {
+    public Frame(int image, int impactAudio, int dodgeAudio) {
       this.image = image;
-      this.unknown = unknown;
       this.impactAudio = impactAudio;
       this.dodgeAudio = dodgeAudio;
     }
 
     public int getImage() {
       return image;
-    }
-
-    public int getUnknown() {
-      return unknown;
     }
 
     public int getImpactAudio() {

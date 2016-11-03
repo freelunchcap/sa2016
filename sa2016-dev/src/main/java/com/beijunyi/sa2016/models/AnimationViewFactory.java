@@ -1,17 +1,20 @@
 package com.beijunyi.sa2016.models;
 
-import java.util.Map;
+import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Animation;
+import com.beijunyi.sa2016.assets.Animation.Frame;
 import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.repositories.AnimationRepo;
 import com.beijunyi.sa2016.assets.repositories.AudioRepo;
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableList;
+
+import static java.util.stream.Collectors.toList;
 
 @Singleton
 public class AnimationViewFactory {
@@ -31,14 +34,17 @@ public class AnimationViewFactory {
   public AnimationView animationView(String id) {
     Animation animation = animations.get(id);
     if(animation == null) return null;
-    Map<String, Image> imagesMap = Maps.newHashMap();
-    for(Animation.Frame frame : animation.getFrames()) {
-      String imageId = frame.getImage();
-      if(imagesMap.containsKey(imageId)) continue;
-      Image image = images.get(imageId);
-      if(image != null) imagesMap.put(imageId, image);
-    }
-    return new AnimationView(animation, imagesMap, ImmutableMap.of());
+    List<Image> images = findImageResources(animation);
+    return new AnimationView(animation, images, ImmutableList.of());
+  }
+
+  @Nonnull
+  private List<Image> findImageResources(Animation animation) {
+    return animation.getFrames()
+                        .stream()
+                        .map(Frame::getImage)
+                        .map(images::get)
+                        .collect(toList());
   }
 
 

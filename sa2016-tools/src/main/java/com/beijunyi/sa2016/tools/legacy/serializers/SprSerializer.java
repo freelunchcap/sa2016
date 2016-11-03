@@ -28,10 +28,10 @@ class SprSerializer extends Serializer<Spr> {
     ImmutableList.Builder<Spr.Frame> frames = ImmutableList.builder();
     for(int i = 0; i < length; i++) {
       int image = (int) LE.uint32(input);
-      int unknown = (int) LE.uint32(input);
+      input.skip(4); // unknown
       int impact = LE.uint8(input);
       int dodge = LE.uint8(input);
-      frames.add(new Spr.Frame(image, unknown, impact, dodge));
+      frames.add(new Spr.Frame(image, impact, dodge));
     }
     return new Spr(direction, action, duration, length, frames.build());
   }

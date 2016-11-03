@@ -17,45 +17,6 @@ APP.directive('pixi', function ($parse) {
 
       var bunny = null;
 
-      function prepareAnimation(data) {
-        var offset = calculateOffset(data);
-        var clip = makeMovieClip(offset, data);
-        clip.play();
-        return clip;
-      }
-
-      function calculateOffset(data) {
-        var ret = {x: 0, y: 0};
-        angular.forEach(data.images, function(image) {
-          ret.x = Math.min(ret.x, image.x);
-          ret.y = Math.min(ret.y, image.y);
-        });
-        return ret;
-      }
-
-      function makeMovieClip(offset, data) {
-        var textures = [];
-        var frames = data.animation.frames;
-
-        angular.forEach(frames, function(frame) {
-          var imageId = frame.image;
-          var image = data.images[imageId];
-          textures.push(makeTexture(offset, image));
-        });
-        var clip = new PIXI.extras.MovieClip(textures);
-        var duration = data.animation.duration;
-        clip.animationSpeed = frames.length / duration * (1000 / 60 * 2);
-        clip.anchor.x = -offset.x;
-        clip.anchor.y = -offset.y;
-        return clip;
-      }
-
-      function makeTexture(offset, image) {
-        var base = PIXI.BaseTexture.fromImage('data:image/png;base64,' + image.data);
-        var frame = new PIXI.Rectangle(image.x - offset.x, image.y - offset.y, image.width, image.height);
-        return new PIXI.Texture(base, null, null, frame);
-      }
-
       PIXI.loader.add('bunny', '/api/animations/Q0v-0-0').load(function (loader, resources) {
         var data = JSON.parse(resources.bunny.data);
         // var image = data.images['2RM'];
@@ -63,8 +24,8 @@ APP.directive('pixi', function ($parse) {
         // var texture = PIXI.Texture.fromImage(url);
 
         // This creates a texture from a 'bunny.png' image.
-        bunny = prepareAnimation(data);
-        // bunny.play();
+        bunny = new Animation(data).render();
+        bunny.play();
 
         // Setup the position and scale of the bunny
         bunny.position.x = 200;
