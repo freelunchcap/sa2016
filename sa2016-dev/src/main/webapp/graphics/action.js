@@ -3,12 +3,16 @@ SA.Action = function(name, ordinal) {
   this.ordinal = ordinal;
 };
 
-SA.Action.prototype.getName = function() {
+SA.Action.prototype.name = function() {
   return this.name;
 };
 
-SA.Action.prototype.getOrdinal = function() {
+SA.Action.prototype.ordinal = function() {
   return this.ordinal;
+};
+
+SA.Action.prototype.toString = function() {
+  return this.name();
 };
 
 SA.Action.ATTACK = new SA.Action('ATTACK', 0);

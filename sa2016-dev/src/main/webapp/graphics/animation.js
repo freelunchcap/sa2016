@@ -1,8 +1,6 @@
-function Animation() {
+SA.Animation = function() {
   PIXI.extras.MovieClip.call(this, [PIXI.Texture.EMPTY]);
-}
-
-SA.Animation = Animation;
+};
 SA.Animation.prototype = Object.create(PIXI.extras.MovieClip.prototype);
 
 SA.Animation.load = function(id) {

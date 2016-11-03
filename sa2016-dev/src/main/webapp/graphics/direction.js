@@ -3,12 +3,16 @@ SA.Direction = function(name, ordinal) {
   this.ordinal = ordinal;
 };
 
-SA.Direction.prototype.getName = function() {
+SA.Direction.prototype.name = function() {
   return this.name;
 };
 
-SA.Direction.prototype.getOrdinal = function() {
+SA.Direction.prototype.ordinal = function() {
   return this.ordinal;
+};
+
+SA.Direction.prototype.toString = function() {
+  return this.name();
 };
 
 SA.Direction.SOUTH_WEST = new SA.Direction('SOUTH_WEST', 0);
