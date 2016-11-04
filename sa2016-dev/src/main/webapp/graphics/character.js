@@ -1,9 +1,22 @@
 SA.Character = function(data, action, direction) {
-  this._data = data;
-  this.action(action);
-  this.direction(direction);
-  this._animation = {current: null, cache: {}};
+  var self = this;
+
+  self._data = data;
+  self.action(action);
+  self.direction(direction);
+  self._animation = {current: null, cache: {}};
   PIXI.Container.call(this);
+
+  self._callbacks = {
+    ready: []
+  };
+
+  self.on = {
+    ready: function(fn) {
+     self._callbacks.ready.push(fn);
+    }
+  }
+
 };
 SA.Character.prototype = Object.create(PIXI.Container.prototype);
 
@@ -22,11 +35,14 @@ SA.Character.prototype.actions = function() {
 };
 
 SA.Character.prototype.action = function(action) {
-  action = SA.Action.valueOf(action);
-  if(this._action != action) {
-    this._action = action;
-    this._init();
+  if(action != null) {
+    action = SA.Action.valueOf(action);
+    if(this._action != action) {
+      this._action = action;
+      this._init();
+    }
   }
+  return this._action;
 };
 
 SA.Character.prototype.directions = function() {
@@ -36,11 +52,14 @@ SA.Character.prototype.directions = function() {
 };
 
 SA.Character.prototype.direction = function(direction) {
-  direction = SA.Direction.valueOf(direction);
-  if(this._direction != direction) {
-    this._direction = direction;
-    this._init();
+  if(direction != null) {
+    direction = SA.Direction.valueOf(direction);
+    if(this._direction != direction) {
+      this._direction = direction;
+      this._init();
+    }
   }
+  return this._direction;
 };
 
 SA.Character.prototype._init = function() {
@@ -59,4 +78,5 @@ SA.Character.prototype._init = function() {
     child = animation.cache[this._animation.current] = SA.Animation.load(this._animation.current);
   }
   this.addChild(child);
+  this._callbacks.ready.forEach(function(fn) {fn(this)});
 };

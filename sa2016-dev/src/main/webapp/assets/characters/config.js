@@ -8,7 +8,7 @@ APP.config(function($stateProvider) {
   });
 
   $stateProvider.state('assets.characters.canvas', {
-    url: '/characters',
+    url: '/:id',
     templateUrl: '/assets/characters/canvas.html',
     controller: 'CharacterCanvasCtrl'
   });

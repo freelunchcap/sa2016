@@ -1,14 +1,14 @@
 SA.Action = function(name, ordinal) {
-  this.name = name;
-  this.ordinal = ordinal;
+  this._name = name;
+  this._ordinal = ordinal;
 };
 
 SA.Action.prototype.name = function() {
-  return this.name;
+  return this._name;
 };
 
 SA.Action.prototype.ordinal = function() {
-  return this.ordinal;
+  return this._ordinal;
 };
 
 SA.Action.prototype.toString = function() {

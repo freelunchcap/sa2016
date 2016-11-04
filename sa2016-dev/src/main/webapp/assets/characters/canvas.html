@@ -1,3 +1,24 @@
 <div id="assets-characters-canvas">
-  <canvas width="400" height="300" pixi></canvas>
+  <div>
+    <canvas width="400" height="300" pixi="pixi"></canvas>
+  </div>
+  <div class="btn-group" uib-dropdown>
+    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+      {{character.action()}}
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+      <li role="menuitem" ng-repeat="action in character.actions()"><a>{{action}}</a></li>
+    </ul>
+  </div>
+
+  <div class="btn-group" uib-dropdown>
+    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+      {{character.direction()}}
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+      <li role="menuitem" ng-repeat="direction in character.directions()"><a>{{direction}}</a></li>
+    </ul>
+  </div>
 </div>
