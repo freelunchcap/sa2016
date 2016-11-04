@@ -55,9 +55,10 @@ class CharacterExtractionTask implements Runnable {
       channel.position(entry.getAddress());
       Input input = new Input(Channels.newInputStream(channel));
       for(int a = 0; a < entry.getAnimations(); a++) {
-        Action action = Action.values()[a / 8];
-        Direction direction = Direction.values()[a % 8];
-        ret.put(action, direction,  KRYO.readObject(input, Spr.class));
+        Spr spr = KRYO.readObject(input, Spr.class);
+        Action action = Action.values()[spr.getAction()];
+        Direction direction = Direction.values()[spr.getDirection()];
+        ret.put(action, direction, spr);
       }
     }
     return new CharacterAsset(entry, ret.build());
