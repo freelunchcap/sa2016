@@ -1,14 +1,14 @@
 SA.Direction = function(name, ordinal) {
-  this.name = name;
-  this.ordinal = ordinal;
+  this._name = name;
+  this._ordinal = ordinal;
 };
 
 SA.Direction.prototype.name = function() {
-  return this.name;
+  return this._name;
 };
 
 SA.Direction.prototype.ordinal = function() {
-  return this.ordinal;
+  return this._ordinal;
 };
 
 SA.Direction.prototype.toString = function() {

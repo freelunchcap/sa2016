@@ -8,7 +8,7 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-      <li role="menuitem" ng-repeat="action in character.actions()"><a>{{action}}</a></li>
+      <li role="menuitem" ng-repeat="action in character.actions()"><a ng-click="setAction(action)">{{action}}</a></li>
     </ul>
   </div>
 
@@ -18,7 +18,7 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-      <li role="menuitem" ng-repeat="direction in character.directions()"><a>{{direction}}</a></li>
+      <li role="menuitem" ng-repeat="direction in character.directions()"><a ng-click="setDirection(direction)">{{direction}}</a></li>
     </ul>
   </div>
 </div>
