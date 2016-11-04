@@ -1,10 +1,20 @@
 SA.Character = function(data, action, direction) {
   this._data = data;
-  this.action = action;
-  this.direction = direction;
+  this.action(action);
+  this.direction(direction);
+  this._animation = {current: null, cache: {}};
   PIXI.Container.call(this);
 };
 SA.Character.prototype = Object.create(PIXI.Container.prototype);
+
+SA.Character.load = function(id, action, direction) {
+  var data = SA.CharacterLoader.load(id);
+  var ret = new SA.Character(data, action, direction);
+  data.then(function() {
+    ret._init()
+  });
+  return ret;
+};
 
 SA.Character.prototype.actions = function() {
   var animations = this._data.animations || {};
@@ -12,21 +22,41 @@ SA.Character.prototype.actions = function() {
 };
 
 SA.Character.prototype.action = function(action) {
-  this.action = SA.Action.valueOf(action);
-  this._init();
+  action = SA.Action.valueOf(action);
+  if(this._action != action) {
+    this._action = action;
+    this._init();
+  }
 };
 
 SA.Character.prototype.directions = function() {
   var animations = this._data.animations || {};
-  var directions = animations[this.action] || {};
+  var directions = animations[this._action] || {};
   return Object.keys(directions);
 };
 
 SA.Character.prototype.direction = function(direction) {
-  this.direction = SA.Direction.valueOf(direction);
-  this._init();
+  direction = SA.Direction.valueOf(direction);
+  if(this._direction != direction) {
+    this._direction = direction;
+    this._init();
+  }
 };
 
 SA.Character.prototype._init = function() {
-
+  this.removeChildren();
+  var data = this._data;
+  if(!data._ready) return;
+  var lookup = data.animations;
+  if(this._action == null || lookup[this._action] == null)
+    this._action = this.actions()[0];
+  if(this._direction == null || lookup[this._action][this._direction] == null)
+    this._direction = this.directions()[0];
+  this._animation.current = lookup[this._action][this._direction];
+  var animation = this._animation;
+  var child = animation.cache[this._animation.current];
+  if(child == null) {
+    child = animation.cache[this._animation.current] = SA.Animation.load(this._animation.current);
+  }
+  this.addChild(child);
 };

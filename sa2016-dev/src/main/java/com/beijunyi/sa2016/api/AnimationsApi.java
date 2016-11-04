@@ -22,7 +22,7 @@ public class AnimationsApi {
   }
 
   @GET
-  @Path("{id}")
+  @Path("{id}.json")
   @Nonnull
   @Produces(APPLICATION_JSON)
   public Response animation(@PathParam("id") String id) {

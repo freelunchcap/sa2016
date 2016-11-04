@@ -25,5 +25,5 @@ SA.Direction.SOUTH_EAST = new SA.Direction('SOUTH_EAST', 6);
 SA.Direction.SOUTH = new SA.Direction('SOUTH', 7);
 
 SA.Direction.valueOf = function(name) {
-  return SA.Direction[name.toUpperCase()];
+  return SA.Direction[name];
 };

@@ -7,7 +7,7 @@ SA.CharacterLoader.load = function(id) {
 
   var character = cache[id];
   if(character == null) {
-    var url = SA.Settings.API_BASE_URL + '/characters/' + id;
+    var url = SA.Settings.API_BASE_URL + '/characters/' + id + '.json';
     character = new SA.RemoteResource(url);
     cache[id] = character;
   }

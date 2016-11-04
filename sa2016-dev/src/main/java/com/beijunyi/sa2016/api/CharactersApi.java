@@ -33,7 +33,7 @@ public class CharactersApi {
   }
 
   @GET
-  @Path("animations/{id}")
+  @Path("{id}.json")
   @Nonnull
   @Produces(APPLICATION_JSON)
   public Response animation(@PathParam("id") String id) {

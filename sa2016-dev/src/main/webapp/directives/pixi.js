@@ -14,7 +14,7 @@ APP.directive('pixi', function ($parse) {
 
       var stage = new PIXI.Container();
       
-      var animation = SA.Animation.load('Q0v-0-0');
+      var animation = SA.Character.load('Q0v');
 
       animation.x = 200;
       animation.y = 150;

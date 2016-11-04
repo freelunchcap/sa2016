@@ -10,8 +10,7 @@ SA.get = function(url) {
   return {
     success: function(fn) {
       SA.Loader.load(function(ignore, response) {
-        var data = JSON.parse(response[uid].data);
-        fn(data);
+        fn(response[uid].data);
       });
     }
   }

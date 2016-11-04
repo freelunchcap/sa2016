@@ -30,5 +30,5 @@ SA.Action.NOD = new SA.Action('NOD', 11);
 SA.Action.TOSS = new SA.Action('TOSS', 12);
 
 SA.Action.valueOf = function(name) {
-  return SA.Action[name.toUpperCase()];
+  return SA.Action[name];
 };
