@@ -1,26 +1,39 @@
 package com.beijunyi.sa2016.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.Serializer;
 
 public class KryoFactory {
 
-  @Nonnull
-  public static Kryo getInstance() {
-    return Holder.INSTANCE;
+  private static final Map<Class, Serializer> SERIALIZERS = new HashMap<>();
+  private static final ThreadLocal<Kryo> POOL = new ThreadLocal<Kryo>() {
+    @Nonnull
+    @Override
+    protected Kryo initialValue() {
+      return createInstance();
+    }
+  };
+
+  public static void register(Class type, Serializer serializer) {
+    SERIALIZERS.put(type, serializer);
   }
 
-  private static class Holder {
+  @Nonnull
+  private static Kryo createInstance() {
+    Kryo kryo = new Kryo();
+    kryo.setReferences(false);
+    SERIALIZERS.entrySet().stream().forEach((e) -> kryo.register(e.getKey(), e.getValue()));
+    return kryo;
+  }
 
-    private static final Kryo INSTANCE = createInstance();
-
-    @Nonnull
-    private static Kryo createInstance() {
-      Kryo kryo = new Kryo();
-      kryo.setReferences(false);
-      return kryo;
-    }
+  @Nonnull
+  public static Kryo getInstance() {
+    return POOL.get();
   }
 
 }

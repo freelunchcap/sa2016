@@ -4,7 +4,7 @@
   </div>
   <div class="btn-group" uib-dropdown>
     <button type="button" class="btn btn-primary" uib-dropdown-toggle>
-      {{character.action()}}
+      {{character.action().name()}}
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -14,7 +14,7 @@
 
   <div class="btn-group" uib-dropdown>
     <button type="button" class="btn btn-primary" uib-dropdown-toggle>
-      {{character.direction()}}
+      {{character.direction().name()}}
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">

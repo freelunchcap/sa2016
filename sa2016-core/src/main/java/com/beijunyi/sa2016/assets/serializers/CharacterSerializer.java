@@ -1,5 +1,7 @@
 package com.beijunyi.sa2016.assets.serializers;
 
+import java.util.Map;
+import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Action;
@@ -10,18 +12,23 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 
 class CharacterSerializer extends Serializer<Character> {
 
   @Override
   public void write(Kryo kryo, Output output, Character character) {
     output.writeAscii(character.getId());
-    int actions = character.getAnimations().rowKeySet().size();
-    output.writeShort(actions);
-    for(int a = 0; a < actions; a++) {
-      Action action = Action.values()[a];
-      for(Direction direction : Direction.values()) {
-        output.writeAscii(character.getAnimations().get(action, direction));
+    Table<Action, Direction, String> animations = character.getAnimations();
+    Set<Action> rows = animations.rowKeySet();
+    output.writeByte(rows.size());
+    for(Action row : rows) {
+      output.writeByte(row.ordinal());
+      Map<Direction, String> cols = animations.row(row);
+      output.writeByte(cols.size());
+      for(Map.Entry<Direction, String> col : cols.entrySet()) {
+        output.writeByte(col.getKey().ordinal());
+        output.writeAscii(col.getValue());
       }
     }
   }
@@ -30,11 +37,13 @@ class CharacterSerializer extends Serializer<Character> {
   @Override
   public Character read(Kryo kryo, Input input, Class<Character> type) {
     String id = input.readString();
-    int actions = input.readShort();
+    int rows = input.readByte();
     ImmutableTable.Builder<Action, Direction, String> animations = ImmutableTable.builder();
-    for(int a = 0; a < actions; a++) {
-      Action action = Action.values()[a];
-      for(Direction direction : Direction.values()) {
+    for(int row = 0; row < rows; row++) {
+      Action action = Action.values()[input.readByte()];
+      int cols = input.readByte();
+      for(int col = 0; col < cols; col++) {
+        Direction direction = Direction.values()[input.readByte()];
         String animation = input.readString();
         animations.put(action, direction, animation);
       }

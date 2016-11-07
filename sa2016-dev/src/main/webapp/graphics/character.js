@@ -24,6 +24,7 @@ SA.Character.load = function(id, action, direction) {
   var data = SA.CharacterLoader.load(id);
   var ret = new SA.Character(data, action, direction);
   data.then(function() {
+    ret._check();
     ret._init()
   });
   return ret;
@@ -62,16 +63,19 @@ SA.Character.prototype.direction = function(direction) {
   return this._direction;
 };
 
+SA.Character.prototype._check = function() {
+  var lookup = this._data.animations;
+  if(this._action == null || lookup[this._action] == null)
+    this._action = SA.Action.valueOf(this.actions()[0]);
+  if(this._direction == null || lookup[this._action][this._direction] == null)
+    this._direction = SA.Direction.valueOf(this.directions()[0]);
+};
+
 SA.Character.prototype._init = function() {
-  this.removeChildren();
   var data = this._data;
   if(!data._ready) return;
-  var lookup = data.animations;
-  if(this._action == null || lookup[this._action] == null)
-    this._action = this.actions()[0];
-  if(this._direction == null || lookup[this._action][this._direction] == null)
-    this._direction = this.directions()[0];
-  this._animation.current = lookup[this._action][this._direction];
+  this.removeChildren();
+  this._animation.current = data.animations[this._action][this._direction];
   var animation = this._animation;
   var child = animation.cache[this._animation.current];
   if(child == null) {
