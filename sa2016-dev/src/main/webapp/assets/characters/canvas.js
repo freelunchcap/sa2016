@@ -4,24 +4,25 @@ APP.controller('CharacterCanvasCtrl', function($scope, $state) {
   $scope.character = null;
   $scope.setAction = setAction;
   $scope.setDirection = setDirection;
-
+  
   $scope.$watch('pixi.renderer', function(renderer) {
     render(renderer);
   });
 
   function render(renderer) {
     var stage = new PIXI.Container();
-
-    $scope.character = SA.Character.load($state.params.id);
-    $scope.character.on.ready(function() {
-      // $scope.$apply();
+    animate();
+    $scope.$watch(function() {return $state.params}, function(params) {
+      loadCharacter(params.id)
     });
 
-    $scope.character.x = 200;
-    $scope.character.y = 150;
-
-    stage.addChild($scope.character);
-    animate();
+    function loadCharacter(id) {
+      stage.removeChildren();
+      $scope.character = SA.Character.load(id);
+      $scope.character.x = 200;
+      $scope.character.y = 150;
+      stage.addChild($scope.character);
+    }
 
     function animate() {
       requestAnimationFrame(animate);

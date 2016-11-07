@@ -7,9 +7,14 @@ APP.controller('CharactersCtrl', function($scope, $state, GRID, CharactersAPI) {
   ];
 
   function select(item) {
-    $state.go('assets.characters.canvas', {
-      id: item.id
-    });
+    const target = 'assets.characters.canvas';
+    const params = {id: item.id};
+    if($state.current.name == target) {
+      $state.transitionTo(target, params, {notify: false});
+      $scope.$emit('hihihi', {});
+    } else {
+      $state.go(target, params);
+    }
   }
 
 });
