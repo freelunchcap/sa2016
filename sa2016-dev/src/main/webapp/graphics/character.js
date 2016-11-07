@@ -24,7 +24,6 @@ SA.Character.load = function(id, action, direction) {
   var data = SA.CharacterLoader.load(id);
   var ret = new SA.Character(data, action, direction);
   data.then(function() {
-    console.log(data);
     ret._check();
     ret._init()
   });
