@@ -18,7 +18,7 @@ APP.controller('CharacterCanvasCtrl', function($scope, $state) {
 
     function loadCharacter(id) {
       stage.removeChildren();
-      $scope.character = SA.Character.load(id);
+      $scope.character = SA.Character.load(id, SA.Action.WALK, SA.Direction.WEST);
       $scope.character.x = 200;
       $scope.character.y = 150;
       stage.addChild($scope.character);

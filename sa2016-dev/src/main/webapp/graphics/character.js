@@ -2,8 +2,8 @@ SA.Character = function(data, action, direction) {
   var self = this;
 
   self._data = data;
-  self.action(action);
-  self.direction(direction);
+  self._action = SA.Action.valueOf(action);
+  self._direction = SA.Direction.valueOf(direction);
   self._animation = {current: null, cache: {}};
   PIXI.Container.call(this);
 
@@ -24,6 +24,7 @@ SA.Character.load = function(id, action, direction) {
   var data = SA.CharacterLoader.load(id);
   var ret = new SA.Character(data, action, direction);
   data.then(function() {
+    console.log(data);
     ret._check();
     ret._init()
   });
