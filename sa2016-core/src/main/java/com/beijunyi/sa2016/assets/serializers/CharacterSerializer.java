@@ -4,9 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.assets.Action;
+import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.assets.Character;
-import com.beijunyi.sa2016.assets.Direction;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -19,14 +18,14 @@ class CharacterSerializer extends Serializer<Character> {
   @Override
   public void write(Kryo kryo, Output output, Character character) {
     output.writeAscii(character.getId());
-    Table<Action, Direction, String> animations = character.getAnimations();
+    Table<Action, Direction, Animation> animations = character.getAnimations();
     Set<Action> rows = animations.rowKeySet();
     output.writeByte(rows.size());
     for(Action row : rows) {
       output.writeByte(row.ordinal());
-      Map<Direction, String> cols = animations.row(row);
+      Map<Direction, Animation> cols = animations.row(row);
       output.writeByte(cols.size());
-      for(Map.Entry<Direction, String> col : cols.entrySet()) {
+      for(Map.Entry<Direction, Animation> col : cols.entrySet()) {
         output.writeByte(col.getKey().ordinal());
         output.writeAscii(col.getValue());
       }

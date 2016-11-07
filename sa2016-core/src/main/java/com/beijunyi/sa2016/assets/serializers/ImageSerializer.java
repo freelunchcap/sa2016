@@ -13,26 +13,22 @@ class ImageSerializer extends Serializer<Image> {
   @Override
   public void write(Kryo kryo, Output output, Image image) {
     output.writeAscii(image.getId());
-    output.writeAscii(image.getFormat());
+    output.writeAscii(image.getTexture());
     output.writeShort(image.getWidth());
     output.writeShort(image.getHeight());
     output.writeShort(image.getX());
     output.writeShort(image.getY());
-    output.writeInt(image.getData().length);
-    output.writeBytes(image.getData());
   }
 
   @Nonnull
   @Override
   public Image read(Kryo kryo, Input input, Class<Image> type) {
     String id = input.readString();
-    String format = input.readString();
+    String texture = input.readString();
     int width = input.readShort();
     int height = input.readShort();
     int x = input.readShort();
     int y = input.readShort();
-    byte[] data = new byte[input.readInt()];
-    input.readBytes(data);
-    return new Image(id, format, width, height, x, y, data);
+    return new Image(id, texture, width, height, x, y);
   }
 }

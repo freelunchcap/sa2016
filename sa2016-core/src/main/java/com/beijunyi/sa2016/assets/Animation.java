@@ -1,27 +1,53 @@
 package com.beijunyi.sa2016.assets;
 
 import java.util.List;
-
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableList;
+public class Animation {
 
-public class Animation implements Asset {
-
-  private final String id;
+  private final String texture;
+  private final int width;
+  private final int height;
+  private final int x;
+  private final int y;
+  private final int frames;
   private final int duration;
-  private final ImmutableList<Frame> frames;
+  private final List<AudioTrigger> audios;
 
-  public Animation(String id, int duration, ImmutableList<Frame> frames) {
-    this.id = id;
-    this.duration = duration;
+  public Animation(String texture, int width, int height, int x, int y, int frames, int duration, List<AudioTrigger> audios) {
+    this.texture = texture;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
     this.frames = frames;
+    this.duration = duration;
+    this.audios = audios;
   }
 
   @Nonnull
-  @Override
-  public String getId() {
-    return id;
+  public String getTexture() {
+    return texture;
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public int getFrames() {
+    return frames;
   }
 
   public int getDuration() {
@@ -29,29 +55,8 @@ public class Animation implements Asset {
   }
 
   @Nonnull
-  public List<Frame> getFrames() {
-    return frames;
-  }
-
-
-  public static class Frame {
-    private final String image;
-    private final String audio;
-
-    public Frame(String image, String audio) {
-      this.image = image;
-      this.audio = audio;
-    }
-
-    @Nonnull
-    public String getImage() {
-      return image;
-    }
-
-    @Nonnull
-    public String getAudio() {
-      return audio;
-    }
+  public List<AudioTrigger> getAudios() {
+    return audios;
   }
 
 }

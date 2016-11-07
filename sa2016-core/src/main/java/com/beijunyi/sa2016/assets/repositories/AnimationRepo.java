@@ -4,11 +4,11 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.assets.Animation;
+import com.beijunyi.sa2016.assets.Texture;
 import org.mapdb.DB;
 
 @Singleton
-public class AnimationRepo extends AssetRepo<Animation> {
+public class AnimationRepo extends AssetRepo<Texture> {
 
   @Inject
   public AnimationRepo(DB cache) {
@@ -23,8 +23,8 @@ public class AnimationRepo extends AssetRepo<Animation> {
 
   @Nonnull
   @Override
-  protected Class<Animation> type() {
-    return Animation.class;
+  protected Class<Texture> type() {
+    return Texture.class;
   }
 
 

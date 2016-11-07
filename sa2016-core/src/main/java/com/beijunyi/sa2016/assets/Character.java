@@ -2,14 +2,14 @@ package com.beijunyi.sa2016.assets;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 
 public class Character implements Asset {
 
   private final String id;
-  private final ImmutableTable<Action, Direction, String> animations;
+  private final Table<Action, Direction, Animation> animations;
 
-  public Character(String id, ImmutableTable<Action, Direction, String> animations) {
+  public Character(String id, Table<Action, Direction, Animation> animations) {
     this.id = id;
     this.animations = animations;
   }
@@ -21,7 +21,7 @@ public class Character implements Asset {
   }
 
   @Nonnull
-  public ImmutableTable<Action, Direction, String> getAnimations() {
+  public Table<Action, Direction, Animation> getAnimations() {
     return animations;
   }
 

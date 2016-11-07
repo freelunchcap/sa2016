@@ -13,6 +13,7 @@ public class AssetsSerializersModule extends AbstractModule {
     KryoFactory.register(Audio.class, new AudioSerializer());
     KryoFactory.register(Character.class, new CharacterSerializer());
     KryoFactory.register(Image.class, new ImageSerializer());
+    KryoFactory.register(Texture.class, new TextureSerializer());
   }
 
 }

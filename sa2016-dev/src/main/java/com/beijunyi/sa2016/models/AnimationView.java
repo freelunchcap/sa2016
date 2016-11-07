@@ -4,25 +4,25 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.assets.Animation;
+import com.beijunyi.sa2016.assets.Texture;
 import com.beijunyi.sa2016.assets.Audio;
 import com.beijunyi.sa2016.assets.Image;
 
 class AnimationView {
 
-  private final Animation animation;
+  private final Texture texture;
   private final Collection<Image> images;
   private final Collection<Audio> audios;
 
-  AnimationView(Animation animation, Collection<Image> images, Collection<Audio> audios) {
-    this.animation = animation;
+  AnimationView(Texture texture, Collection<Image> images, Collection<Audio> audios) {
+    this.texture = texture;
     this.images = images;
     this.audios = audios;
   }
 
   @Nonnull
-  public Animation getAnimation() {
-    return animation;
+  public Texture getTexture() {
+    return texture;
   }
 
   @Nonnull
