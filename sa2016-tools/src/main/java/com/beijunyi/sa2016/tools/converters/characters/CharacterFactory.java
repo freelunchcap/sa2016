@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.assets.Character;
-import com.beijunyi.sa2016.assets.repositories.AnimationRepo;
+import com.beijunyi.sa2016.assets.repositories.TextureRepo;
 import com.beijunyi.sa2016.tools.legacy.Spr;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -18,10 +18,10 @@ class CharacterFactory {
   private static final Logger LOG = LoggerFactory.getLogger(CharacterFactory.class);
 
   private final AnimationFactory factory;
-  private final AnimationRepo repo;
+  private final TextureRepo repo;
 
   @Inject
-  public CharacterFactory(AnimationFactory factory, AnimationRepo repo) {
+  public CharacterFactory(AnimationFactory factory, TextureRepo repo) {
     this.factory = factory;
     this.repo = repo;
   }

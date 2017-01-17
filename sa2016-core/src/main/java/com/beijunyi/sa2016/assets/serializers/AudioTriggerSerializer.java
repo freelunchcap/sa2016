@@ -13,19 +13,16 @@ class AudioTriggerSerializer extends Serializer<AudioTrigger> {
 
   @Override
   public void write(Kryo kryo, Output output, AudioTrigger trigger) {
-    output.writeAscii(trigger.getId());
-    output.writeAscii(trigger.getFormat());
-    output.writeInt(trigger.getBytes().length);
-    output.writeBytes(trigger.getBytes());
+    output.writeShort(trigger.getFrame());
+    output.writeAscii(trigger.getAudio());
   }
 
   @Nonnull
   @Override
-  public AudioTrigger read(Kryo kryo, Input input, Class<Audio> type) {
-    return new Audio(
-                      input.readString(),
-                      input.readString(),
-                      input.readBytes(input.readInt())
+  public AudioTrigger read(Kryo kryo, Input input, Class<AudioTrigger> type) {
+    return new AudioTrigger(
+                      input.readShort(),
+                      input.readString()
     );
   }
 }

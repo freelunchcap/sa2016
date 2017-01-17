@@ -2,6 +2,4 @@ rootProject.name = 'sa2016'
 
 include 'sa2016-core'
 include 'sa2016-tools'
-include 'sa2016-dev'
-include 'sa2016-js'
 

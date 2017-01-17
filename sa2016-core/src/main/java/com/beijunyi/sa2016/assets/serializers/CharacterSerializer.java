@@ -27,7 +27,7 @@ class CharacterSerializer extends Serializer<Character> {
       output.writeByte(cols.size());
       for(Map.Entry<Direction, Animation> col : cols.entrySet()) {
         output.writeByte(col.getKey().ordinal());
-        output.writeAscii(col.getValue());
+        kryo.writeObject(output, col.getValue());
       }
     }
   }
@@ -37,13 +37,13 @@ class CharacterSerializer extends Serializer<Character> {
   public Character read(Kryo kryo, Input input, Class<Character> type) {
     String id = input.readString();
     int rows = input.readByte();
-    ImmutableTable.Builder<Action, Direction, String> animations = ImmutableTable.builder();
+    ImmutableTable.Builder<Action, Direction, Animation> animations = ImmutableTable.builder();
     for(int row = 0; row < rows; row++) {
       Action action = Action.values()[input.readByte()];
       int cols = input.readByte();
       for(int col = 0; col < cols; col++) {
         Direction direction = Direction.values()[input.readByte()];
-        String animation = input.readString();
+        Animation animation = kryo.readObject(input, Animation.class);
         animations.put(action, direction, animation);
       }
     }
