@@ -3,8 +3,9 @@ package com.beijunyi.sa2016.assets;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-public class Animation {
+public class Animation implements Asset {
 
+  private final String id;
   private final String texture;
   private final int width;
   private final int height;
@@ -14,7 +15,8 @@ public class Animation {
   private final int duration;
   private final List<AudioTrigger> audios;
 
-  public Animation(String texture, int width, int height, int x, int y, int frames, int duration, List<AudioTrigger> audios) {
+  public Animation(String id, String texture, int width, int height, int x, int y, int frames, int duration, List<AudioTrigger> audios) {
+    this.id = id;
     this.texture = texture;
     this.width = width;
     this.height = height;
@@ -23,6 +25,12 @@ public class Animation {
     this.frames = frames;
     this.duration = duration;
     this.audios = audios;
+  }
+
+  @Nonnull
+  @Override
+  public String getId() {
+    return id;
   }
 
   @Nonnull

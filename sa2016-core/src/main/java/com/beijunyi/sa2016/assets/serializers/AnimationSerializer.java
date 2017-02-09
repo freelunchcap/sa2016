@@ -15,6 +15,7 @@ class AnimationSerializer extends Serializer<Animation> {
 
   @Override
   public void write(Kryo kryo, Output output, Animation animation) {
+    output.writeAscii(animation.getId());
     output.writeAscii(animation.getTexture());
     output.writeShort(animation.getWidth());
     output.writeShort(animation.getHeight());
@@ -29,6 +30,7 @@ class AnimationSerializer extends Serializer<Animation> {
   @Nonnull
   @Override
   public Animation read(Kryo kryo, Input input, Class<Animation> type) {
+    String id = input.readString();
     String texture = input.readString();
     int width = input.readShort();
     int height = input.readShort();
@@ -39,6 +41,6 @@ class AnimationSerializer extends Serializer<Animation> {
     int count = input.readShort();
     ImmutableList.Builder<AudioTrigger> audios = ImmutableList.builder();
     while(count-- > 0) audios.add(kryo.readObject(input, AudioTrigger.class));
-    return new Animation(texture, width, height, x, y, frames, duration, audios.build());
+    return new Animation(id, texture, width, height, x, y, frames, duration, audios.build());
   }
 }
