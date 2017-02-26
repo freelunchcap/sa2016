@@ -7,7 +7,6 @@ import com.beijunyi.sa2016.assets.Animation;
 import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.Texture;
 import com.beijunyi.sa2016.tools.legacy.Spr;
-import com.beijunyi.sa2016.tools.utils.Base62;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ class AnimationFactory {
       LOG.warn("Animation {} has invalid audio id {}", id, image);
       audio = 0;
     }
-    return new Texture.Frame(Base62.encode(image), Base62.encode(audio));
+    return new Texture.Frame(image, audio);
   }
 
 }

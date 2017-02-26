@@ -1,29 +1,14 @@
-package com.beijunyi.sa2016.tools.converters.images;
+package com.beijunyi.sa2016.tools.converters.textures;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.legacy.*;
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
-import com.beijunyi.sa2016.utils.KryoFactory;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
+import com.beijunyi.sa2016.tools.legacy.Palet;
 import com.google.common.collect.ImmutableList;
 
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.PALET;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
-import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
-import static java.lang.System.arraycopy;
 
-@Singleton
-class ImageRenderer {
+final class TextureUtils {
 
   private static final ImmutableList<Color> FIXED_HEAD
     = ImmutableList.of(
@@ -65,37 +50,7 @@ class ImageRenderer {
     new Color(255, 255, 255)
   );
 
-  private static final Kryo KRYO = KryoFactory.getInstance();
-  private final ImmutableList<Color> colors;
-
-  @Inject
-  public ImageRenderer(ResourcesProvider resources) throws IOException {
-    colors = readPalette(resources.getClientResource(PALET));
-  }
-
-  @Nonnull
-  RenderedImage render(ImageAsset image) {
-    Real real = image.getData();
-    int width = real.getWidth();
-    int height = real.getHeight();
-    byte[] bitmap = new byte[width * height];
-    readBitmap(real, bitmap);
-    BufferedImage ret = new BufferedImage(width, height, TYPE_INT_ARGB);
-    for(int i = 0; i < width * height; i++) {
-      int color = uint8(bitmap[i]);
-      if(color != 0) ret.setRGB(i % width, height - 1 - i / width, colors.get(color).getRGB());
-    }
-    return ret;
-  }
-
-  private static void readBitmap(Real real, byte[] bitmap) {
-    if(real.getMajor() == 1)
-      readBitmap(real.getData(), bitmap);
-    else
-      arraycopy(real.getData(), 0, bitmap, 0, bitmap.length);
-  }
-
-  private static void readBitmap(byte[] src, byte[] bitmap) {
+  static void decodeBitmap(byte[] src, byte[] bitmap) {
     int length = src.length;
     int readPos = 0;
     int writePos = 0;
@@ -179,16 +134,7 @@ class ImageRenderer {
   }
 
   @Nonnull
-  private static ImmutableList<Color> readPalette(Path file) throws IOException {
-    Palet palet;
-    try(Input input = new Input(Files.newInputStream(file))) {
-      palet = KRYO.readObject(input, Palet.class);
-    }
-    return readPalette(palet);
-  }
-
-  @Nonnull
-  private static ImmutableList<Color> readPalette(Palet palet) {
+  static ImmutableList<Color> makePalette(Palet palet) {
     ImmutableList.Builder<Color> builder = ImmutableList.builder();
     builder.addAll(FIXED_HEAD);
     builder.addAll(palet.getColors());

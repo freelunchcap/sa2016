@@ -1,17 +1,15 @@
 package com.beijunyi.sa2016.assets;
 
-import javax.annotation.Nonnull;
-
 public class Image implements Asset {
 
-  private final String id;
-  private final String texture;
+  private final int id;
+  private final int texture;
   private final int x;
   private final int y;
   private final int width;
   private final int height;
 
-  public Image(String id, String texture, int width, int height, int x, int y) {
+  public Image(int id, int texture, int width, int height, int x, int y) {
     this.id = id;
     this.texture = texture;
     this.width = width;
@@ -20,14 +18,12 @@ public class Image implements Asset {
     this.y = y;
   }
 
-  @Nonnull
   @Override
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  @Nonnull
-  public String getTexture() {
+  public int getTexture() {
     return texture;
   }
 

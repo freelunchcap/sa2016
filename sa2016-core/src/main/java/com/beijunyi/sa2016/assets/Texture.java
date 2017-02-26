@@ -4,19 +4,18 @@ import javax.annotation.Nonnull;
 
 public class Texture implements Asset {
 
-  private final String id;
+  private final int id;
   private final String format;
   private final byte[] data;
 
-  public Texture(String id, String format, byte[] data) {
+  public Texture(int id, String format, byte[] data) {
     this.id = id;
     this.format = format;
     this.data = data;
   }
 
-  @Nonnull
   @Override
-  public String getId() {
+  public int getId() {
     return id;
   }
 

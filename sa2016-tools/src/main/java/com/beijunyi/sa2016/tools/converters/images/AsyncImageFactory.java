@@ -11,16 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Singleton
-public class ImageExtractor implements AssetExtractor {
+public class AsyncImageFactory implements AssetExtractor {
 
   private static final ExecutorService THREADS = ThreadPoolFactory.getInstance();
-  private static final Logger LOG = LoggerFactory.getLogger(ImageExtractor.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AsyncImageFactory.class);
 
   private final ImageLocator locator;
   private final ImageExtractionTaskFactory tasks;
 
   @Inject
-  public ImageExtractor(ImageLocator locator, ImageExtractionTaskFactory tasks) {
+  public AsyncImageFactory(ImageLocator locator, ImageExtractionTaskFactory tasks) {
     this.locator = locator;
     this.tasks = tasks;
   }
@@ -42,8 +42,5 @@ public class ImageExtractor implements AssetExtractor {
         }
       });
   }
-
-
-
 
 }

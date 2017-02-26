@@ -17,15 +17,14 @@ import org.mapdb.DB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.mapdb.Serializer.BYTE_ARRAY;
-import static org.mapdb.Serializer.STRING_ASCII;
+import static org.mapdb.Serializer.*;
 
 public abstract class AssetRepo<A extends Asset> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 
   private static final Kryo KRYO = KryoFactory.getInstance();
-  private final BTreeMap<String, byte[]> store;
+  private final BTreeMap<Integer, byte[]> store;
 
   AssetRepo(DB cache) {
     this.store = createStore(cache);
@@ -40,12 +39,12 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   @Nonnull
-  public ImmutableList<A> list(@Nullable String start, @Nullable String dir, @Nullable Integer max) {
-    Iterator<Map.Entry<String, byte[]>> iterator = iterate(start, dir);
+  public ImmutableList<A> list(@Nullable Integer start, @Nullable String dir, @Nullable Integer max) {
+    Iterator<Map.Entry<Integer, byte[]>> iterator = iterate(start, dir);
     int remain = max == null ? 10 : max;
     ImmutableList.Builder<A> ret = ImmutableList.builder();
     while(remain-- > 0 && iterator.hasNext()) {
-      Map.Entry<String, byte[]> entry = iterator.next();
+      Map.Entry<Integer, byte[]> entry = iterator.next();
       A asset = readObject(entry.getValue());
       if(asset == null) {
         LOG.warn("Missing asset {}", entry.getKey());
@@ -57,12 +56,12 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   @Nullable
-  public A get(String id) {
+  public A get(int id) {
     return readObject(store.get(id));
   }
 
   @Nonnull
-  private Iterator<Map.Entry<String, byte[]>> iterate(@Nullable String start, @Nullable String dir) {
+  private Iterator<Map.Entry<Integer, byte[]>> iterate(@Nullable Integer start, @Nullable String dir) {
     if(dir == null) dir = "gte";
     dir = dir.toLowerCase();
     boolean inclusive = dir.endsWith("e");
@@ -88,9 +87,9 @@ public abstract class AssetRepo<A extends Asset> {
   protected abstract Class<A> type();
 
   @Nonnull
-  private BTreeMap<String, byte[]> createStore(DB cache) {
+  private BTreeMap<Integer, byte[]> createStore(DB cache) {
     return cache.treeMap(namespace())
-             .keySerializer(STRING_ASCII)
+             .keySerializer(INTEGER)
              .valueSerializer(BYTE_ARRAY)
              .createOrOpen();
   }
