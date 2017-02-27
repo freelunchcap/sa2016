@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.Texture;
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
-import com.beijunyi.sa2016.tools.converters.textures.TextureFactory;
+import com.beijunyi.sa2016.tools.converters.graphics.BitmapRenderer;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.beijunyi.sa2016.tools.legacy.Real;
 import com.beijunyi.sa2016.utils.KryoFactory;
@@ -26,13 +26,13 @@ class ImageExtractionTask implements Callable<Image> {
 
   private final Adrn entry;
   private final Path archive;
-  private final TextureFactory textureFactory;
+  private final BitmapRenderer bitmapRenderer;
   private final ImageRepo repo;
 
-  ImageExtractionTask(Path archive, Adrn entry, TextureFactory textureFactory, ImageRepo repo) {
+  ImageExtractionTask(Path archive, Adrn entry, BitmapRenderer bitmapRenderer, ImageRepo repo) {
     this.archive = archive;
     this.entry = entry;
-    this.textureFactory = textureFactory;
+    this.bitmapRenderer = bitmapRenderer;
     this.repo = repo;
   }
 
@@ -42,7 +42,7 @@ class ImageExtractionTask implements Callable<Image> {
     Image image = repo.get(entry.getUid());
     if(image == null) {
       ImageAsset legacy = readAsset();
-      Texture texture = textureFactory.createTexture(legacy);
+      Texture texture = bitmapRenderer.createTexture(legacy);
       Adrn index = legacy.getIndex();
       image = new Image(legacy.getId(), texture.getId(), index.getWidth(), index.getHeight(), index.getXOffset(), index.getYOffset());
     }

@@ -15,7 +15,7 @@ public class LegacyAssetsSerializerModule extends AbstractModule {
   private static void registerSerializers() {
     KryoFactory.register(Adrn.class, new AdrnSerializer());
     KryoFactory.register(Ls2Map.class, new Ls2MapSerializer());
-    KryoFactory.register(Palet.class, new PaletSerializer());
+    KryoFactory.register(LegacyPalet.class, new PaletSerializer());
     KryoFactory.register(Real.class, new RealSerializer());
     KryoFactory.register(SprAdrn.class, new SprAdrnSerializer());
     KryoFactory.register(Spr.class, new SprSerializer());

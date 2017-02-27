@@ -6,11 +6,11 @@ import com.google.common.collect.ImmutableList;
 
 import java.awt.*;
 
-public class Palet {
+public class LegacyPalet {
 
   private final ImmutableList<Color> colors;
 
-  public Palet(ImmutableList<Color> colors) {
+  public LegacyPalet(ImmutableList<Color> colors) {
     this.colors = colors;
   }
 

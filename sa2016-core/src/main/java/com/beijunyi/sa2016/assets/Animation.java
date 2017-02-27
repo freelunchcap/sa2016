@@ -5,8 +5,8 @@ import javax.annotation.Nonnull;
 
 public class Animation implements Asset {
 
-  private final String id;
-  private final String texture;
+  private final int id;
+  private final int texture;
   private final int width;
   private final int height;
   private final int x;
@@ -15,7 +15,7 @@ public class Animation implements Asset {
   private final int duration;
   private final List<AudioTrigger> audios;
 
-  public Animation(String id, String texture, int width, int height, int x, int y, int frames, int duration, List<AudioTrigger> audios) {
+  public Animation(int id, int texture, int width, int height, int x, int y, int frames, int duration, List<AudioTrigger> audios) {
     this.id = id;
     this.texture = texture;
     this.width = width;
@@ -27,14 +27,12 @@ public class Animation implements Asset {
     this.audios = audios;
   }
 
-  @Nonnull
   @Override
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  @Nonnull
-  public String getTexture() {
+  public int getTexture() {
     return texture;
   }
 

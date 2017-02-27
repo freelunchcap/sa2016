@@ -5,7 +5,6 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.assets.Character;
-import com.beijunyi.sa2016.assets.repositories.TextureRepo;
 import com.beijunyi.sa2016.tools.legacy.Spr;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;

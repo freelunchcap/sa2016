@@ -1,46 +1,32 @@
-package com.beijunyi.sa2016.tools.converters.textures;
+package com.beijunyi.sa2016.tools.converters.graphics;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Texture;
-import com.beijunyi.sa2016.assets.repositories.TextureRepo;
 import com.beijunyi.sa2016.tools.converters.images.ImageAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
-import com.beijunyi.sa2016.utils.KryoFactory;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.google.common.collect.ImmutableList;
 
 import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
-import static com.beijunyi.sa2016.tools.converters.textures.TextureUtils.decodeBitmap;
-import static com.beijunyi.sa2016.tools.converters.textures.TextureUtils.makePalette;
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.PALET;
+import static com.beijunyi.sa2016.tools.converters.graphics.RunLengthDecoder.decodeBitmap;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.arraycopy;
 
 @Singleton
-public class TextureFactory {
+public class BitmapRenderer {
 
-  private static final Kryo KRYO = KryoFactory.getInstance();
-
-  private final TextureRepo textureRepo;
-  private final ImmutableList<Color> colors;
+  private final Palette palette;
 
   @Inject
-  public TextureFactory(TextureRepo textureRepo, ResourcesProvider resources) throws IOException {
-    colors = readPalette(resources.getClientResource(PALET));
-    this.textureRepo = textureRepo;
+  public BitmapRenderer(Palette palette) throws IOException {
+    this.palette = palette;
   }
 
   @Nonnull
@@ -84,15 +70,6 @@ public class TextureFactory {
     } else {
       arraycopy(real.getData(), 0, bitmap, 0, bitmap.length);
     }
-  }
-
-  @Nonnull
-  private static ImmutableList<Color> readPalette(Path file) throws IOException {
-    Palet palet;
-    try(Input input = new Input(Files.newInputStream(file))) {
-      palet = KRYO.readObject(input, Palet.class);
-    }
-    return makePalette(palet);
   }
 
 }

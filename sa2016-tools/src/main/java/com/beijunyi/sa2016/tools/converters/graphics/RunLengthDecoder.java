@@ -1,54 +1,8 @@
-package com.beijunyi.sa2016.tools.converters.textures;
-
-import java.awt.*;
-import javax.annotation.Nonnull;
-
-import com.beijunyi.sa2016.tools.legacy.Palet;
-import com.google.common.collect.ImmutableList;
+package com.beijunyi.sa2016.tools.converters.graphics;
 
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 
-final class TextureUtils {
-
-  private static final ImmutableList<Color> FIXED_HEAD
-    = ImmutableList.of(
-    new Color(  0,   0,   0),
-    new Color(132,   4,   0),
-    new Color(  0, 134,   0),
-    new Color(132, 134,   0),
-    new Color(  0,   4, 132),
-    new Color(132,   4, 132),
-    new Color(  0, 134, 132),
-    new Color(192, 192, 192),
-    new Color(198, 223, 198),
-    new Color(165, 207, 247),
-    new Color(222,   4,   0),
-    new Color(255,  93,   0),
-    new Color(255, 255, 165),
-    new Color(  0,  93, 214),
-    new Color( 82, 215, 255),
-    new Color( 41, 231,  41)
-  );
-
-  private static final ImmutableList<Color> FIXED_TAIL
-    = ImmutableList.of(
-    new Color(247, 199, 148),
-    new Color(231, 166,  90),
-    new Color(198, 125,  66),
-    new Color(156,  85,  24),
-    new Color( 66,  69,  49),
-    new Color( 41,  36,  24),
-    new Color(255, 255, 247),
-    new Color(165, 166, 165),
-    new Color(132, 134, 132),
-    new Color(255,   4,   0),
-    new Color(  0, 255,   0),
-    new Color(255, 255,   0),
-    new Color(  0,   4, 255),
-    new Color(255,   4, 255),
-    new Color(  0, 255, 255),
-    new Color(255, 255, 255)
-  );
+final class RunLengthDecoder {
 
   static void decodeBitmap(byte[] src, byte[] bitmap) {
     int length = src.length;
@@ -131,15 +85,6 @@ final class TextureUtils {
         }
       }
     }
-  }
-
-  @Nonnull
-  static ImmutableList<Color> makePalette(Palet palet) {
-    ImmutableList.Builder<Color> builder = ImmutableList.builder();
-    builder.addAll(FIXED_HEAD);
-    builder.addAll(palet.getColors());
-    builder.addAll(FIXED_TAIL);
-    return builder.build();
   }
 
 }
