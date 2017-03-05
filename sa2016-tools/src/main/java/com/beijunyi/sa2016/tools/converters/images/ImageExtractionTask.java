@@ -9,8 +9,7 @@ import java.util.concurrent.Callable;
 
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.assets.Image;
-import com.beijunyi.sa2016.assets.Texture;
+import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
 import com.beijunyi.sa2016.tools.converters.graphics.BitmapRenderer;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
@@ -20,7 +19,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import static java.nio.file.StandardOpenOption.READ;
 
-class ImageExtractionTask implements Callable<Image> {
+class ImageExtractionTask implements Callable<Sprite> {
 
   private static final Kryo KRYO = KryoFactory.getInstance();
 
@@ -38,15 +37,15 @@ class ImageExtractionTask implements Callable<Image> {
 
   @Nonnull
   @Override
-  public Image call() {
-    Image image = repo.get(entry.getUid());
-    if(image == null) {
+  public Sprite call() {
+    Sprite sprite = repo.get(entry.getUid());
+    if(sprite == null) {
       ImageAsset legacy = readAsset();
       Texture texture = bitmapRenderer.createTexture(legacy);
       Adrn index = legacy.getIndex();
-      image = new Image(legacy.getId(), texture.getId(), index.getWidth(), index.getHeight(), index.getXOffset(), index.getYOffset());
+      sprite = new Sprite(legacy.getId(), texture.getId(), index.getWidth(), index.getHeight(), index.getXOffset(), index.getYOffset());
     }
-    return image;
+    return sprite;
   }
 
   @Nonnull

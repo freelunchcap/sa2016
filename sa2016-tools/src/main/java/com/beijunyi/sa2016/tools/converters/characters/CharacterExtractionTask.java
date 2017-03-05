@@ -50,15 +50,15 @@ class CharacterExtractionTask implements Runnable {
 
   @Nonnull
   private CharacterAsset readAsset() throws IOException {
-    ImmutableTable.Builder<Action, Direction, Spr> ret = ImmutableTable.builder();
+    ImmutableTable.Builder<ActType, Direction, Spr> ret = ImmutableTable.builder();
     try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
       channel.position(entry.getAddress());
       Input input = new Input(Channels.newInputStream(channel));
       for(int a = 0; a < entry.getAnimations(); a++) {
         Spr spr = KRYO.readObject(input, Spr.class);
-        Action action = Action.values()[spr.getAction()];
+        ActType actType = ActType.values()[spr.getAction()];
         Direction direction = Direction.values()[spr.getDirection()];
-        ret.put(action, direction, spr);
+        ret.put(actType, direction, spr);
       }
     }
     return new CharacterAsset(entry, ret.build());

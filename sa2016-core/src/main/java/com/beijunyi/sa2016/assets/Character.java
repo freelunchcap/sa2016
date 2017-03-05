@@ -1,28 +1,28 @@
 package com.beijunyi.sa2016.assets;
 
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.Table;
 
 public class Character implements Asset {
 
-  private final String id;
-  private final Table<Action, Direction, Animation> animations;
+  private final int id;
+  private final Map<ActType, Act> acts;
 
-  public Character(String id, Table<Action, Direction, Animation> animations) {
+  public Character(int id, Map<ActType, Act> acts) {
     this.id = id;
-    this.animations = animations;
+    this.acts = acts;
   }
 
-  @Nonnull
   @Override
-  public String getId() {
+  public int getId() {
     return id;
   }
 
   @Nonnull
-  public Table<Action, Direction, Animation> getAnimations() {
-    return animations;
+  public Map<ActType, Act> getActs() {
+    return acts;
   }
 
 }

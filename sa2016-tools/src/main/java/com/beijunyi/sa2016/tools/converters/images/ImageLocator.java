@@ -57,7 +57,7 @@ class ImageLocator {
         if(keys.add(adrn.getUid())) {
           adrns.put(adrn.getUid(), adrn);
         } else {
-          LOG.warn("Duplicate Image Key: " + adrn.getUid());
+          LOG.warn("Duplicate Sprite Key: " + adrn.getUid());
         }
       }
     }

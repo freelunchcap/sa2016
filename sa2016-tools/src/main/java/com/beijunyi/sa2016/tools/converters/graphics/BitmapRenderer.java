@@ -1,6 +1,5 @@
 package com.beijunyi.sa2016.tools.converters.graphics;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.assets.Texture;
 import com.beijunyi.sa2016.tools.converters.images.ImageAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
 

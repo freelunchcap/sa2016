@@ -2,21 +2,14 @@ package com.beijunyi.sa2016.assets;
 
 import javax.annotation.Nonnull;
 
-public class Texture implements Asset {
+public class Media {
 
-  private final int id;
   private final String format;
   private final byte[] data;
 
-  public Texture(int id, String format, byte[] data) {
-    this.id = id;
+  public Media(String format, byte[] data) {
     this.format = format;
     this.data = data;
-  }
-
-  @Override
-  public int getId() {
-    return id;
   }
 
   @Nonnull

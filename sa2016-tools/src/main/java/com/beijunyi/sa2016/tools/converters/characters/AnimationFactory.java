@@ -3,9 +3,7 @@ package com.beijunyi.sa2016.tools.converters.characters;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.assets.Animation;
-import com.beijunyi.sa2016.assets.Image;
-import com.beijunyi.sa2016.assets.Texture;
+import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.legacy.Spr;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
@@ -24,7 +22,7 @@ class AnimationFactory {
   }
 
   @Nonnull
-  private static Image convert(String id, Spr.Frame frame) {
+  private static Sprite convert(String id, Spr.Frame frame) {
     int image = frame.getImage();
     int audio = Math.max(frame.getImpactAudio(), frame.getDodgeAudio());
     if(image < 0) {

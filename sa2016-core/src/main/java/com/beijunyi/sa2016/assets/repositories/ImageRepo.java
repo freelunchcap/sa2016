@@ -4,11 +4,11 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.assets.Image;
+import com.beijunyi.sa2016.assets.Sprite;
 import org.mapdb.*;
 
 @Singleton
-public class ImageRepo extends AssetRepo<Image> {
+public class ImageRepo extends AssetRepo<Sprite> {
 
   @Inject
   public ImageRepo(DB cache) {
@@ -23,8 +23,8 @@ public class ImageRepo extends AssetRepo<Image> {
 
   @Nonnull
   @Override
-  protected Class<Image> type() {
-    return Image.class;
+  protected Class<Sprite> type() {
+    return Sprite.class;
   }
 
 

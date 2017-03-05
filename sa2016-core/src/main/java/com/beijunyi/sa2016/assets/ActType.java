@@ -1,6 +1,6 @@
 package com.beijunyi.sa2016.assets;
 
-public enum Action {
+public enum ActType {
   ATTACK,
   INJURED,
   FAINT,
@@ -13,5 +13,6 @@ public enum Action {
   SAD,
   DEFENSE,
   NOD,
-  TOSS
+  TOSS,
+  SINGLETON,
 }
