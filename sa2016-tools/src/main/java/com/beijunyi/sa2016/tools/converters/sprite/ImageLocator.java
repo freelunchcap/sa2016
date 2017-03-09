@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.images;
+package com.beijunyi.sa2016.tools.converters.sprite;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +14,6 @@ import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

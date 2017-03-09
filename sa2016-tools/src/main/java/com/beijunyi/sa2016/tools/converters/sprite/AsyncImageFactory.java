@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.images;
+package com.beijunyi.sa2016.tools.converters.sprite;
 
 import java.util.concurrent.ExecutorService;
 import javax.annotation.Nonnull;
@@ -28,7 +28,7 @@ public class AsyncImageFactory implements AssetExtractor {
   @Nonnull
   @Override
   public String name() {
-    return "images";
+    return "sprite";
   }
 
   @Override

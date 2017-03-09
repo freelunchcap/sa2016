@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.images;
+package com.beijunyi.sa2016.tools.converters.sprite;
 
 import java.io.IOException;
 import java.nio.channels.Channels;
@@ -40,20 +40,20 @@ class ImageExtractionTask implements Callable<Sprite> {
   public Sprite call() {
     Sprite sprite = repo.get(entry.getUid());
     if(sprite == null) {
-      ImageAsset legacy = readAsset();
+      SpriteAsset legacy = readAsset();
       Texture texture = bitmapRenderer.createTexture(legacy);
-      Adrn index = legacy.getIndex();
+      Adrn index = legacy.getHeader();
       sprite = new Sprite(legacy.getId(), texture.getId(), index.getWidth(), index.getHeight(), index.getXOffset(), index.getYOffset());
     }
     return sprite;
   }
 
   @Nonnull
-  private ImageAsset readAsset() {
+  private SpriteAsset readAsset() {
     try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
       channel.position(entry.getAddress());
       Input input = new Input(Channels.newInputStream(channel));
-      return new ImageAsset(entry, KRYO.readObject(input, Real.class));
+      return new SpriteAsset(entry, KRYO.readObject(input, Real.class));
     } catch(IOException e) {
       throw new IllegalStateException(e);
     }

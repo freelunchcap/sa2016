@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.converters.images.ImageAsset;
+import com.beijunyi.sa2016.tools.converters.sprite.SpriteAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
 
 import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
@@ -28,7 +28,7 @@ public class BitmapRenderer {
   }
 
   @Nonnull
-  public Texture createTexture(ImageAsset asset) {
+  public Texture createTexture(SpriteAsset asset) {
     Texture texture = textureRepo.get(asset.getId());
     if(texture == null) {
       texture = renderTexture(asset);
@@ -37,7 +37,7 @@ public class BitmapRenderer {
   }
 
   @Nonnull
-  private Texture renderTexture(ImageAsset asset) {
+  private Texture renderTexture(SpriteAsset asset) {
     Real real = asset.getData();
     int width = real.getWidth();
     int height = real.getHeight();

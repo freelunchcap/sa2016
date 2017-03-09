@@ -1,7 +1,7 @@
 package com.beijunyi.sa2016.tools.converters;
 
 import com.beijunyi.sa2016.tools.converters.characters.CharacterExtractor;
-import com.beijunyi.sa2016.tools.converters.images.AsyncImageFactory;
+import com.beijunyi.sa2016.tools.converters.sprite.AsyncImageFactory;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.AbstractModule;
