@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Sprite;
-import com.beijunyi.sa2016.assets.repositories.ImageRepo;
+import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
 import com.beijunyi.sa2016.tools.converters.graphics.BitmapRenderer;
 import com.beijunyi.sa2016.tools.legacy.Adrn;
 import com.beijunyi.sa2016.tools.legacy.Real;
@@ -26,9 +26,9 @@ class ImageExtractionTask implements Callable<Sprite> {
   private final Adrn entry;
   private final Path archive;
   private final BitmapRenderer bitmapRenderer;
-  private final ImageRepo repo;
+  private final SpriteRepo repo;
 
-  ImageExtractionTask(Path archive, Adrn entry, BitmapRenderer bitmapRenderer, ImageRepo repo) {
+  ImageExtractionTask(Path archive, Adrn entry, BitmapRenderer bitmapRenderer, SpriteRepo repo) {
     this.archive = archive;
     this.entry = entry;
     this.bitmapRenderer = bitmapRenderer;

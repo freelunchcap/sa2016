@@ -27,8 +27,8 @@ class ImageLocator {
   private static final Logger LOG = LoggerFactory.getLogger(ImageLocator.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final ImmutableMap<Integer, Adrn> lookup;
-  private final ImmutableMap<Integer, Integer> tiles;
+  private final Map<Integer, Adrn> lookup;
+  private final Map<Integer, Integer> tiles;
 
   @Inject
   public ImageLocator(ResourcesProvider resources) throws IOException {
@@ -37,7 +37,7 @@ class ImageLocator {
   }
 
   @Nonnull
-  ImmutableCollection<Adrn> imageAssets() {
+  Collection<Adrn> imageAssets() {
     return lookup.values();
   }
 
@@ -48,7 +48,7 @@ class ImageLocator {
   }
 
   @Nonnull
-  private static ImmutableMap<Integer, Adrn> readIndex(Path file) throws IOException {
+  private static Map<Integer, Adrn> readIndex(Path file) throws IOException {
     ImmutableMap.Builder<Integer, Adrn> adrns = ImmutableMap.builder();
     Set<Integer> keys = new HashSet<>();
     try(Input input = new Input(Files.newInputStream(file))) {
@@ -65,7 +65,7 @@ class ImageLocator {
   }
 
   @Nonnull
-  private static ImmutableMap<Integer, Integer> indexTiles(Collection<Adrn> adrns) {
+  private static Map<Integer, Integer> indexTiles(Collection<Adrn> adrns) {
     ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
     Set<Integer> keys = new HashSet<>();
     for(Adrn adrn : adrns) {

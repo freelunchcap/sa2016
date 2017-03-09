@@ -3,8 +3,7 @@ package com.beijunyi.sa2016.tools.converters.characters;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +26,7 @@ class CharacterLocator {
   private static final Logger LOG = LoggerFactory.getLogger(CharacterLocator.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final ImmutableMap<Integer, SprAdrn> lookup;
+  private final Map<Integer, SprAdrn> lookup;
 
   @Inject
   public CharacterLocator(ResourcesProvider resources) throws IOException {
@@ -35,12 +34,12 @@ class CharacterLocator {
   }
 
   @Nonnull
-  ImmutableCollection<SprAdrn> assets() {
+  Collection<SprAdrn> assets() {
     return lookup.values();
   }
 
   @Nonnull
-  private ImmutableMap<Integer, SprAdrn> readIndex(Path file) throws IOException {
+  private Map<Integer, SprAdrn> readIndex(Path file) throws IOException {
     ImmutableMap.Builder<Integer, SprAdrn> ret = ImmutableMap.builder();
     Set<Integer> keys = new HashSet<>();
     try(Input input = new Input(Files.newInputStream(file))) {

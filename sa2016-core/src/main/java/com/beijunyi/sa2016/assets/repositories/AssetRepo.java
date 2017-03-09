@@ -1,6 +1,7 @@
 package com.beijunyi.sa2016.assets.repositories;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +40,7 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   @Nonnull
-  public ImmutableList<A> list(@Nullable Integer start, @Nullable String dir, @Nullable Integer max) {
+  public List<A> list(@Nullable Integer start, @Nullable String dir, @Nullable Integer max) {
     Iterator<Map.Entry<Integer, byte[]>> iterator = iterate(start, dir);
     int remain = max == null ? 10 : max;
     ImmutableList.Builder<A> ret = ImmutableList.builder();

@@ -4,26 +4,27 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.mapdb.DB;
+import com.beijunyi.sa2016.assets.Sprite;
+import org.mapdb.*;
 
 @Singleton
-public class AudioRepo extends AssetRepo<Audio> {
+public class SpriteRepo extends AssetRepo<Sprite> {
 
   @Inject
-  public AudioRepo(DB cache) {
+  public SpriteRepo(DB cache) {
     super(cache);
   }
 
   @Nonnull
   @Override
   protected String namespace() {
-    return "audios";
+    return "sprites";
   }
 
   @Nonnull
   @Override
-  protected Class<Audio> type() {
-    return Audio.class;
+  protected Class<Sprite> type() {
+    return Sprite.class;
   }
 
 
