@@ -3,16 +3,17 @@ package com.beijunyi.sa2016.tools.converters.sprite;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.legacy.Adrn;
-import com.beijunyi.sa2016.tools.legacy.Real;
+import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
+import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
+import com.beijunyi.sa2016.tools.legacy.providers.SpriteDataProvider;
 
 public class SpriteAsset {
 
   private final int id;
-  private final Adrn header;
+  private final LegacySpriteHeader header;
   private final SpriteDataProvider data;
 
-  public SpriteAsset(int id, Adrn header, SpriteDataProvider data) {
+  public SpriteAsset(int id, LegacySpriteHeader header, SpriteDataProvider data) {
     this.id = id;
     this.header = header;
     this.data = data;
@@ -23,12 +24,12 @@ public class SpriteAsset {
   }
 
   @Nonnull
-  public Adrn getHeader() {
+  public LegacySpriteHeader getHeader() {
     return header;
   }
 
   @Nonnull
-  public Real readData() throws IOException {
+  public LegacySpriteData readData() throws IOException {
     return data.read();
   }
 

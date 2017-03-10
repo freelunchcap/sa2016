@@ -1,6 +1,6 @@
 package com.beijunyi.sa2016.tools.legacy.serializers;
 
-import com.beijunyi.sa2016.tools.legacy.Real;
+import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -10,17 +10,17 @@ import org.slf4j.LoggerFactory;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-class RealSerializer extends Serializer<Real> {
+class LegacySpriteDataSerializer extends Serializer<LegacySpriteData> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(RealSerializer.class);
+  private static final Logger LOG = LoggerFactory.getLogger(LegacySpriteDataSerializer.class);
 
   @Override
-  public void write(Kryo kryo, Output output, Real object) {
+  public void write(Kryo kryo, Output output, LegacySpriteData object) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Real read(Kryo kryo, Input input, Class<Real> type) {
+  public LegacySpriteData read(Kryo kryo, Input input, Class<LegacySpriteData> type) {
     String signature = new String(input.readBytes(2));
     int major = LE.uint8(input);
     int minor = LE.uint8(input);
@@ -38,6 +38,6 @@ class RealSerializer extends Serializer<Real> {
     if(actual != expected) {
       LOG.warn("Unexpected length {}, expected {}", actual, expected);
     }
-    return new Real(signature, major, minor, width, height, data);
+    return new LegacySpriteData(signature, major, minor, width, height, data);
   }
 }

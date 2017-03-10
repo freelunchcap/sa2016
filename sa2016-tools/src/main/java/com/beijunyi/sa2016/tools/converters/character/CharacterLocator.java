@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
-import com.beijunyi.sa2016.tools.legacy.SprAdrn;
+import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -25,7 +25,7 @@ class CharacterLocator {
   private static final Logger LOG = LoggerFactory.getLogger(CharacterLocator.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final Map<Integer, SprAdrn> lookup;
+  private final Map<Integer, LegacyCharacterHeader> lookup;
 
   @Inject
   public CharacterLocator(ResourcesProvider resources) throws IOException {
@@ -33,17 +33,17 @@ class CharacterLocator {
   }
 
   @Nonnull
-  Collection<SprAdrn> assets() {
+  Collection<LegacyCharacterHeader> assets() {
     return lookup.values();
   }
 
   @Nonnull
-  private Map<Integer, SprAdrn> readIndex(Path file) throws IOException {
-    ImmutableMap.Builder<Integer, SprAdrn> ret = ImmutableMap.builder();
+  private Map<Integer, LegacyCharacterHeader> readIndex(Path file) throws IOException {
+    ImmutableMap.Builder<Integer, LegacyCharacterHeader> ret = ImmutableMap.builder();
     Set<Integer> keys = new HashSet<>();
     try(Input input = new Input(Files.newInputStream(file))) {
       while(!input.eof()) {
-        SprAdrn entry = KRYO.readObject(input, SprAdrn.class);
+        LegacyCharacterHeader entry = KRYO.readObject(input, LegacyCharacterHeader.class);
         if(keys.add(entry.getId())) {
           ret.put(entry.getId(), entry);
         } else {

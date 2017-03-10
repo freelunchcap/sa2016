@@ -4,19 +4,19 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.ActType;
 import com.beijunyi.sa2016.assets.Direction;
-import com.beijunyi.sa2016.tools.legacy.Spr;
-import com.beijunyi.sa2016.tools.legacy.SprAdrn;
+import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
+import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
 import com.google.common.collect.ImmutableTable;
 
 class CharacterAsset {
 
   private final int id;
-  private final SprAdrn index;
-  private final ImmutableTable<ActType, Direction, Spr> data;
+  private final LegacyCharacterHeader header;
+  private final ImmutableTable<ActType, Direction, LegacyAnimation> data;
 
-  CharacterAsset(SprAdrn index, ImmutableTable<ActType, Direction, Spr> data) {
-    this.id = index.getId();
-    this.index = index;
+  CharacterAsset(LegacyCharacterHeader header, ImmutableTable<ActType, Direction, LegacyAnimation> data) {
+    this.id = header.getId();
+    this.header = header;
     this.data = data;
   }
 
@@ -25,12 +25,12 @@ class CharacterAsset {
   }
 
   @Nonnull
-  SprAdrn getIndex() {
-    return index;
+  LegacyCharacterHeader getHeader() {
+    return header;
   }
 
   @Nonnull
-  ImmutableTable<ActType, Direction, Spr> getData() {
+  ImmutableTable<ActType, Direction, LegacyAnimation> getData() {
     return data;
   }
 

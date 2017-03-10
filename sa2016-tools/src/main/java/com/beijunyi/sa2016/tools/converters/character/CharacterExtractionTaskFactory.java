@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import com.beijunyi.sa2016.assets.repositories.CharacterRepo;
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
-import com.beijunyi.sa2016.tools.legacy.SprAdrn;
+import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
 
 import static com.beijunyi.sa2016.tools.legacy.ClientResource.SPR;
 
@@ -21,7 +21,7 @@ class CharacterExtractionTaskFactory {
     this.repo = repo;
   }
 
-  CharacterExtractionTask newExtraction(SprAdrn entry) {
+  CharacterExtractionTask newExtraction(LegacyCharacterHeader entry) {
     return new CharacterExtractionTask(resources.getClientResource(SPR), entry, characters, repo);
   }
 

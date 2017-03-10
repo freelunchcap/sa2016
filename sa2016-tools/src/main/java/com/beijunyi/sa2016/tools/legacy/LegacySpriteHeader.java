@@ -9,7 +9,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import static com.beijunyi.sa2016.tools.utils.IntegerReader.LE;
 
-public class Adrn {
+public class LegacySpriteHeader {
 
   private final int uid;
   private final long address;
@@ -24,7 +24,7 @@ public class Adrn {
   private final String reference;
   private final int map;
 
-  public Adrn(int uid, long address, int size, int xOffset, int yOffset, int width, int height, int east, int south, int path, String reference, int map) {
+  public LegacySpriteHeader(int uid, long address, int size, int xOffset, int yOffset, int width, int height, int east, int south, int path, String reference, int map) {
     this.uid = uid;
     this.address = address;
     this.size = size;

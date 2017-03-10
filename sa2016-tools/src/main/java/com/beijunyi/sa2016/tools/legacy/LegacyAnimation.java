@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 
-public class Spr {
+public class LegacyAnimation {
 
   private final int direction;
   private final int action;
@@ -12,7 +12,7 @@ public class Spr {
   private final int length;
   private final ImmutableList<Frame> frames;
 
-  public Spr(int direction, int action, int duration, int length, ImmutableList<Frame> frames) {
+  public LegacyAnimation(int direction, int action, int duration, int length, ImmutableList<Frame> frames) {
     this.direction = direction;
     this.action = action;
     this.duration = duration;

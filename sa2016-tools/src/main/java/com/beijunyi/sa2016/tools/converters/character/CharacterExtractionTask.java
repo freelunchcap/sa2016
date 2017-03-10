@@ -25,12 +25,12 @@ class CharacterExtractionTask implements Runnable {
   private static final Logger LOG = LoggerFactory.getLogger(CharacterExtractionTask.class);
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final SprAdrn entry;
+  private final LegacyCharacterHeader entry;
   private final Path archive;
   private final CharacterFactory factory;
   private final CharacterRepo repo;
 
-  CharacterExtractionTask(Path archive, SprAdrn entry, CharacterFactory factory, CharacterRepo repo) {
+  CharacterExtractionTask(Path archive, LegacyCharacterHeader entry, CharacterFactory factory, CharacterRepo repo) {
     this.archive = archive;
     this.entry = entry;
     this.factory = factory;
@@ -50,15 +50,15 @@ class CharacterExtractionTask implements Runnable {
 
   @Nonnull
   private CharacterAsset readAsset() throws IOException {
-    ImmutableTable.Builder<ActType, Direction, Spr> ret = ImmutableTable.builder();
+    ImmutableTable.Builder<ActType, Direction, LegacyAnimation> ret = ImmutableTable.builder();
     try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
       channel.position(entry.getAddress());
       Input input = new Input(Channels.newInputStream(channel));
       for(int a = 0; a < entry.getAnimations(); a++) {
-        Spr spr = KRYO.readObject(input, Spr.class);
-        ActType actType = ActType.values()[spr.getAction()];
-        Direction direction = Direction.values()[spr.getDirection()];
-        ret.put(actType, direction, spr);
+        LegacyAnimation legacyAnimation = KRYO.readObject(input, LegacyAnimation.class);
+        ActType actType = ActType.values()[legacyAnimation.getAction()];
+        Direction direction = Direction.values()[legacyAnimation.getDirection()];
+        ret.put(actType, direction, legacyAnimation);
       }
     }
     return new CharacterAsset(entry, ret.build());

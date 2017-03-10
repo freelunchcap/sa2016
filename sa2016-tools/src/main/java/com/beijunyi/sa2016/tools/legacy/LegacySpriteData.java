@@ -2,7 +2,7 @@ package com.beijunyi.sa2016.tools.legacy;
 
 import javax.annotation.Nonnull;
 
-public class Real {
+public class LegacySpriteData {
 
   private final String signature;
   private final int major;
@@ -11,7 +11,7 @@ public class Real {
   private final int height;
   private final byte[] data;
 
-  public Real(String signature, int major, int minor, int width, int height, byte[] data) {
+  public LegacySpriteData(String signature, int major, int minor, int width, int height, byte[] data) {
     this.signature = signature;
     this.major = major;
     this.minor = minor;

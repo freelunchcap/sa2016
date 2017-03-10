@@ -13,12 +13,12 @@ public class LegacyAssetsSerializerModule extends AbstractModule {
   }
 
   private static void registerSerializers() {
-    KryoFactory.register(Adrn.class, new AdrnSerializer());
+    KryoFactory.register(LegacySpriteHeader.class, new LegacySpriteHeaderSerializer());
     KryoFactory.register(Ls2Map.class, new Ls2MapSerializer());
     KryoFactory.register(LegacyPalet.class, new PaletSerializer());
-    KryoFactory.register(Real.class, new RealSerializer());
-    KryoFactory.register(SprAdrn.class, new SprAdrnSerializer());
-    KryoFactory.register(Spr.class, new SprSerializer());
+    KryoFactory.register(LegacySpriteData.class, new LegacySpriteDataSerializer());
+    KryoFactory.register(LegacyCharacterHeader.class, new LegacyCharacterHeaderSerializer());
+    KryoFactory.register(LegacyAnimation.class, new LegacyAnimationSerializer());
   }
 
 }
