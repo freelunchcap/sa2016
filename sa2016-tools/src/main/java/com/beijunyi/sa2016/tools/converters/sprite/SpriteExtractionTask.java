@@ -5,16 +5,15 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
-import com.beijunyi.sa2016.tools.converters.graphics.SpriteFactory;
 
-class ImageExtractionTask implements Supplier<Sprite> {
+class SpriteExtractionTask implements Supplier<Sprite> {
 
   private final int id;
   private final SpriteAssetsManager assets;
   private final SpriteFactory factory;
   private final SpriteRepo repo;
 
-  ImageExtractionTask(int id, SpriteAssetsManager assets, SpriteFactory factory, SpriteRepo repo) {
+  SpriteExtractionTask(int id, SpriteAssetsManager assets, SpriteFactory factory, SpriteRepo repo) {
     this.id = id;
     this.assets = assets;
     this.factory = factory;

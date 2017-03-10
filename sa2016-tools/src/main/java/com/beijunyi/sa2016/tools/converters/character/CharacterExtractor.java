@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.characters;
+package com.beijunyi.sa2016.tools.converters.character;
 
 import java.util.concurrent.ExecutorService;
 import javax.annotation.Nonnull;
@@ -25,7 +25,7 @@ public class CharacterExtractor implements AssetExtractor {
   @Nonnull
   @Override
   public String name() {
-    return "characters";
+    return "character";
   }
 
   @Override

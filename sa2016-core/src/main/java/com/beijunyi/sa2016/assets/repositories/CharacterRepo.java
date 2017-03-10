@@ -18,7 +18,7 @@ public class CharacterRepo extends AssetRepo<Character> {
   @Nonnull
   @Override
   protected String namespace() {
-    return "characters";
+    return "character";
   }
 
   @Nonnull

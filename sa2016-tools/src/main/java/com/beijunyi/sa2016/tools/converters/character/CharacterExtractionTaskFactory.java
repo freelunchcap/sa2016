@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.characters;
+package com.beijunyi.sa2016.tools.converters.character;
 
 import javax.inject.Inject;
 

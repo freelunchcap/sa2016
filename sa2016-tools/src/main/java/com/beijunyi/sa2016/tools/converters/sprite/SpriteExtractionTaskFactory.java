@@ -5,25 +5,24 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
-import com.beijunyi.sa2016.tools.converters.graphics.SpriteFactory;
 
 @Singleton
-class ImageExtractionTaskFactory {
+class SpriteExtractionTaskFactory {
 
   private final SpriteAssetsManager assets;
   private final SpriteFactory factory;
   private final SpriteRepo repo;
 
   @Inject
-  public ImageExtractionTaskFactory(SpriteAssetsManager assets, SpriteFactory factory, SpriteRepo repo) {
+  public SpriteExtractionTaskFactory(SpriteAssetsManager assets, SpriteFactory factory, SpriteRepo repo) {
     this.assets = assets;
     this.factory = factory;
     this.repo = repo;
   }
 
   @Nonnull
-  ImageExtractionTask newExtraction(int id) {
-    return new ImageExtractionTask(id, assets, factory, repo);
+  SpriteExtractionTask newExtraction(int id) {
+    return new SpriteExtractionTask(id, assets, factory, repo);
   }
 
 }

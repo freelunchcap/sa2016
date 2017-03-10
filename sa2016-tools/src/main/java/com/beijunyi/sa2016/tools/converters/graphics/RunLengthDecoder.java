@@ -2,9 +2,9 @@ package com.beijunyi.sa2016.tools.converters.graphics;
 
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 
-final class RunLengthDecoder {
+public final class RunLengthDecoder {
 
-  static void decodeBitmap(byte[] src, byte[] bitmap) {
+  public static void decodeBitmap(byte[] src, byte[] bitmap) {
     int length = src.length;
     int readPos = 0;
     int writePos = 0;

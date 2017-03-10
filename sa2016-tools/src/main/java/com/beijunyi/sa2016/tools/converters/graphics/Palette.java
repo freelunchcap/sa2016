@@ -51,7 +51,7 @@ public class Palette {
   }
 
   @Nonnull
-  Color getColor(int index) {
+  public Color getColor(int index) {
     return colors.get(index);
   }
 

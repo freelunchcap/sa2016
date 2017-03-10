@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.graphics;
+package com.beijunyi.sa2016.tools.converters.sprite;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,9 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.beijunyi.sa2016.assets.Media;
 import com.beijunyi.sa2016.assets.Sprite;
+import com.beijunyi.sa2016.tools.converters.graphics.Palette;
 import com.beijunyi.sa2016.tools.converters.sprite.SpriteAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
 
@@ -24,40 +26,37 @@ public class SpriteFactory {
   private final Palette palette;
 
   @Inject
-  public SpriteFactory(Palette palette) throws IOException {
+  public SpriteFactory(Palette palette) {
     this.palette = palette;
   }
 
   @Nonnull
-  public Sprite create(SpriteAsset asset) {
-    Texture texture = textureRepo.get(asset.getId());
-    if(texture == null) {
-      texture = renderTexture(asset);
-    }
-    return texture;
+  public Sprite create(SpriteAsset asset) throws IOException {
+    Adrn header = asset.getHeader();
+    return create(asset.getId(), header.getXOffset(), header.getYOffset(), asset.readData());
   }
 
   @Nonnull
-  private Texture renderTexture(SpriteAsset asset) {
-    Real real = asset.getData();
-    int width = real.getWidth();
-    int height = real.getHeight();
+  private Sprite create(int id, int xOffset, int yOffset, Real data) {
+    int width = data.getWidth();
+    int height = data.getHeight();
     byte[] bitmap = new byte[width * height];
-    readBitmap(real, bitmap);
+    readBitmap(data, bitmap);
     BufferedImage image = new BufferedImage(width, height, TYPE_INT_ARGB);
     for(int i = 0; i < width * height; i++) {
       int color = uint8(bitmap[i]);
-      if(color != 0) image.setRGB(i % width, height - 1 - i / width, colors.get(color).getRGB());
+      if(color != 0) image.setRGB(i % width, height - 1 - i / width, palette.getColor(color).getRGB());
     }
-    return toTexture(asset.getId(), image);
+    return create(id, xOffset, yOffset, image);
   }
 
   @Nonnull
-  private static Texture toTexture(int id, BufferedImage image) {
+  private static Sprite create(int id, int xOffset, int yOffset, BufferedImage image) {
     try {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       ImageIO.write(image, IMAGE_FORMAT, out);
-      return new Texture(id, IMAGE_FORMAT, out.toByteArray());
+      Media media = new Media(IMAGE_FORMAT, out.toByteArray());
+      return new Sprite(id, image.getWidth(), image.getHeight(), xOffset, yOffset, media);
     } catch(IOException e) {
       throw new IllegalStateException();
     }

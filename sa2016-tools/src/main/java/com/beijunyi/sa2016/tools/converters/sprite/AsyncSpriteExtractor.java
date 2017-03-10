@@ -9,13 +9,13 @@ import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.converters.AssetExtractor;
 
 @Singleton
-public class AsyncSpriteFactory implements AssetExtractor {
+public class AsyncSpriteExtractor implements AssetExtractor {
 
   private final SpriteAssetsManager assets;
-  private final ImageExtractionTaskFactory tasks;
+  private final SpriteExtractionTaskFactory tasks;
 
   @Inject
-  public AsyncSpriteFactory(SpriteAssetsManager assets, ImageExtractionTaskFactory tasks) {
+  public AsyncSpriteExtractor(SpriteAssetsManager assets, SpriteExtractionTaskFactory tasks) {
     this.assets = assets;
     this.tasks = tasks;
   }
