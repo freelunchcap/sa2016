@@ -1,63 +1,37 @@
 package com.beijunyi.sa2016.tools.converters.sprite;
 
-import java.io.IOException;
-import java.nio.channels.Channels;
-import java.nio.channels.SeekableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
-import com.beijunyi.sa2016.tools.converters.graphics.BitmapRenderer;
-import com.beijunyi.sa2016.tools.legacy.Adrn;
-import com.beijunyi.sa2016.tools.legacy.Real;
-import com.beijunyi.sa2016.utils.KryoFactory;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import static java.nio.file.StandardOpenOption.READ;
+import com.beijunyi.sa2016.tools.converters.graphics.SpriteFactory;
 
 class ImageExtractionTask implements Callable<Sprite> {
 
-  private static final Kryo KRYO = KryoFactory.getInstance();
-
-  private final Adrn entry;
-  private final Path archive;
-  private final BitmapRenderer bitmapRenderer;
+  private final int id;
+  private final SpriteAssetsManager assets;
+  private final SpriteFactory factory;
   private final SpriteRepo repo;
 
-  ImageExtractionTask(Path archive, Adrn entry, BitmapRenderer bitmapRenderer, SpriteRepo repo) {
-    this.archive = archive;
-    this.entry = entry;
-    this.bitmapRenderer = bitmapRenderer;
+  ImageExtractionTask(int id, SpriteAssetsManager assets, SpriteFactory factory, SpriteRepo repo) {
+    this.id = id;
+    this.assets = assets;
+    this.factory = factory;
     this.repo = repo;
   }
 
   @Nonnull
   @Override
   public Sprite call() {
-    Sprite sprite = repo.get(entry.getUid());
+    Sprite sprite = repo.get(id);
     if(sprite == null) {
-      SpriteAsset legacy = readAsset();
-      Texture texture = bitmapRenderer.createTexture(legacy);
-      Adrn index = legacy.getHeader();
-      sprite = new Sprite(legacy.getId(), texture.getId(), index.getWidth(), index.getHeight(), index.getXOffset(), index.getYOffset());
+      SpriteAsset asset = assets.get(id);
+      sprite = factory.create(asset);
+      repo.put(sprite);
     }
     return sprite;
   }
-
-  @Nonnull
-  private SpriteAsset readAsset() {
-    try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
-      channel.position(entry.getAddress());
-      Input input = new Input(Channels.newInputStream(channel));
-      return new SpriteAsset(entry, KRYO.readObject(input, Real.class));
-    } catch(IOException e) {
-      throw new IllegalStateException(e);
-    }
-  }
-
 
 }

@@ -1,7 +1,7 @@
 package com.beijunyi.sa2016.tools.converters;
 
 import com.beijunyi.sa2016.tools.converters.characters.CharacterExtractor;
-import com.beijunyi.sa2016.tools.converters.sprite.AsyncImageFactory;
+import com.beijunyi.sa2016.tools.converters.sprite.AsyncSpriteFactory;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.AbstractModule;
@@ -11,7 +11,7 @@ public class ExtractorModule extends AbstractModule {
 
   private static final ImmutableCollection<Class<? extends AssetExtractor>> EXTRACTORS = ImmutableSet.of(
     CharacterExtractor.class,
-    AsyncImageFactory.class
+    AsyncSpriteFactory.class
   );
 
   @Override

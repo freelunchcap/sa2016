@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.converters.sprite.SpriteAsset;
 import com.beijunyi.sa2016.tools.legacy.*;
 
@@ -18,17 +19,17 @@ import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.arraycopy;
 
 @Singleton
-public class BitmapRenderer {
+public class SpriteFactory {
 
   private final Palette palette;
 
   @Inject
-  public BitmapRenderer(Palette palette) throws IOException {
+  public SpriteFactory(Palette palette) throws IOException {
     this.palette = palette;
   }
 
   @Nonnull
-  public Texture createTexture(SpriteAsset asset) {
+  public Sprite create(SpriteAsset asset) {
     Texture texture = textureRepo.get(asset.getId());
     if(texture == null) {
       texture = renderTexture(asset);
