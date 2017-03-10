@@ -1,14 +1,13 @@
 package com.beijunyi.sa2016.tools.converters.sprite;
 
-import java.util.concurrent.Callable;
-
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
 import com.beijunyi.sa2016.tools.converters.graphics.SpriteFactory;
 
-class ImageExtractionTask implements Callable<Sprite> {
+class ImageExtractionTask implements Supplier<Sprite> {
 
   private final int id;
   private final SpriteAssetsManager assets;
@@ -24,7 +23,7 @@ class ImageExtractionTask implements Callable<Sprite> {
 
   @Nonnull
   @Override
-  public Sprite call() {
+  public Sprite get() {
     Sprite sprite = repo.get(id);
     if(sprite == null) {
       SpriteAsset asset = assets.get(id);
