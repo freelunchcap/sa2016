@@ -7,16 +7,16 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.converters.AssetExtractor;
-import com.beijunyi.sa2016.tools.legacy.providers.LegacySpriteAssetProvider;
+import com.beijunyi.sa2016.tools.legacy.providers.LegacySpriteProvider;
 
 @Singleton
 public class AsyncSpriteExtractor implements AssetExtractor {
 
-  private final LegacySpriteAssetProvider assets;
+  private final LegacySpriteProvider assets;
   private final SpriteExtractionTaskFactory tasks;
 
   @Inject
-  public AsyncSpriteExtractor(LegacySpriteAssetProvider assets, SpriteExtractionTaskFactory tasks) {
+  public AsyncSpriteExtractor(LegacySpriteProvider assets, SpriteExtractionTaskFactory tasks) {
     this.assets = assets;
     this.tasks = tasks;
   }

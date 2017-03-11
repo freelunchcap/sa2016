@@ -7,10 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.assets.*;
+import com.beijunyi.sa2016.assets.ActType;
 import com.beijunyi.sa2016.assets.Character;
+import com.beijunyi.sa2016.assets.Direction;
 import com.beijunyi.sa2016.assets.repositories.CharacterRepo;
-import com.beijunyi.sa2016.tools.legacy.*;
+import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
+import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
+import com.beijunyi.sa2016.tools.legacy.providers.CharacterAsset;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;

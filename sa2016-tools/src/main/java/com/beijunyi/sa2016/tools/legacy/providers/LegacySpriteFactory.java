@@ -5,27 +5,26 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.converters.sprite.SpriteAsset;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
 import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 
 import static com.beijunyi.sa2016.tools.legacy.ClientResource.REAL;
 
 @Singleton
-class SpriteAssetFactory {
+class LegacySpriteFactory implements LegacyAssetFactory<LegacySpriteHeader, LegacySprite> {
 
   private final Path archive;
 
   @Inject
-  SpriteAssetFactory(ResourcesProvider resources) {
+  LegacySpriteFactory(ResourcesProvider resources) {
     archive = resources.getClientResource(REAL);
   }
 
   @Nonnull
-  SpriteAsset createAsset(LegacySpriteHeader header) {
+  public LegacySprite createAsset(LegacySpriteHeader header) {
     int id = header.getUid();
-    SpriteDataProvider data = new SpriteDataProvider(archive, header.getAddress());
-    return new SpriteAsset(id, header, data);
+    LegacySpriteDataSource data = new LegacySpriteDataSource(archive, header.getAddress());
+    return new LegacySprite(id, header, data);
   }
 
 }

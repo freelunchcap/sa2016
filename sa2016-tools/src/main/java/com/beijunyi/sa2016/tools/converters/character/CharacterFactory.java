@@ -3,9 +3,11 @@ package com.beijunyi.sa2016.tools.converters.character;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.assets.*;
+import com.beijunyi.sa2016.assets.ActType;
 import com.beijunyi.sa2016.assets.Character;
+import com.beijunyi.sa2016.assets.Direction;
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
+import com.beijunyi.sa2016.tools.legacy.providers.CharacterAsset;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import org.slf4j.Logger;

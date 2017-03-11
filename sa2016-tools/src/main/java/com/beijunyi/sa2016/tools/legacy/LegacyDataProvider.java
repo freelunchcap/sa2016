@@ -26,14 +26,14 @@ public abstract class LegacyDataProvider<T> {
   }
 
   @Nonnull
-  protected abstract Class<T> getDataType();
+  protected abstract T read(Kryo kryo, Input input);
 
   @Nonnull
   public T read() throws IOException {
     try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
       channel.position(position);
       Input input = new Input(Channels.newInputStream(channel));
-      return KRYO.readObject(input, getDataType());
+      return read(KRYO, input);
     }
   }
 

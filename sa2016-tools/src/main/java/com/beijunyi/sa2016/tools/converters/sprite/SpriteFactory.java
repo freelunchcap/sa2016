@@ -11,7 +11,9 @@ import javax.inject.Singleton;
 import com.beijunyi.sa2016.assets.Media;
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.converters.graphics.Palette;
-import com.beijunyi.sa2016.tools.legacy.*;
+import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
+import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
+import com.beijunyi.sa2016.tools.legacy.providers.LegacySprite;
 
 import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
 import static com.beijunyi.sa2016.tools.converters.graphics.RunLengthDecoder.decodeBitmap;
@@ -30,7 +32,7 @@ public class SpriteFactory {
   }
 
   @Nonnull
-  Sprite create(SpriteAsset asset) throws IOException {
+  Sprite create(LegacySprite asset) throws IOException {
     LegacySpriteHeader header = asset.getHeader();
     return create(asset.getId(), header.getXOffset(), header.getYOffset(), asset.readData());
   }

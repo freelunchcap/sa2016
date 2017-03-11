@@ -1,8 +1,7 @@
 package com.beijunyi.sa2016.tools.legacy;
 
+import java.util.List;
 import javax.annotation.Nonnull;
-
-import com.google.common.collect.ImmutableList;
 
 public class LegacyAnimation {
 
@@ -10,9 +9,9 @@ public class LegacyAnimation {
   private final int action;
   private final int duration;
   private final int length;
-  private final ImmutableList<Frame> frames;
+  private final List<LegacyAnimationFrame> frames;
 
-  public LegacyAnimation(int direction, int action, int duration, int length, ImmutableList<Frame> frames) {
+  public LegacyAnimation(int direction, int action, int duration, int length, List<LegacyAnimationFrame> frames) {
     this.direction = direction;
     this.action = action;
     this.duration = duration;
@@ -37,34 +36,8 @@ public class LegacyAnimation {
   }
 
   @Nonnull
-  public ImmutableList<Frame> getFrames() {
+  public List<LegacyAnimationFrame> getFrames() {
     return frames;
-  }
-
-  public static class Frame {
-
-    private final int image;
-    private final int impactAudio;
-    private final int dodgeAudio;
-
-    public Frame(int image, int impactAudio, int dodgeAudio) {
-      this.image = image;
-      this.impactAudio = impactAudio;
-      this.dodgeAudio = dodgeAudio;
-    }
-
-    public int getImage() {
-      return image;
-    }
-
-    public int getImpactAudio() {
-      return impactAudio;
-    }
-
-    public int getDodgeAudio() {
-      return dodgeAudio;
-    }
-
   }
 
 }

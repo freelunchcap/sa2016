@@ -6,7 +6,8 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.assets.repositories.SpriteRepo;
-import com.beijunyi.sa2016.tools.legacy.providers.LegacySpriteAssetProvider;
+import com.beijunyi.sa2016.tools.legacy.providers.LegacySprite;
+import com.beijunyi.sa2016.tools.legacy.providers.LegacySpriteProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +16,11 @@ class SpriteExtractionTask implements Supplier<Sprite> {
   private static final Logger LOG = LoggerFactory.getLogger(SpriteExtractionTask.class);
 
   private final int id;
-  private final LegacySpriteAssetProvider assets;
+  private final LegacySpriteProvider assets;
   private final SpriteFactory factory;
   private final SpriteRepo repo;
 
-  SpriteExtractionTask(int id, LegacySpriteAssetProvider assets, SpriteFactory factory, SpriteRepo repo) {
+  SpriteExtractionTask(int id, LegacySpriteProvider assets, SpriteFactory factory, SpriteRepo repo) {
     this.id = id;
     this.assets = assets;
     this.factory = factory;
@@ -31,7 +32,7 @@ class SpriteExtractionTask implements Supplier<Sprite> {
   public Sprite get() {
     Sprite sprite = repo.get(id);
     if(sprite == null) {
-      SpriteAsset asset = assets.get(id);
+      LegacySprite asset = assets.get(id);
       try {
         sprite = factory.create(asset);
       } catch(IOException e) {
