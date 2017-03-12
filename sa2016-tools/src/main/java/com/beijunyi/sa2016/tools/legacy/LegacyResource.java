@@ -11,33 +11,100 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.beijunyi.sa2016.tools.ToolsVariables.*;
 import static java.nio.file.StandardOpenOption.READ;
 
-interface LegacyResource {
+public enum LegacyResource {
+
+  ADRN
+    (
+      LegacyResourceType.CLIENT,
+      "data",
+      matchPattern(CLIENT_ADRN_PATTERN)
+    ),
+
+  REAL
+    (
+      LegacyResourceType.CLIENT,
+      "data",
+      matchPattern(CLIENT_REAL_PATTERN)
+    ),
+
+  SPR
+    (
+      LegacyResourceType.CLIENT,
+      "data",
+      matchPattern(CLIENT_SPR_PATTERN)
+    ),
+
+  SPRADRN
+    (
+      LegacyResourceType.CLIENT,
+      "data",
+      matchPattern(CLIENT_SPRADRN_PATTERN)
+    ),
+
+  PALET
+    (
+      LegacyResourceType.CLIENT,
+      "data/pal",
+      matchPattern(CLIENT_PALET_PATTERN)
+    );
 
   Logger LOG = LoggerFactory.getLogger(LegacyResource.class);
 
+  private final LegacyResourceType type;
+  private final String path;
+  private final PathMatcher pattern;
+  private final byte[] header;
+  private final boolean recursive;
+
+  LegacyResource(LegacyResourceType type, String path, PathMatcher pattern) {
+    this(type, path, pattern, null, false);
+  }
+
+  LegacyResource(LegacyResourceType type, String path, PathMatcher pattern, @Nullable byte[] header, boolean recursive) {
+    this.type = type;
+    this.path = path;
+    this.pattern = pattern;
+    this.header = header;
+    this.recursive = recursive;
+  }
+
   @Nonnull
-  String path();
+  public LegacyResourceType type() {
+    return type;
+  }
+
+  @Nonnull
+  String path() {
+    return path;
+  }
 
   @Nullable
-  PathMatcher pattern();
+  PathMatcher pattern() {
+    return pattern;
+  }
 
   @Nullable
-  byte[] header();
+  byte[] header() {
+    return header;
+  }
 
-  boolean recursive();
+  boolean recursive() {
+    return recursive;
+  }
 
-  default boolean matches(Path path) {
+  public boolean matches(Path path) {
     return filenameMatches(path) && headerMatches(path);
   }
 
-  default boolean filenameMatches(Path path) {
+  public boolean filenameMatches(Path path) {
     PathMatcher expect = pattern();
     return expect == null || expect.matches(path.getFileName());
   }
 
-  default boolean headerMatches(Path path) {
+  public boolean headerMatches(Path path) {
     byte[] expect = header();
     if(expect == null) return true;
     ByteBuffer actual = ByteBuffer.allocate(expect.length);
@@ -48,6 +115,11 @@ interface LegacyResource {
       return false;
     }
     return Arrays.equals(expect, actual.array());
+  }
+
+  @Nonnull
+  private static PathMatcher matchPattern(String path) {
+    return FileSystems.getDefault().getPathMatcher("glob:" + path);
   }
 
 }

@@ -6,25 +6,29 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
+import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.SPR;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResource.SPR;
 
 @Singleton
-class LegacyCharacterFactory implements LegacyAssetFactory<LegacyCharacterHeader, LegacyCharacter> {
+class LegacyCharacterFactory implements LegacyAssetFactory<LegacyCharacter> {
 
-  private final Path archive;
+  private final Path file;
 
   @Inject
-  LegacyCharacterFactory(ResourcesProvider resources) {
-    archive = resources.getClientResource(SPR);
+  LegacyCharacterFactory(LegacyResourcesProvider resources) {
+    file = resources.getResourceFile(SPR);
   }
 
   @Nonnull
-  public LegacyCharacter createAsset(LegacyCharacterHeader header) {
+  @Override
+  public LegacyCharacter createAsset(Input input) {
+    LegacyCharacterHeader header = KRYO.readObject(input, LegacyCharacterHeader.class);
     int id = header.getId();
+    long address = header.getAddress();
     int animationNum = header.getAnimations();
-    LegacyCharacterDataSource data = new LegacyCharacterDataSource(archive, header.getAddress(), animationNum);
+    LegacyCharacterDataSource data = new LegacyCharacterDataSource(file, address, animationNum);
     return new LegacyCharacter(id, header, data);
   }
 

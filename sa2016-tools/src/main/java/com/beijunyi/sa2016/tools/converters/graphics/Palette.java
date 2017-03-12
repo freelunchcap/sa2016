@@ -4,21 +4,19 @@ import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.beijunyi.sa2016.tools.legacy.LegacyPalet;
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Singleton;
 
-import static com.beijunyi.sa2016.tools.converters.graphics.PaletteConstants.PREFIX;
-import static com.beijunyi.sa2016.tools.converters.graphics.PaletteConstants.SUFFIX;
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.PALET;
+import static com.beijunyi.sa2016.tools.converters.graphics.PaletteConstants.*;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResource.PALET;
 
 @Singleton
 public class Palette {
@@ -28,8 +26,8 @@ public class Palette {
   private final ImmutableList<Color> colors;
 
   @Inject
-  Palette(ResourcesProvider resources) throws IOException {
-    colors = createPalette(resources.getClientResource(PALET));
+  Palette(LegacyResourcesProvider resources) throws IOException {
+    colors = createPalette(resources.getResourceFile(PALET));
   }
 
   @Nonnull

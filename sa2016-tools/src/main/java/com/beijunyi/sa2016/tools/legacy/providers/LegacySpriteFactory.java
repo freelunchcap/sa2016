@@ -5,25 +5,29 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
+import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.legacy.ClientResource.REAL;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResource.REAL;
 
 @Singleton
-class LegacySpriteFactory implements LegacyAssetFactory<LegacySpriteHeader, LegacySprite> {
+class LegacySpriteFactory implements LegacyAssetFactory<LegacySprite> {
 
-  private final Path archive;
+  private final Path file;
 
   @Inject
-  LegacySpriteFactory(ResourcesProvider resources) {
-    archive = resources.getClientResource(REAL);
+  LegacySpriteFactory(LegacyResourcesProvider resources) {
+    file = resources.getResourceFile(REAL);
   }
 
   @Nonnull
-  public LegacySprite createAsset(LegacySpriteHeader header) {
+  @Override
+  public LegacySprite createAsset(Input input) {
+    LegacySpriteHeader header = KRYO.readObject(input, LegacySpriteHeader.class);
     int id = header.getUid();
-    LegacySpriteDataSource data = new LegacySpriteDataSource(archive, header.getAddress());
+    long address = header.getAddress();
+    LegacySpriteDataSource data = new LegacySpriteDataSource(file, address);
     return new LegacySprite(id, header, data);
   }
 

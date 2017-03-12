@@ -13,15 +13,15 @@ import com.esotericsoftware.kryo.io.Input;
 
 import static java.nio.file.StandardOpenOption.READ;
 
-public abstract class LegacyDataProvider<T> {
+public abstract class LegacyDataSource<T> {
 
   private static final Kryo KRYO = KryoFactory.getInstance();
 
-  private final Path archive;
+  private final Path file;
   private final long position;
 
-  public LegacyDataProvider(Path archive, long position) {
-    this.archive = archive;
+  public LegacyDataSource(Path file, long position) {
+    this.file = file;
     this.position = position;
   }
 
@@ -30,7 +30,7 @@ public abstract class LegacyDataProvider<T> {
 
   @Nonnull
   public T read() throws IOException {
-    try(SeekableByteChannel channel = Files.newByteChannel(archive, READ)) {
+    try(SeekableByteChannel channel = Files.newByteChannel(file, READ)) {
       channel.position(position);
       Input input = new Input(Channels.newInputStream(channel));
       return read(KRYO, input);

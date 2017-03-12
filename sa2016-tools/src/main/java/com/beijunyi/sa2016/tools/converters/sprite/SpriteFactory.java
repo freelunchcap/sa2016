@@ -15,7 +15,7 @@ import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacySprite;
 
-import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
+import static com.beijunyi.sa2016.tools.ToolsVariables.IMAGE_FORMAT;
 import static com.beijunyi.sa2016.tools.converters.graphics.RunLengthDecoder.decodeBitmap;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;

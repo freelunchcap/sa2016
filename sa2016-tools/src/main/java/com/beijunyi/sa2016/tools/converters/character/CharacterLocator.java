@@ -8,8 +8,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.legacy.ResourcesProvider;
 import com.beijunyi.sa2016.tools.legacy.LegacyCharacterHeader;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -28,8 +28,8 @@ class CharacterLocator {
   private final Map<Integer, LegacyCharacterHeader> lookup;
 
   @Inject
-  public CharacterLocator(ResourcesProvider resources) throws IOException {
-    this.lookup = readIndex(resources.getClientResource(SPRADRN));
+  public CharacterLocator(LegacyResourcesProvider resources) throws IOException {
+    this.lookup = readIndex(resources.getResourceFile(SPRADRN));
   }
 
   @Nonnull

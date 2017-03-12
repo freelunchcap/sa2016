@@ -5,12 +5,12 @@ import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
 import com.beijunyi.sa2016.tools.legacy.LegacyCharacterData;
-import com.beijunyi.sa2016.tools.legacy.LegacyDataProvider;
+import com.beijunyi.sa2016.tools.legacy.LegacyDataSource;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableList;
 
-class LegacyCharacterDataSource extends LegacyDataProvider<LegacyCharacterData> {
+class LegacyCharacterDataSource extends LegacyDataSource<LegacyCharacterData> {
 
   private final int animationNum;
 

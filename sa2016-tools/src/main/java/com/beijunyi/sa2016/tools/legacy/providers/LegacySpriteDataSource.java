@@ -3,15 +3,15 @@ package com.beijunyi.sa2016.tools.legacy.providers;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.legacy.LegacyDataProvider;
+import com.beijunyi.sa2016.tools.legacy.LegacyDataSource;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 
-class LegacySpriteDataSource extends LegacyDataProvider<LegacySpriteData> {
+class LegacySpriteDataSource extends LegacyDataSource<LegacySpriteData> {
 
-  LegacySpriteDataSource(Path archive, long position) {
-    super(archive, position);
+  LegacySpriteDataSource(Path file, long position) {
+    super(file, position);
   }
 
   @Nonnull

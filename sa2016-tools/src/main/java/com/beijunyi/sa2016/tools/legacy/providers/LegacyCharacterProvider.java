@@ -8,20 +8,20 @@ import javax.inject.Singleton;
 import com.beijunyi.sa2016.tools.legacy.LegacyResource;
 import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 
-import static com.beijunyi.sa2016.tools.legacy.LegacyResource.ADRN;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResource.SPRADRN;
 
 @Singleton
-public class LegacySpriteProvider extends LegacyAssetProvider<LegacySprite> {
+public class LegacyCharacterProvider extends LegacyAssetProvider<LegacyCharacter> {
 
   @Inject
-  LegacySpriteProvider(LegacyResourcesProvider resources, LegacySpriteFactory factory) throws IOException {
+  LegacyCharacterProvider(LegacyResourcesProvider resources, LegacyCharacterFactory factory) throws IOException {
     super(resources, factory);
   }
 
   @Nonnull
   @Override
   protected LegacyResource resource() {
-    return ADRN;
+    return SPRADRN;
   }
 
 }
