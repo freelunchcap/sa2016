@@ -27,7 +27,7 @@ public class SpriteSheetFactory {
   private final AsyncSpriteExtractor extractor;
 
   @Inject
-  public SpriteSheetFactory(AsyncSpriteExtractor extractor) {
+  SpriteSheetFactory(AsyncSpriteExtractor extractor) {
     this.extractor = extractor;
   }
 

@@ -10,6 +10,6 @@ public enum Direction {
   EAST,
   SOUTH_EAST,
   SOUTH,
-  SINGLETON,
+  UNIQUE,
 
 }

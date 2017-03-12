@@ -14,5 +14,5 @@ public enum ActType {
   DEFENSE,
   NOD,
   TOSS,
-  SINGLETON,
+  UNIQUE,
 }
