@@ -1,10 +1,10 @@
-package com.beijunyi.sa2016.tools.converters.graphics;
+package com.beijunyi.sa2016.tools.converters.utils;
 
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 
 public final class RunLengthDecoder {
 
-  public static void decodeBitmap(byte[] src, byte[] bitmap) {
+  public static void decode(byte[] src, byte[] dest) {
     int length = src.length;
     int readPos = 0;
     int writePos = 0;
@@ -66,7 +66,7 @@ public final class RunLengthDecoder {
         z = head;
       }
       int total = x * 65536 + y * 256 + z;
-      int canWrite = bitmap.length - writePos;
+      int canWrite = dest.length - writePos;
       if(total > canWrite) {
         total = canWrite;
       }
@@ -77,11 +77,11 @@ public final class RunLengthDecoder {
         }
         for(int i = 0; i < total; i++) {
           value = src[readPos++];
-          bitmap[writePos++] = value;
+          dest[writePos++] = value;
         }
       } else {
         for(int i = 0; i < total; i++) {
-          bitmap[writePos++] = value;
+          dest[writePos++] = value;
         }
       }
     }

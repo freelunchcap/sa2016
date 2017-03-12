@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.*;
 import javax.annotation.Nonnull;
 
-import com.beijunyi.sa2016.tools.legacy.LegacyResource;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourceType;
 import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
@@ -39,7 +39,7 @@ public abstract class LegacyAssetProvider<Asset extends LegacyAsset> {
   }
 
   @Nonnull
-  protected abstract LegacyResource resource();
+  protected abstract LegacyResourceType resource();
 
   @Nonnull
   private Map<Integer, Asset> indexAssets(Collection<Path> files, LegacyAssetFactory<Asset> factory) throws IOException {

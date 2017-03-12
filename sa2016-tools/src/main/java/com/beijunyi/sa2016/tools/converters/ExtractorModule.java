@@ -1,6 +1,5 @@
 package com.beijunyi.sa2016.tools.converters;
 
-import com.beijunyi.sa2016.tools.converters.character.CharacterExtractor;
 import com.beijunyi.sa2016.tools.converters.sprite.AsyncSpriteExtractor;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;

@@ -1,10 +1,10 @@
 package com.beijunyi.sa2016.tools.legacy.providers;
 
-abstract class LegacyAsset {
+public abstract class LegacyAsset {
 
   private final int id;
 
-  protected LegacyAsset(int id) {
+  LegacyAsset(int id) {
     this.id = id;
   }
 

@@ -10,19 +10,20 @@ import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Media;
 import com.beijunyi.sa2016.assets.Sprite;
-import com.beijunyi.sa2016.tools.converters.graphics.Palette;
+import com.beijunyi.sa2016.tools.converters.AssetFactory;
+import com.beijunyi.sa2016.tools.converters.utils.Palette;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacySprite;
 
 import static com.beijunyi.sa2016.tools.ToolsVariables.IMAGE_FORMAT;
-import static com.beijunyi.sa2016.tools.converters.graphics.RunLengthDecoder.decodeBitmap;
+import static com.beijunyi.sa2016.tools.converters.utils.RunLengthDecoder.decode;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.arraycopy;
 
 @Singleton
-public class SpriteFactory {
+public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
 
   private final Palette palette;
 
@@ -32,7 +33,8 @@ public class SpriteFactory {
   }
 
   @Nonnull
-  Sprite create(LegacySprite asset) throws IOException {
+  @Override
+  public Sprite create(LegacySprite asset) throws IOException {
     LegacySpriteHeader header = asset.getHeader();
     return create(asset.getId(), header.getXOffset(), header.getYOffset(), asset.readData());
   }
@@ -61,7 +63,7 @@ public class SpriteFactory {
 
   private static void readBitmap(LegacySpriteData legacySpriteData, byte[] bitmap) {
     if(legacySpriteData.getMajor() == 1) {
-      decodeBitmap(legacySpriteData.getData(), bitmap);
+      decode(legacySpriteData.getData(), bitmap);
     } else {
       arraycopy(legacySpriteData.getData(), 0, bitmap, 0, bitmap.length);
     }

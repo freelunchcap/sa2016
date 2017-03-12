@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.beijunyi.sa2016.assets.Asset;
+import com.beijunyi.sa2016.assets.GameAsset;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.mapdb.Serializer.*;
 
-public abstract class AssetRepo<A extends Asset> {
+public abstract class AssetRepo<A extends GameAsset> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 

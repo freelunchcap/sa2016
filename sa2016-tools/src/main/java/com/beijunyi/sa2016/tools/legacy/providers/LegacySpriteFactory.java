@@ -9,7 +9,7 @@ import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
 import com.esotericsoftware.kryo.io.Input;
 
-import static com.beijunyi.sa2016.tools.legacy.LegacyResource.REAL;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.REAL;
 
 @Singleton
 class LegacySpriteFactory implements LegacyAssetFactory<LegacySprite> {

@@ -1,12 +1,13 @@
-package com.beijunyi.sa2016.tools.converters.graphics;
+package com.beijunyi.sa2016.tools.converters.utils;
 
 import java.awt.*;
+import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
 final class PaletteConstants {
 
-  static final ImmutableList<Color> PREFIX
+  static final List<Color> PREFIX
     = ImmutableList.of(
     new Color(  0,   0,   0),
     new Color(132,   4,   0),
@@ -26,7 +27,7 @@ final class PaletteConstants {
     new Color( 41, 231,  41)
   );
 
-  static final ImmutableList<Color> SUFFIX
+  static final List<Color> SUFFIX
     = ImmutableList.of(
     new Color(247, 199, 148),
     new Color(231, 166,  90),

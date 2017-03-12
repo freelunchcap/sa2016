@@ -5,10 +5,10 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.legacy.LegacyResource;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourceType;
 import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 
-import static com.beijunyi.sa2016.tools.legacy.LegacyResource.ADRN;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.ADRN;
 
 @Singleton
 public class LegacySpriteProvider extends LegacyAssetProvider<LegacySprite> {
@@ -20,7 +20,7 @@ public class LegacySpriteProvider extends LegacyAssetProvider<LegacySprite> {
 
   @Nonnull
   @Override
-  protected LegacyResource resource() {
+  protected LegacyResourceType resource() {
     return ADRN;
   }
 

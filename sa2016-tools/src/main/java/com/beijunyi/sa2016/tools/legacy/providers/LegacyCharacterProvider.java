@@ -5,10 +5,10 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.beijunyi.sa2016.tools.legacy.LegacyResource;
+import com.beijunyi.sa2016.tools.legacy.LegacyResourceType;
 import com.beijunyi.sa2016.tools.legacy.LegacyResourcesProvider;
 
-import static com.beijunyi.sa2016.tools.legacy.LegacyResource.SPRADRN;
+import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.SPRADRN;
 
 @Singleton
 public class LegacyCharacterProvider extends LegacyAssetProvider<LegacyCharacter> {
@@ -20,7 +20,7 @@ public class LegacyCharacterProvider extends LegacyAssetProvider<LegacyCharacter
 
   @Nonnull
   @Override
-  protected LegacyResource resource() {
+  protected LegacyResourceType resource() {
     return SPRADRN;
   }
 
