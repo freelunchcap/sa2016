@@ -2,18 +2,18 @@ package com.beijunyi.sa2016.tools.legacy;
 
 public class LegacyAnimationFrame {
 
-  private final int image;
+  private final int sprite;
   private final int impactAudio;
   private final int dodgeAudio;
 
-  public LegacyAnimationFrame(int image, int impactAudio, int dodgeAudio) {
-    this.image = image;
+  public LegacyAnimationFrame(int sprite, int impactAudio, int dodgeAudio) {
+    this.sprite = sprite;
     this.impactAudio = impactAudio;
     this.dodgeAudio = dodgeAudio;
   }
 
-  public int getImage() {
-    return image;
+  public int getSprite() {
+    return sprite;
   }
 
   public int getImpactAudio() {

@@ -1,23 +1,21 @@
 package com.beijunyi.sa2016.tools.converters.sprite;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Media;
 import com.beijunyi.sa2016.assets.Sprite;
 import com.beijunyi.sa2016.tools.converters.AssetFactory;
-import com.beijunyi.sa2016.tools.converters.utils.Palette;
+import com.beijunyi.sa2016.tools.converters.sprite.utils.Palette;
+import com.beijunyi.sa2016.tools.converters.utils.MediaUtils;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteData;
 import com.beijunyi.sa2016.tools.legacy.LegacySpriteHeader;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacySprite;
 
-import static com.beijunyi.sa2016.tools.ToolsVariables.IMAGE_FORMAT;
-import static com.beijunyi.sa2016.tools.converters.utils.RunLengthDecoder.decode;
+import static com.beijunyi.sa2016.tools.converters.sprite.utils.RunLengthDecoder.decode;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.arraycopy;
@@ -40,7 +38,7 @@ public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
   }
 
   @Nonnull
-  private Sprite create(int id, int xOffset, int yOffset, LegacySpriteData data) throws IOException {
+  private Sprite create(int id, int xOffset, int yOffset, LegacySpriteData data) {
     int width = data.getWidth();
     int height = data.getHeight();
     byte[] bitmap = new byte[width * height];
@@ -54,10 +52,8 @@ public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
   }
 
   @Nonnull
-  private static Sprite create(int id, int xOffset, int yOffset, BufferedImage image) throws IOException {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    ImageIO.write(image, IMAGE_FORMAT, out);
-    Media media = new Media(IMAGE_FORMAT, out.toByteArray());
+  private static Sprite create(int id, int xOffset, int yOffset, BufferedImage image) {
+    Media media = MediaUtils.create(image);
     return new Sprite(id, image.getWidth(), image.getHeight(), xOffset, yOffset, media);
   }
 

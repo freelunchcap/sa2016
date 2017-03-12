@@ -1,4 +1,4 @@
-package com.beijunyi.sa2016.tools.converters.utils;
+package com.beijunyi.sa2016.tools.converters.sprite.utils;
 
 import java.awt.*;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Singleton;
 
-import static com.beijunyi.sa2016.tools.converters.utils.PaletteConstants.*;
+import static com.beijunyi.sa2016.tools.converters.sprite.utils.PaletteConstants.*;
 import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.PALET;
 
 @Singleton

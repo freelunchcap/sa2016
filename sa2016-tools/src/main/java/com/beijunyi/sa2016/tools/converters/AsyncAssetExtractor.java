@@ -1,6 +1,8 @@
 package com.beijunyi.sa2016.tools.converters;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import com.beijunyi.sa2016.assets.GameAsset;
@@ -18,8 +20,18 @@ public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Game
   }
 
   @Nonnull
-  public CompletableFuture<A> genAsset(int id) {
-    return CompletableFuture.supplyAsync(tasks.newExtraction(id));
+  public CompletableFuture<A> genAsset(int key) {
+    return CompletableFuture.supplyAsync(tasks.newExtraction(key));
+  }
+
+  @Nonnull
+  public CompletableFuture<List<A>> genAssets(List<Integer> keys) {
+    return CompletableFuture.supplyAsync(
+      () -> keys.stream()
+              .map(this::genAsset)
+              .map(CompletableFuture::join)
+              .collect(Collectors.toList())
+    );
   }
 
   @Override
