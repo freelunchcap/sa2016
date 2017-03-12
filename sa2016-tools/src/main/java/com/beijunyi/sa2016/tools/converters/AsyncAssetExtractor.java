@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import com.beijunyi.sa2016.assets.GameAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
+import com.beijunyi.sa2016.utils.ThreadPoolFactory;
 
 public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends GameAsset> implements AssetExtractor {
 
@@ -21,7 +22,7 @@ public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Game
 
   @Nonnull
   public CompletableFuture<A> genAsset(int key) {
-    return CompletableFuture.supplyAsync(tasks.newExtraction(key));
+    return CompletableFuture.supplyAsync(tasks.newExtraction(key), ThreadPoolFactory.getInstance());
   }
 
   @Nonnull
@@ -30,7 +31,8 @@ public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Game
       () -> keys.stream()
               .map(this::genAsset)
               .map(CompletableFuture::join)
-              .collect(Collectors.toList())
+              .collect(Collectors.toList()),
+      ThreadPoolFactory.getInstance()
     );
   }
 

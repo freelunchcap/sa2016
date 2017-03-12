@@ -8,6 +8,8 @@ import com.google.inject.AbstractModule;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 
+import static java.lang.Runtime.getRuntime;
+
 public class AssetsRepositoriesModule extends AbstractModule {
 
   @Override
@@ -18,9 +20,14 @@ public class AssetsRepositoriesModule extends AbstractModule {
   @Nonnull
   private static DB makeFileCache() {
     Path assets = AppConstants.APP_HOME.resolve("assets.bin");
-    return DBMaker.fileDB(assets.toFile())
-             .checksumHeaderBypass()
-             .make();
+    DB ret = DBMaker.fileDB(assets.toFile())
+               .checksumHeaderBypass()
+               .make();
+    getRuntime().addShutdownHook(new Thread(() -> {
+      ret.commit();
+      ret.close();
+    }));
+    return ret;
   }
 
 

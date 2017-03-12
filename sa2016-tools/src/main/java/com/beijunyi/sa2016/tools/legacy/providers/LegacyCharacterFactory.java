@@ -1,6 +1,5 @@
 package com.beijunyi.sa2016.tools.legacy.providers;
 
-import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,11 +13,11 @@ import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.SPR;
 @Singleton
 class LegacyCharacterFactory implements LegacyAssetFactory<LegacyCharacter> {
 
-  private final Path file;
+  private final LegacyResourcesProvider resources;
 
   @Inject
   LegacyCharacterFactory(LegacyResourcesProvider resources) {
-    file = resources.getResourceFile(SPR);
+    this.resources = resources;
   }
 
   @Nonnull
@@ -28,7 +27,7 @@ class LegacyCharacterFactory implements LegacyAssetFactory<LegacyCharacter> {
     int id = header.getId();
     long address = header.getAddress();
     int animationNum = header.getAnimations();
-    LegacyCharacterDataSource data = new LegacyCharacterDataSource(file, address, animationNum);
+    LegacyCharacterDataSource data = new LegacyCharacterDataSource(resources.getResourceFile(SPR), address, animationNum);
     return new LegacyCharacter(id, header, data);
   }
 

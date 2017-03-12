@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.beijunyi.sa2016.assets.Media;
@@ -23,10 +24,10 @@ import static java.lang.System.arraycopy;
 @Singleton
 public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
 
-  private final Palette palette;
+  private final Provider<Palette> palette;
 
   @Inject
-  public SpriteFactory(Palette palette) {
+  public SpriteFactory(Provider<Palette> palette) {
     this.palette = palette;
   }
 
@@ -46,7 +47,7 @@ public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
     BufferedImage image = new BufferedImage(width, height, TYPE_INT_ARGB);
     for(int i = 0; i < width * height; i++) {
       int color = uint8(bitmap[i]);
-      if(color != 0) image.setRGB(i % width, height - 1 - i / width, palette.getColor(color).getRGB());
+      if(color != 0) image.setRGB(i % width, height - 1 - i / width, palette.get().getColor(color).getRGB());
     }
     return create(id, xOffset, yOffset, image);
   }

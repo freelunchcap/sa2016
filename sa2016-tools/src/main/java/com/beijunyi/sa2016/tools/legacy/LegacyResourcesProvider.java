@@ -41,11 +41,13 @@ public class LegacyResourcesProvider {
   private static Collection<Path> findResources(Path root, LegacyResourceType type) {
     Path start = root.resolve(type.path());
     ImmutableCollection.Builder<Path> ret = ImmutableList.builder();
-    try {
-      Stream<Path> stream = type.recursive() ? Files.walk(start) : Files.list(start);
-      stream.filter(type::matches).forEach(ret::add);
-    } catch(IOException e) {
-      throw new IllegalStateException(e);
+    if(Files.exists(root)) {
+      try {
+        Stream<Path> stream = type.recursive() ? Files.walk(start) : Files.list(start);
+        stream.filter(type::matches).forEach(ret::add);
+      } catch(IOException e) {
+        throw new IllegalStateException(e);
+      }
     }
     return ret.build();
   }

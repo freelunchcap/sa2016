@@ -1,6 +1,5 @@
 package com.beijunyi.sa2016.tools.legacy.providers;
 
-import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,11 +13,11 @@ import static com.beijunyi.sa2016.tools.legacy.LegacyResourceType.REAL;
 @Singleton
 class LegacySpriteFactory implements LegacyAssetFactory<LegacySprite> {
 
-  private final Path file;
+  private final LegacyResourcesProvider resources;
 
   @Inject
   LegacySpriteFactory(LegacyResourcesProvider resources) {
-    file = resources.getResourceFile(REAL);
+    this.resources = resources;
   }
 
   @Nonnull
@@ -27,7 +26,7 @@ class LegacySpriteFactory implements LegacyAssetFactory<LegacySprite> {
     LegacySpriteHeader header = KRYO.readObject(input, LegacySpriteHeader.class);
     int id = header.getUid();
     long address = header.getAddress();
-    LegacySpriteDataSource data = new LegacySpriteDataSource(file, address);
+    LegacySpriteDataSource data = new LegacySpriteDataSource(resources.getResourceFile(REAL), address);
     return new LegacySprite(id, header, data);
   }
 
