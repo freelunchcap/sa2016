@@ -2,7 +2,7 @@ package com.beijunyi.sa2016.assets;
 
 import javax.annotation.Nonnull;
 
-public class Sprite implements Asset {
+public class Sprite implements GameAsset {
 
   private final int id;
   private final int width;

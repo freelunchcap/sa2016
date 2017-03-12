@@ -3,9 +3,7 @@ package com.beijunyi.sa2016.assets;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Table;
-
-public class Character implements Asset {
+public class Character implements GameAsset {
 
   private final int id;
   private final Map<ActType, Act> acts;
