@@ -1,5 +1,5 @@
 dependencies {
   compile project(':sa2016-core')
-  compile 'com.beust:jcommander:1.48'
+  compile 'com.beust:jcommander:1.64'
 
 }

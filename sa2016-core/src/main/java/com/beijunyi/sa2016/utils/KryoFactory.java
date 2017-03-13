@@ -2,7 +2,6 @@ package com.beijunyi.sa2016.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -27,7 +26,7 @@ public class KryoFactory {
   private static Kryo createInstance() {
     Kryo kryo = new Kryo();
     kryo.setReferences(false);
-    SERIALIZERS.entrySet().stream().forEach((e) -> kryo.register(e.getKey(), e.getValue()));
+    SERIALIZERS.entrySet().forEach((e) -> kryo.register(e.getKey(), e.getValue()));
     return kryo;
   }
 
