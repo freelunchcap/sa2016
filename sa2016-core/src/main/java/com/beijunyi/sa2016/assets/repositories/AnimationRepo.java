@@ -1,19 +1,11 @@
 package com.beijunyi.sa2016.assets.repositories;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.beijunyi.sa2016.assets.Animation;
-import org.mapdb.DB;
+import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
 @Singleton
 public class AnimationRepo extends AssetRepo<Animation> {
-
-  @Inject
-  public AnimationRepo(DB cache) {
-    super(cache);
-  }
 
   @Nonnull
   @Override

@@ -1,24 +1,18 @@
 package com.beijunyi.sa2016.assets.repositories;
 
-import java.util.Iterator;
-import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.beijunyi.sa2016.assets.Asset;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
+import java.util.Iterator;
+import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.mapdb.BTreeMap;
-import org.mapdb.DB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.mapdb.Serializer.BYTE_ARRAY;
-import static org.mapdb.Serializer.STRING_ASCII;
 
 public abstract class AssetRepo<A extends Asset> {
 
@@ -62,6 +56,12 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   @Nonnull
+  protected abstract String namespace();
+
+  @Nonnull
+  protected abstract Class<A> type();
+
+  @Nonnull
   private Iterator<Map.Entry<String, byte[]>> iterate(@Nullable String start, @Nullable String dir) {
     if(dir == null) dir = "gte";
     dir = dir.toLowerCase();
@@ -80,12 +80,6 @@ public abstract class AssetRepo<A extends Asset> {
     if(data == null) return null;
     return KRYO.readObject(new Input(data), type());
   }
-
-  @Nonnull
-  protected abstract String namespace();
-
-  @Nonnull
-  protected abstract Class<A> type();
 
   @Nonnull
   private BTreeMap<String, byte[]> createStore(DB cache) {

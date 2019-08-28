@@ -1,7 +1,5 @@
 package com.beijunyi.sa2016.assets;
 
-import com.beijunyi.sa2016.assets.repositories.AssetsRepositoriesModule;
-import com.beijunyi.sa2016.assets.serializers.AssetsSerializersModule;
 import com.google.inject.AbstractModule;
 
 public class AssetsModule extends AbstractModule {
