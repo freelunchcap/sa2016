@@ -1,15 +1,14 @@
 package com.beijunyi.sa2016.assets;
 
+import java.util.Map;
 import javax.annotation.Nonnull;
-
-import com.google.common.collect.ImmutableTable;
 
 public class Character implements Asset {
 
   private final String id;
-  private final ImmutableTable<Action, Direction, String> animations;
+  private final Map<Action, Map<Direction, String>> animations;
 
-  public Character(String id, ImmutableTable<Action, Direction, String> animations) {
+  public Character(String id, Map<Action, Map<Direction, String>> animations) {
     this.id = id;
     this.animations = animations;
   }
@@ -21,7 +20,7 @@ public class Character implements Asset {
   }
 
   @Nonnull
-  public ImmutableTable<Action, Direction, String> getAnimations() {
+  public Map<Action, Map<Direction, String>> getAnimations() {
     return animations;
   }
 

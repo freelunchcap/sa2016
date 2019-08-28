@@ -1,15 +1,15 @@
 package com.beijunyi.sa2016.models;
 
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.beijunyi.sa2016.assets.Action;
 import com.beijunyi.sa2016.assets.Character;
 import com.beijunyi.sa2016.assets.Direction;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CharacterView {
 
@@ -23,13 +23,15 @@ public class CharacterView {
 
   @Nullable
   public static CharacterView view(@Nullable Character character) {
-    if(character == null) return null;
+    if (character == null) {
+      return null;
+    }
     return new CharacterView(character.getId(), character.getAnimations().rowMap());
   }
 
   @Nonnull
-  public static List<CharacterView> view(List<Character> characters) {
-    return ImmutableList.copyOf(Lists.transform(characters, CharacterView::view));
+  public static ImmutableList<CharacterView> view(List<Character> characters) {
+    return characters.stream().map(CharacterView::view).collect(toImmutableList());
   }
 
   @Nonnull

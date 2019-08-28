@@ -6,6 +6,8 @@ import java.io.OutputStream;
 
 public interface AssetSerializer<A extends Asset> {
 
+  String suffix();
+
   void write(A asset, OutputStream out);
 
   A read(InputStream in);

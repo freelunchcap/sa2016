@@ -1,17 +1,21 @@
 package com.beijunyi.sa2016.assets.repositories;
 
+import static com.beijunyi.sa2016.AppConstants.APP_HOME;
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.beijunyi.sa2016.assets.Asset;
 import com.beijunyi.sa2016.assets.serializers.AssetSerializer;
-import com.beijunyi.sa2016.utils.KryoFactory;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
-import java.util.Iterator;
-import java.util.Map;
+import com.google.common.collect.Ordering;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,36 +23,52 @@ public abstract class AssetRepo<A extends Asset> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 
-  private static final Kryo KRYO = KryoFactory.getInstance();
+  AssetRepo() {
+    try {
+      Files.createDirectories(getDirectory());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   public void put(A asset) {
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    Output output = new Output(stream);
-    KRYO.writeObject(output, asset);
-    output.flush();
-    store.put(asset.getId(), stream.toByteArray());
+    try (OutputStream out = Files.newOutputStream(getFilePath(asset.getId()))) {
+      serializer().write(asset, out);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Nonnull
-  public ImmutableList<A> list(@Nullable String start, @Nullable String dir, @Nullable Integer max) {
-    Iterator<Map.Entry<String, byte[]>> iterator = iterate(start, dir);
-    int remain = max == null ? 10 : max;
-    ImmutableList.Builder<A> ret = ImmutableList.builder();
-    while(remain-- > 0 && iterator.hasNext()) {
-      Map.Entry<String, byte[]> entry = iterator.next();
-      A asset = readObject(entry.getValue());
-      if(asset == null) {
-        LOG.warn("Missing asset {}", entry.getKey());
-      } else {
-        ret.add(asset);
-      }
+  public ImmutableList<A> list(
+      @Nullable String start, @Nullable String dir, @Nullable Integer max) {
+    start = start == null ? "" : start;
+    dir = dir == null ? "gte" : dir;
+    max = max == null ? 10 : max;
+    try {
+      return Files.list(getDirectory())
+          .sorted(order(dir))
+          .filter(filter(start, dir))
+          .limit(max)
+          .map(this::get)
+          .collect(toImmutableList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
-    return ret.build();
   }
 
   @Nullable
   public A get(String id) {
-    return readObject(store.get(id));
+    return get(getFilePath(id));
+  }
+
+  @Nullable
+  private A get(Path path) {
+    try (InputStream in = Files.newInputStream(path)) {
+      return serializer().read(in);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Nonnull
@@ -57,32 +77,38 @@ public abstract class AssetRepo<A extends Asset> {
   @Nonnull
   protected abstract AssetSerializer<A> serializer();
 
-  @Nonnull
-  private Iterator<Map.Entry<String, byte[]>> iterate(@Nullable String start, @Nullable String dir) {
-    if(dir == null) dir = "gte";
-    dir = dir.toLowerCase();
-    boolean inclusive = dir.endsWith("e");
-    if(dir.startsWith("gt"))
-      return store.entryIterator(start, inclusive, null, false);
-    if(dir.startsWith("lt"))
-      return store.descendingEntryIterator(null, false, start, inclusive);
-    else {
-      throw new IllegalArgumentException(dir);
+  private Path getDirectory() {
+    return APP_HOME.resolve(namespace());
+  }
+
+  private Path getFilePath(String id) {
+    return getDirectory().resolve(id + serializer().suffix());
+  }
+
+  private Comparator<Path> order(String dir) {
+    if (dir.startsWith("lt")) {
+      return Ordering.natural().reverse();
     }
+    return Ordering.natural();
   }
 
-  @Nullable
-  private A readObject(@Nullable byte[] data) {
-    if(data == null) return null;
-    return KRYO.readObject(new Input(data), type());
+  private Predicate<Path> filter(String start, String dir) {
+    return file -> {
+      String filename = file.getFileName().toString();
+      String first = start + serializer().suffix();
+      switch (dir) {
+        case "gte":
+          return filename.compareTo(first) >= 0;
+        case "gt":
+          return filename.compareTo(first) > 0;
+        case "lte":
+          return filename.compareTo(first) <= 0;
+        case "lt":
+          return filename.compareTo(first) < 0;
+        case "e":
+          return filename.compareTo(first) == 0;
+      }
+      throw new IllegalArgumentException(dir);
+    };
   }
-
-  @Nonnull
-  private BTreeMap<String, byte[]> createStore(DB cache) {
-    return cache.treeMap(namespace())
-             .keySerializer(STRING_ASCII)
-             .valueSerializer(BYTE_ARRAY)
-             .createOrOpen();
-  }
-
 }

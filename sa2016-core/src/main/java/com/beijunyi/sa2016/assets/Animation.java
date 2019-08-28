@@ -1,18 +1,15 @@
 package com.beijunyi.sa2016.assets;
 
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
-import com.google.common.collect.ImmutableList;
 
 public class Animation implements Asset {
 
   private final String id;
   private final int duration;
-  private final ImmutableList<Frame> frames;
+  private final List<Frame> frames;
 
-  public Animation(String id, int duration, ImmutableList<Frame> frames) {
+  public Animation(String id, int duration, List<Frame> frames) {
     this.id = id;
     this.duration = duration;
     this.frames = frames;
