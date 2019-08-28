@@ -1,10 +1,15 @@
-*.iml
-.idea
-
-gradle
-gradlew
-gradlew.bat
 .gradle
+.idea
+*.iml
+
+**.dev.json
 
 build
 classes
+
+api_key.json
+static
+webapp
+
+!.gitkeep
+!codeStyleSettings.xml
