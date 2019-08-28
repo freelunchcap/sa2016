@@ -1,14 +1,7 @@
 package com.beijunyi.sa2016.tools.converters.images;
 
-import java.awt.image.RenderedImage;
-import java.io.IOException;
-import java.nio.channels.Channels;
-import java.nio.channels.SeekableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
+import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
+import static java.nio.file.StandardOpenOption.READ;
 
 import com.beijunyi.sa2016.assets.Image;
 import com.beijunyi.sa2016.assets.repositories.ImageRepo;
@@ -17,12 +10,17 @@ import com.beijunyi.sa2016.tools.legacy.Real;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.channels.Channels;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
+import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.beijunyi.sa2016.tools.ToolsContext.IMAGE_FORMAT;
-import static java.nio.file.StandardOpenOption.READ;
 
 class ImageExtractionTask implements Runnable {
 
@@ -64,10 +62,10 @@ class ImageExtractionTask implements Runnable {
   }
 
   private void saveImage(ImageAsset raw, RenderedImage rendered) {
-    try(ByteOutputStream stream = new ByteOutputStream()) {
+    try(ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
       ImageIO.write(rendered, IMAGE_FORMAT, stream);
       Adrn meta = raw.getIndex();
-      repo.put(new Image(raw.getId(), IMAGE_FORMAT, meta.getWidth(), meta.getHeight(), meta.getXOffset(), meta.getYOffset(), stream.getBytes()));
+      repo.put(new Image(raw.getId(), IMAGE_FORMAT, meta.getWidth(), meta.getHeight(), meta.getXOffset(), meta.getYOffset(), stream.toByteArray()));
     } catch(IOException e) {
       throw new IllegalStateException(e);
     }
