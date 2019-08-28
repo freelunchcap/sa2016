@@ -1,6 +1,7 @@
 package com.beijunyi.sa2016.assets.repositories;
 
 import com.beijunyi.sa2016.assets.Asset;
+import com.beijunyi.sa2016.assets.serializers.AssetSerializer;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -19,11 +20,6 @@ public abstract class AssetRepo<A extends Asset> {
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 
   private static final Kryo KRYO = KryoFactory.getInstance();
-  private final BTreeMap<String, byte[]> store;
-
-  AssetRepo(DB cache) {
-    this.store = createStore(cache);
-  }
 
   public void put(A asset) {
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -59,7 +55,7 @@ public abstract class AssetRepo<A extends Asset> {
   protected abstract String namespace();
 
   @Nonnull
-  protected abstract Class<A> type();
+  protected abstract AssetSerializer<A> serializer();
 
   @Nonnull
   private Iterator<Map.Entry<String, byte[]>> iterate(@Nullable String start, @Nullable String dir) {
