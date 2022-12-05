@@ -1,5 +1,14 @@
-*.iml
+.gradle
 .idea
+*.iml
+
+*.dev.*
+.temp
 
 build
+generated
 classes
+out
+logs
+
+!.gitkeep
