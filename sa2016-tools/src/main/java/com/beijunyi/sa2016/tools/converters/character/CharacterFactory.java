@@ -1,19 +1,24 @@
 package com.beijunyi.sa2016.tools.converters.character;
 
-import java.io.IOException;
-import java.util.*;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.assets.Character;
+import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.tools.converters.AssetFactory;
 import com.beijunyi.sa2016.tools.converters.character.utils.SpriteSheetFactory;
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
 import com.beijunyi.sa2016.tools.legacy.LegacyCharacterData;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyCharacter;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.collect.Iterables.getOnlyElement;
 
@@ -29,7 +34,7 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
 
   @Nonnull
   @Override
-  public Character create(LegacyCharacter legacy) throws IOException {
+  public Character create(LegacyCharacter legacy) {
     int id = legacy.getId();
     LegacyCharacterData data = legacy.readData();
     Map<ActType, Act> acts = createActs(data);
@@ -46,10 +51,10 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
     Table<ActType, Direction, LegacyAnimation> table = indexAnimations(animations);
     Set<ActType> types = table.rowKeySet();
     ImmutableMap.Builder<ActType, Act> ret = ImmutableMap.builder();
-    if(types.size() == 1) {
+    if (types.size() == 1) {
       ret.put(ActType.UNIQUE, createAct(table.row(getOnlyElement(types))));
     } else {
-      for(ActType type : types) {
+      for (ActType type : types) {
         ret.put(type, createAct(table.row(type)));
       }
     }
@@ -66,24 +71,28 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
   }
 
   @Nonnull
-  private static Table<ActType, Direction, LegacyAnimation> indexAnimations(Collection<LegacyAnimation> animations) {
+  private static Table<ActType, Direction, LegacyAnimation> indexAnimations(
+      Collection<LegacyAnimation> animations) {
     ImmutableTable.Builder<ActType, Direction, LegacyAnimation> ret = ImmutableTable.builder();
-    for(LegacyAnimation animation : animations) {
-      ret.put(ActType.values()[animation.getAction()], Direction.values()[animation.getDirection()], animation);
+    for (LegacyAnimation animation : animations) {
+      ret.put(
+          ActType.values()[animation.action()],
+          Direction.values()[animation.direction()],
+          animation);
     }
     return ret.build();
   }
 
   private static int calculateDuration(Collection<LegacyAnimation> animations) {
     Integer duration = null;
-    for(LegacyAnimation animation : animations) {
-      if(duration == null) {
-        duration = animation.getLength();
-      } else if(duration != animation.getDuration()) {
+    for (LegacyAnimation animation : animations) {
+      if (duration == null) {
+        duration = animation.length();
+      } else if (duration != animation.duration()) {
         throw new IllegalStateException("Different durations found for same act");
       }
     }
-    if(duration == null) {
+    if (duration == null) {
       throw new IllegalStateException("Act duration must not be 0");
     }
     return duration;
@@ -91,14 +100,14 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
 
   private static int calculateLength(Collection<LegacyAnimation> animations) {
     Integer length = null;
-    for(LegacyAnimation animation : animations) {
-      if(length == null) {
-        length = animation.getLength();
-      } else if(length != animation.getLength()) {
+    for (LegacyAnimation animation : animations) {
+      if (length == null) {
+        length = animation.length();
+      } else if (length != animation.length()) {
         throw new IllegalStateException("Different lengths found for same act");
       }
     }
-    if(length == null) {
+    if (length == null) {
       throw new IllegalStateException("Act length must not be 0");
     }
     return length;
@@ -107,21 +116,19 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
   @Nonnull
   private Map<Direction, SpriteSheet> makeSpriteSheets(Map<Direction, LegacyAnimation> animations) {
     ImmutableMap.Builder<Direction, SpriteSheet> ret = ImmutableMap.builder();
-    if(animations.size() == 1) {
+    if (animations.size() == 1) {
       ret.put(Direction.UNIQUE, sheets.create(getOnlyElement(animations.values())));
     } else {
-      for(Map.Entry<Direction, LegacyAnimation> animation : animations.entrySet()) {
+      for (Map.Entry<Direction, LegacyAnimation> animation : animations.entrySet()) {
         ret.put(animation.getKey(), sheets.create(animation.getValue()));
       }
     }
     return ret.build();
   }
 
-
   @Nonnull
   private List<ActEffect> makeActEffects(Map<Direction, LegacyAnimation> animations) {
     ImmutableList.Builder<ActEffect> ret = ImmutableList.builder();
     return ret.build();
   }
-
 }

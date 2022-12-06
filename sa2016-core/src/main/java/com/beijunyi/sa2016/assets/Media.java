@@ -2,24 +2,17 @@ package com.beijunyi.sa2016.assets;
 
 import javax.annotation.Nonnull;
 
-public class Media {
+public record Media(String format, byte[] data) {
 
-  private final String format;
-  private final byte[] data;
-
-  public Media(String format, byte[] data) {
-    this.format = format;
-    this.data = data;
-  }
-
+  @Override
   @Nonnull
-  public String getFormat() {
+  public String format() {
     return format;
   }
 
+  @Override
   @Nonnull
-  public byte[] getData() {
+  public byte[] data() {
     return data;
   }
-
 }

@@ -21,7 +21,7 @@ class Ls2MapSerializer extends Serializer<Ls2Map> {
   }
 
   @Override
-  public Ls2Map read(Kryo kryo, Input input, Class<Ls2Map> type) {
+  public Ls2Map read(Kryo kryo, Input input, Class<? extends Ls2Map> type) {
     input.skip(6);
     int id = BE.uint16(input);
     String name = readName(input);

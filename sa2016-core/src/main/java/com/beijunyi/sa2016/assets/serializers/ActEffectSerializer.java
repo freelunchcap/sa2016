@@ -17,7 +17,7 @@ public class ActEffectSerializer extends Serializer<ActEffect> {
   }
 
   @Override
-  public ActEffect read(Kryo kryo, Input input, Class<ActEffect> type) {
+  public ActEffect read(Kryo kryo, Input input, Class<? extends ActEffect> type) {
     int frame = input.readShort();
     boolean knockback = input.readBoolean();
     SoundEffect sound = kryo.readObject(input, SoundEffect.class);

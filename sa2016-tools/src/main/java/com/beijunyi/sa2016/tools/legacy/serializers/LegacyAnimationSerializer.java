@@ -21,7 +21,7 @@ class LegacyAnimationSerializer extends Serializer<LegacyAnimation> {
 
   @Nonnull
   @Override
-  public LegacyAnimation read(Kryo kryo, Input input, Class<LegacyAnimation> type) {
+  public LegacyAnimation read(Kryo kryo, Input input, Class<? extends LegacyAnimation> type) {
     int direction = LE.uint16(input);
     int action = LE.uint16(input);
     int duration = (int) LE.uint32(input);

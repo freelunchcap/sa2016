@@ -19,7 +19,7 @@ class SoundEffectSerializer extends Serializer<SoundEffect> {
 
   @Nonnull
   @Override
-  public SoundEffect read(Kryo kryo, Input input, Class<SoundEffect> type) {
+  public SoundEffect read(Kryo kryo, Input input, Class<? extends SoundEffect> type) {
     int duration = input.readInt();
     Media media = kryo.readObject(input, Media.class);
     return new SoundEffect(duration, media);

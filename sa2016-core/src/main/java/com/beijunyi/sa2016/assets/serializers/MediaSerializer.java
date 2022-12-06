@@ -10,13 +10,13 @@ public class MediaSerializer extends Serializer<Media> {
 
   @Override
   public void write(Kryo kryo, Output output, Media object) {
-    output.writeAscii(object.getFormat());
-    output.writeInt(object.getData().length);
-    output.writeBytes(object.getData());
+    output.writeAscii(object.format());
+    output.writeInt(object.data().length);
+    output.writeBytes(object.data());
   }
 
   @Override
-  public Media read(Kryo kryo, Input input, Class<Media> type) {
+  public Media read(Kryo kryo, Input input, Class<? extends Media> type) {
     String format = input.readString();
     byte[] data = new byte[input.readInt()];
     input.readBytes(data);

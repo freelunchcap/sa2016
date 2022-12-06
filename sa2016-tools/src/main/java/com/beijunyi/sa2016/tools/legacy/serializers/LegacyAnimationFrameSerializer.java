@@ -16,7 +16,7 @@ public class LegacyAnimationFrameSerializer extends Serializer<LegacyAnimationFr
   }
 
   @Override
-  public LegacyAnimationFrame read(Kryo kryo, Input input, Class<LegacyAnimationFrame> type) {
+  public LegacyAnimationFrame read(Kryo kryo, Input input, Class<? extends LegacyAnimationFrame> type) {
     int image = (int) LE.uint32(input);
     input.skip(4); // unknown
     int impact = LE.uint8(input);

@@ -17,7 +17,7 @@ class PaletSerializer extends Serializer<LegacyPalet> {
   }
 
   @Override
-  public LegacyPalet read(Kryo kryo, Input input, Class<LegacyPalet> type) {
+  public LegacyPalet read(Kryo kryo, Input input, Class<? extends LegacyPalet> type) {
     ImmutableList.Builder<Color> colors = ImmutableList.builder();
     for(int i = 0; i < 224; i++) {
       int blue = input.read();

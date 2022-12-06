@@ -7,17 +7,17 @@ import com.google.common.collect.ImmutableSet;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
-public class ExtractorModule extends AbstractModule {
+import javax.annotation.concurrent.NotThreadSafe;
 
-  private static final ImmutableCollection<Class<? extends AssetExtractor>> EXTRACTORS = ImmutableSet.of(
-    AsyncCharacterExtractor.class,
-    AsyncSpriteExtractor.class
-  );
+@NotThreadSafe
+public final class ExtractorModule extends AbstractModule {
+
+  private static final ImmutableCollection<Class<? extends AssetExtractor>> EXTRACTORS =
+      ImmutableSet.of(AsyncCharacterExtractor.class, AsyncSpriteExtractor.class);
 
   @Override
   protected void configure() {
     Multibinder<AssetExtractor> binder = Multibinder.newSetBinder(binder(), AssetExtractor.class);
-    for(Class<? extends AssetExtractor> e : EXTRACTORS) binder.addBinding().to(e);
+    for (Class<? extends AssetExtractor> e : EXTRACTORS) binder.addBinding().to(e);
   }
-
 }

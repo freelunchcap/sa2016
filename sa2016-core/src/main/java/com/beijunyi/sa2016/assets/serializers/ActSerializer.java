@@ -31,7 +31,7 @@ public class ActSerializer extends Serializer<Act> {
   }
 
   @Override
-  public Act read(Kryo kryo, Input input, Class<Act> type) {
+  public Act read(Kryo kryo, Input input, Class<? extends Act> type) {
     int frames = input.readShort();
     int duration = input.readInt();
     int animationCount = input.readByte();

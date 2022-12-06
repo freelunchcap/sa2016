@@ -23,7 +23,7 @@ class SpriteSheetSerializer extends Serializer<SpriteSheet> {
 
   @Nonnull
   @Override
-  public SpriteSheet read(Kryo kryo, Input input, Class<SpriteSheet> type) {
+  public SpriteSheet read(Kryo kryo, Input input, Class<? extends SpriteSheet> type) {
     int frameWidth = input.readShort();
     int frameHeight = input.readShort();
     int frames = input.readShort();

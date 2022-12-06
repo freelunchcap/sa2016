@@ -20,7 +20,7 @@ class LegacySpriteDataSerializer extends Serializer<LegacySpriteData> {
   }
 
   @Override
-  public LegacySpriteData read(Kryo kryo, Input input, Class<LegacySpriteData> type) {
+  public LegacySpriteData read(Kryo kryo, Input input, Class<? extends LegacySpriteData> type) {
     String signature = new String(input.readBytes(2));
     int major = LE.uint8(input);
     int minor = LE.uint8(input);

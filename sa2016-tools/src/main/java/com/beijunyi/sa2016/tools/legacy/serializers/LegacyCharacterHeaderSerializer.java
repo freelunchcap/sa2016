@@ -19,7 +19,7 @@ class LegacyCharacterHeaderSerializer extends Serializer<LegacyCharacterHeader> 
 
   @Nonnull
   @Override
-  public LegacyCharacterHeader read(Kryo kryo, Input input, Class<LegacyCharacterHeader> type) {
+  public LegacyCharacterHeader read(Kryo kryo, Input input, Class<? extends LegacyCharacterHeader> type) {
     return new LegacyCharacterHeader((int) LE.uint32(input), LE.uint32(input), LE.uint16(input), LE.uint16(input));
   }
 }

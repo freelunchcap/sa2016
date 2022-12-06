@@ -10,5 +10,6 @@ generated
 classes
 out
 logs
+client
 
 !.gitkeep

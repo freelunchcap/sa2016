@@ -23,7 +23,7 @@ class SpriteSerializer extends Serializer<Sprite> {
 
   @Nonnull
   @Override
-  public Sprite read(Kryo kryo, Input input, Class<Sprite> type) {
+  public Sprite read(Kryo kryo, Input input, Class<? extends Sprite> type) {
     int id = input.readInt();
     int width = input.readShort();
     int height = input.readShort();

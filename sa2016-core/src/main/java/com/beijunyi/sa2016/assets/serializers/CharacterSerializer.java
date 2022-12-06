@@ -29,7 +29,7 @@ class CharacterSerializer extends Serializer<Character> {
 
   @Nonnull
   @Override
-  public Character read(Kryo kryo, Input input, Class<Character> type) {
+  public Character read(Kryo kryo, Input input, Class<? extends Character> type) {
     int id = input.readInt();
     int acts = input.readByte();
     ImmutableMap.Builder<ActType, Act> animations = ImmutableMap.builder();

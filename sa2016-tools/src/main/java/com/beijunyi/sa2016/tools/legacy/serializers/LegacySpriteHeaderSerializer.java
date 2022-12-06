@@ -19,7 +19,7 @@ class LegacySpriteHeaderSerializer extends Serializer<LegacySpriteHeader> {
 
   @Nonnull
   @Override
-  public LegacySpriteHeader read(Kryo kryo, Input input, Class<LegacySpriteHeader> type) {
+  public LegacySpriteHeader read(Kryo kryo, Input input, Class<? extends LegacySpriteHeader> type) {
     return new LegacySpriteHeader(
                      LE.int32(input),
                      LE.uint32(input),
