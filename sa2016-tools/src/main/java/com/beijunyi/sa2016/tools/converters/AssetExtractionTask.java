@@ -7,13 +7,12 @@ import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 
-import java.util.function.Supplier;
+import java.io.IOException;
+import java.util.List;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAsset>
-    implements Supplier<ImmutableList<A>> {
+public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAsset> {
 
   private static final Logger LOG = getLogger(AssetExtractionTask.class);
 
@@ -30,23 +29,17 @@ public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAss
     this.repo = repo;
   }
 
-  @Override
-  public ImmutableList<A> get() {
+  public ImmutableList<A> extract() throws IOException {
     ImmutableList<A> assets = repo.get(id);
     if (assets.isEmpty()) {
-      ImmutableList<A> newAssets =
-          provider.get(id).stream()
-              .map(
-                  legacy -> {
-                    try {
-                      return factory.create(legacy);
-                    } catch (java.io.IOException e) {
-                      throw new RuntimeException(e);
-                    }
-                  })
-              .collect(toImmutableList());
-      newAssets.forEach(repo::put);
-      assets = newAssets;
+      List<LA> legacyAssets = provider.get(id);
+      ImmutableList.Builder<A> builder = ImmutableList.builder();
+      for (LA l : legacyAssets) {
+        A asset = factory.create(l);
+        repo.put(asset);
+        builder.add(asset);
+      }
+      assets = builder.build();
     }
     return assets;
   }
