@@ -25,4 +25,14 @@ public class SpriteRepo extends AssetRepo<Sprite> {
   protected Class<Sprite> type() {
     return Sprite.class;
   }
+
+  @Override
+  protected byte[] serialize(Sprite asset) {
+    return new byte[0];
+  }
+
+  @Override
+  protected Sprite deserialize(byte[] data) {
+    return null;
+  }
 }

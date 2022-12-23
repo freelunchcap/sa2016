@@ -3,20 +3,24 @@ package com.beijunyi.sa2016.assets.repositories;
 import com.beijunyi.sa2016.assets.GameAsset;
 import com.beijunyi.sa2016.utils.KryoFactory;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableList;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+import com.google.common.io.BaseEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public abstract class AssetRepo<A extends GameAsset> {
+
+  private static final HashFunction SHA256 = Hashing.sha256();
+  private static final BaseEncoding BASE32 = BaseEncoding.base32().lowerCase();
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 
@@ -28,52 +32,35 @@ public abstract class AssetRepo<A extends GameAsset> {
     this.dir = cache.root().resolve(namespace());
   }
 
-  public void put(A asset) {
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    Output output = new Output(stream);
-    KRYO.writeObject(output, asset);
-    output.flush();
-    store.put(asset.getId(), stream.toByteArray());
+  public void put(A asset) throws IOException {
+    int id = asset.getId();
+    Path assetDir = dir.resolve(Integer.toString(id));
+    Files.createDirectories(assetDir);
+
+    byte[] data = serialize(asset);
+    HashCode hashCode = SHA256.hashBytes(data);
+    String name = BASE32.encode(hashCode.asBytes());
+
+    Path file = assetDir.resolve(name);
+    Files.write(file, data);
   }
 
-  @Nonnull
-  public List<A> list(@Nullable Integer start, @Nullable String dir, @Nullable Integer max) {
-    Iterator<Map.Entry<Integer, byte[]>> iterator = iterate(start, dir);
-    int remain = max == null ? 10 : max;
-    ImmutableList.Builder<A> ret = ImmutableList.builder();
-    while (remain-- > 0 && iterator.hasNext()) {
-      Map.Entry<Integer, byte[]> entry = iterator.next();
-      A asset = readObject(entry.getValue());
-      if (asset == null) {
-        LOG.warn("Missing asset {}", entry.getKey());
-      } else {
-        ret.add(asset);
+  public ImmutableList<A> get(int id) throws IOException {
+    Path assetDir = dir.resolve(Integer.toString(id));
+    if (!Files.isDirectory(assetDir)) {
+      return ImmutableList.of();
+    }
+
+    ImmutableList.Builder<A> result = ImmutableList.builder();
+    try (DirectoryStream<Path> assets = Files.newDirectoryStream(assetDir)) {
+      for (Path asset : assets) {
+        byte[] data = Files.readAllBytes(asset);
+        A deserialized = deserialize(data);
+        result.add(deserialized);
       }
     }
-    return ret.build();
-  }
 
-  public ImmutableList<A> get(int id) {
-    return readObject(store.get(id));
-  }
-
-  @Nonnull
-  private Iterator<Map.Entry<Integer, byte[]>> iterate(
-      @Nullable Integer start, @Nullable String dir) {
-    if (dir == null) dir = "gte";
-    dir = dir.toLowerCase();
-    boolean inclusive = dir.endsWith("e");
-    if (dir.startsWith("gt")) return store.entryIterator(start, inclusive, null, false);
-    if (dir.startsWith("lt")) return store.descendingEntryIterator(null, false, start, inclusive);
-    else {
-      throw new IllegalArgumentException(dir);
-    }
-  }
-
-  @Nullable
-  private A readObject(@Nullable byte[] data) {
-    if (data == null) return null;
-    return KRYO.readObject(new Input(data), type());
+    return result.build();
   }
 
   @Nonnull
@@ -81,4 +68,8 @@ public abstract class AssetRepo<A extends GameAsset> {
 
   @Nonnull
   protected abstract Class<A> type();
+
+  protected abstract byte[] serialize(A asset);
+
+  protected abstract A deserialize(byte[] data);
 }

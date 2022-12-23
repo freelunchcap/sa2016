@@ -25,4 +25,14 @@ public class CharacterRepo extends AssetRepo<Character> {
   protected Class<Character> type() {
     return Character.class;
   }
+
+  @Override
+  protected byte[] serialize(Character asset) {
+    return new byte[0];
+  }
+
+  @Override
+  protected Character deserialize(byte[] data) {
+    return null;
+  }
 }
