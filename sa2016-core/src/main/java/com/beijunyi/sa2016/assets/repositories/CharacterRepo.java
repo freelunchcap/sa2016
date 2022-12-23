@@ -1,17 +1,16 @@
 package com.beijunyi.sa2016.assets.repositories;
 
+import com.beijunyi.sa2016.assets.Character;
+
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.beijunyi.sa2016.assets.Character;
-import org.mapdb.DB;
 
 @Singleton
 public class CharacterRepo extends AssetRepo<Character> {
 
   @Inject
-  public CharacterRepo(DB cache) {
+  public CharacterRepo(CacheProvider cache) {
     super(cache);
   }
 
@@ -26,6 +25,4 @@ public class CharacterRepo extends AssetRepo<Character> {
   protected Class<Character> type() {
     return Character.class;
   }
-
-
 }

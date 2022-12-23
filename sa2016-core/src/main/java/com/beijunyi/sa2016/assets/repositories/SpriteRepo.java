@@ -1,17 +1,16 @@
 package com.beijunyi.sa2016.assets.repositories;
 
+import com.beijunyi.sa2016.assets.Sprite;
+
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.beijunyi.sa2016.assets.Sprite;
-import org.mapdb.*;
 
 @Singleton
 public class SpriteRepo extends AssetRepo<Sprite> {
 
   @Inject
-  public SpriteRepo(DB cache) {
+  public SpriteRepo(CacheProvider cache) {
     super(cache);
   }
 
@@ -26,6 +25,4 @@ public class SpriteRepo extends AssetRepo<Sprite> {
   protected Class<Sprite> type() {
     return Sprite.class;
   }
-
-
 }

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import static com.beijunyi.sa2016.tools.converters.sprite.utils.RunLengthDecoder.decode;
 import static com.beijunyi.sa2016.tools.utils.BitConverter.uint8;
@@ -32,7 +33,7 @@ public class SpriteFactory implements AssetFactory<LegacySprite, Sprite> {
 
   @Nonnull
   @Override
-  public Sprite create(LegacySprite asset) {
+  public Sprite create(LegacySprite asset) throws IOException {
     LegacySpriteHeader header = asset.getHeader();
     return create(asset.getId(), header.xOffset(), header.yOffset(), asset.readData());
   }

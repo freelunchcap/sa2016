@@ -15,6 +15,7 @@ import com.google.common.collect.Table;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
 
   @Nonnull
   @Override
-  public Character create(LegacyCharacter legacy) {
+  public Character create(LegacyCharacter legacy) throws IOException {
     int id = legacy.getId();
     LegacyCharacterData data = legacy.readData();
     Map<ActType, Act> acts = createActs(data);

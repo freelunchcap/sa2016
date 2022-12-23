@@ -35,7 +35,16 @@ public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAss
     ImmutableList<A> assets = repo.get(id);
     if (assets.isEmpty()) {
       ImmutableList<A> newAssets =
-          provider.get(id).stream().map(factory::create).collect(toImmutableList());
+          provider.get(id).stream()
+              .map(
+                  legacy -> {
+                    try {
+                      return factory.create(legacy);
+                    } catch (java.io.IOException e) {
+                      throw new RuntimeException(e);
+                    }
+                  })
+              .collect(toImmutableList());
       newAssets.forEach(repo::put);
       assets = newAssets;
     }
