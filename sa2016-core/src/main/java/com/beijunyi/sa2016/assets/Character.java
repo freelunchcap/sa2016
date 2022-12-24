@@ -1,9 +1,9 @@
 package com.beijunyi.sa2016.assets;
 
-import java.util.Map;
 import javax.annotation.Nonnull;
+import java.util.Map;
 
-public class Character implements GameAsset {
+public class Character implements Asset {
 
   private final int id;
   private final Map<ActType, Act> acts;

@@ -1,6 +1,6 @@
 package com.beijunyi.sa2016.tools.converters;
 
-import com.beijunyi.sa2016.assets.GameAsset;
+import com.beijunyi.sa2016.assets.Asset;
 import com.beijunyi.sa2016.assets.repositories.AssetRepo;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import static java.lang.String.format;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAsset> {
+public final class AssetExtractionTask<LA extends LegacyAsset, A extends Asset> {
 
   private static final Logger LOG = getLogger(AssetExtractionTask.class);
 

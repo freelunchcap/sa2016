@@ -1,6 +1,6 @@
 package com.beijunyi.sa2016.assets.repositories;
 
-import com.beijunyi.sa2016.assets.GameAsset;
+import com.beijunyi.sa2016.assets.Asset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public abstract class AssetRepo<A extends GameAsset> {
+public abstract class AssetRepo<A extends Asset> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetRepo.class);
 

@@ -1,6 +1,6 @@
 package com.beijunyi.sa2016.tools.converters;
 
-import com.beijunyi.sa2016.assets.GameAsset;
+import com.beijunyi.sa2016.assets.Asset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
 import com.beijunyi.sa2016.utils.ThreadPoolFactory;
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends GameAsset>
+public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Asset>
     implements AssetExtractor {
 
   private static final Logger LOG = getLogger(AsyncAssetExtractor.class);

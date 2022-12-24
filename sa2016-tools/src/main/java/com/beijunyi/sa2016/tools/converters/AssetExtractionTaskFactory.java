@@ -1,13 +1,13 @@
 package com.beijunyi.sa2016.tools.converters;
 
-import javax.annotation.Nonnull;
-
-import com.beijunyi.sa2016.assets.GameAsset;
+import com.beijunyi.sa2016.assets.Asset;
 import com.beijunyi.sa2016.assets.repositories.AssetRepo;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
 
-public class AssetExtractionTaskFactory<LA extends LegacyAsset, A extends GameAsset> {
+import javax.annotation.Nonnull;
+
+public class AssetExtractionTaskFactory<LA extends LegacyAsset, A extends Asset> {
 
   private final LegacyAssetProvider<LA> provider;
   private final AssetFactory<LA, A> factory;
