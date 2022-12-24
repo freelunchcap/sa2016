@@ -28,7 +28,7 @@ public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Game
     this.tasks = tasks;
   }
 
-  public CompletableFuture<ImmutableList<A>> genAsset(int key) {
+  public CompletableFuture<A> genAsset(int key) {
     return CompletableFuture.supplyAsync(
         () -> {
           try {
@@ -41,7 +41,7 @@ public abstract class AsyncAssetExtractor<LA extends LegacyAsset, A extends Game
         ThreadPoolFactory.getInstance());
   }
 
-  public CompletableFuture<ImmutableList<ImmutableList<A>>> genAssets(List<Integer> keys) {
+  public CompletableFuture<ImmutableList<A>> genAssets(List<Integer> keys) {
     return CompletableFuture.supplyAsync(
         () ->
             keys.stream()

@@ -5,6 +5,7 @@ import com.beijunyi.sa2016.assets.Sprite;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.nio.file.Path;
 
 @Singleton
 public class SpriteRepo extends AssetRepo<Sprite> {
@@ -27,12 +28,10 @@ public class SpriteRepo extends AssetRepo<Sprite> {
   }
 
   @Override
-  protected byte[] serialize(Sprite asset) {
-    return new byte[0];
-  }
+  protected void serialize(Sprite asset, Path dir) {}
 
   @Override
-  protected Sprite deserialize(byte[] data) {
+  protected Sprite deserialize(Path dir) {
     return null;
   }
 }

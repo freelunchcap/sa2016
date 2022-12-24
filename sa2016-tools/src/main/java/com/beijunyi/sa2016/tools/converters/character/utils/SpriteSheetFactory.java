@@ -7,7 +7,6 @@ import com.beijunyi.sa2016.tools.converters.sprite.AsyncSpriteExtractor;
 import com.beijunyi.sa2016.tools.converters.utils.MediaUtils;
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimationFrame;
-import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,27 +40,13 @@ public final class SpriteSheetFactory {
   public SpriteSheet create(LegacyAnimation animation) {
     List<Integer> keys =
         animation.frames().stream().map(LegacyAnimationFrame::sprite).collect(Collectors.toList());
-    List<ImmutableList<Sprite>> sprites = extractor.genAssets(keys).join();
+    List<Sprite> sprites = extractor.genAssets(keys).join();
     if (sprites.size() != keys.size()) {
       throw new IllegalStateException(
           format("Expected assets %d, actual assets %d", keys.size(), sprites.size()));
     }
 
-    List<Sprite> flatten = new ArrayList<>();
-    for (int i = 0; i < keys.size(); i++) {
-      int id = keys.get(i);
-      List<Sprite> assets = sprites.get(i);
-      if (assets.isEmpty()) {
-        LOG.error("Asset {} is missing.", id);
-      } else {
-        flatten.add(assets.get(0));
-        if (assets.size() > 1) {
-          LOG.warn("Duplicated asset {}.", id);
-        }
-      }
-    }
-
-    return combine(flatten);
+    return combine(sprites);
   }
 
   @Nonnull

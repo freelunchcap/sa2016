@@ -5,6 +5,7 @@ import com.beijunyi.sa2016.assets.Character;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.nio.file.Path;
 
 @Singleton
 public class CharacterRepo extends AssetRepo<Character> {
@@ -27,12 +28,10 @@ public class CharacterRepo extends AssetRepo<Character> {
   }
 
   @Override
-  protected byte[] serialize(Character asset) {
-    return new byte[0];
-  }
+  protected void serialize(Character asset, Path dir) {}
 
   @Override
-  protected Character deserialize(byte[] data) {
+  protected Character deserialize(Path dir) {
     return null;
   }
 }

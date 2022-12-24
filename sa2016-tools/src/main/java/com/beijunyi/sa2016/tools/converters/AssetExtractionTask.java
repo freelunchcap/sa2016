@@ -4,12 +4,11 @@ import com.beijunyi.sa2016.assets.GameAsset;
 import com.beijunyi.sa2016.assets.repositories.AssetRepo;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAsset;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyAssetProvider;
-import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
 
+import static java.lang.String.format;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAsset> {
@@ -29,18 +28,18 @@ public final class AssetExtractionTask<LA extends LegacyAsset, A extends GameAss
     this.repo = repo;
   }
 
-  public ImmutableList<A> extract() throws IOException {
-    ImmutableList<A> assets = repo.get(id);
-    if (assets.isEmpty()) {
-      List<LA> legacyAssets = provider.get(id);
-      ImmutableList.Builder<A> builder = ImmutableList.builder();
-      for (LA l : legacyAssets) {
-        A asset = factory.create(l);
-        repo.put(asset);
-        builder.add(asset);
+  public A extract() throws IOException {
+    A cached = repo.get(id);
+    if (cached == null) {
+      LA legacyAssets = provider.get(id);
+      if (legacyAssets == null) {
+        throw new IllegalStateException(format("No asset found %d", id));
       }
-      assets = builder.build();
+
+      A asset = factory.create(legacyAssets);
+      repo.put(asset);
+      cached = asset;
     }
-    return assets;
+    return cached;
   }
 }
