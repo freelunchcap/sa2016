@@ -1,18 +1,18 @@
 package com.beijunyi.sa2016.assets.repositories;
 
 import com.beijunyi.sa2016.assets.Character;
+import com.beijunyi.sa2016.assets.serializers.CharacterSerializer;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.nio.file.Path;
 
 @Singleton
 public class CharacterRepo extends AssetRepo<Character> {
 
   @Inject
   public CharacterRepo(CacheProvider cache) {
-    super(cache);
+    super(cache, new CharacterSerializer());
   }
 
   @Nonnull
@@ -25,13 +25,5 @@ public class CharacterRepo extends AssetRepo<Character> {
   @Override
   protected Class<Character> type() {
     return Character.class;
-  }
-
-  @Override
-  protected void serialize(Character asset, Path dir) {}
-
-  @Override
-  protected Character deserialize(Path dir) {
-    return null;
   }
 }

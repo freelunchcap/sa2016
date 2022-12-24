@@ -1,7 +1,5 @@
 package com.beijunyi.sa2016.assets.serializers;
 
-import javax.annotation.Nonnull;
-
 import com.beijunyi.sa2016.assets.Media;
 import com.beijunyi.sa2016.assets.SpriteSheet;
 import com.esotericsoftware.kryo.Kryo;
@@ -9,7 +7,9 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-class SpriteSheetSerializer extends Serializer<SpriteSheet> {
+import javax.annotation.Nonnull;
+
+public final class SpriteSheetSerializer extends Serializer<SpriteSheet> {
 
   @Override
   public void write(Kryo kryo, Output output, SpriteSheet object) {
