@@ -1,14 +1,6 @@
 package com.beijunyi.sa2016.assets;
 
-public record Media(String format, byte[] data) {
+import javax.annotation.concurrent.Immutable;
 
-  @Override
-  public String format() {
-    return format;
-  }
-
-  @Override
-  public byte[] data() {
-    return data;
-  }
-}
+@Immutable
+public record Media(String format, byte[] data) {}

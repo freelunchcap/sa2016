@@ -21,7 +21,7 @@ public class Sprite implements Asset {
   }
 
   @Override
-  public int getId() {
+  public int id() {
     return id;
   }
 
@@ -45,5 +45,4 @@ public class Sprite implements Asset {
   public Media getMedia() {
     return media;
   }
-
 }

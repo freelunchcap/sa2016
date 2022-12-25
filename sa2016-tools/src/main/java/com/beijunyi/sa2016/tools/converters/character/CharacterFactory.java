@@ -1,13 +1,11 @@
 package com.beijunyi.sa2016.tools.converters.character;
 
-import com.beijunyi.sa2016.assets.Character;
 import com.beijunyi.sa2016.assets.*;
 import com.beijunyi.sa2016.tools.converters.AssetFactory;
 import com.beijunyi.sa2016.tools.converters.character.utils.SpriteSheetFactory;
 import com.beijunyi.sa2016.tools.legacy.LegacyAnimation;
 import com.beijunyi.sa2016.tools.legacy.LegacyCharacterData;
 import com.beijunyi.sa2016.tools.legacy.providers.LegacyCharacter;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -17,14 +15,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.collect.Iterables.getOnlyElement;
 
 @Singleton
-class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
+class CharacterFactory implements AssetFactory<LegacyCharacter, Avatar> {
 
   private final SpriteSheetFactory sheets;
 
@@ -35,20 +32,20 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
 
   @Nonnull
   @Override
-  public Character create(LegacyCharacter legacy) throws IOException {
+  public Avatar create(LegacyCharacter legacy) throws IOException {
     int id = legacy.getId();
     LegacyCharacterData data = legacy.readData();
-    Map<ActType, Act> acts = createActs(data);
-    return new Character(id, acts);
+    ImmutableMap<ActType, Act> acts = createActs(data);
+    return new Avatar(id, acts);
   }
 
   @Nonnull
-  private Map<ActType, Act> createActs(LegacyCharacterData data) {
+  private ImmutableMap<ActType, Act> createActs(LegacyCharacterData data) {
     return createActs(data.getAnimations());
   }
 
   @Nonnull
-  private Map<ActType, Act> createActs(Collection<LegacyAnimation> animations) {
+  private ImmutableMap<ActType, Act> createActs(Collection<LegacyAnimation> animations) {
     Table<ActType, Direction, LegacyAnimation> table = indexAnimations(animations);
     Set<ActType> types = table.rowKeySet();
     ImmutableMap.Builder<ActType, Act> ret = ImmutableMap.builder();
@@ -66,9 +63,8 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
   private Act createAct(Map<Direction, LegacyAnimation> animationMap) {
     int frames = calculateLength(animationMap.values());
     int duration = calculateDuration(animationMap.values());
-    Map<Direction, SpriteSheet> animations = makeSpriteSheets(animationMap);
-    List<ActEffect> effects = makeActEffects(animationMap);
-    return new Act(frames, duration, animations, effects);
+    ImmutableMap<Direction, SpriteSheet> animations = makeSpriteSheets(animationMap);
+    return new Act(frames, duration, animations);
   }
 
   @Nonnull
@@ -115,7 +111,8 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
   }
 
   @Nonnull
-  private Map<Direction, SpriteSheet> makeSpriteSheets(Map<Direction, LegacyAnimation> animations) {
+  private ImmutableMap<Direction, SpriteSheet> makeSpriteSheets(
+      Map<Direction, LegacyAnimation> animations) {
     ImmutableMap.Builder<Direction, SpriteSheet> ret = ImmutableMap.builder();
     if (animations.size() == 1) {
       ret.put(Direction.UNIQUE, sheets.create(getOnlyElement(animations.values())));
@@ -124,12 +121,6 @@ class CharacterFactory implements AssetFactory<LegacyCharacter, Character> {
         ret.put(animation.getKey(), sheets.create(animation.getValue()));
       }
     }
-    return ret.build();
-  }
-
-  @Nonnull
-  private List<ActEffect> makeActEffects(Map<Direction, LegacyAnimation> animations) {
-    ImmutableList.Builder<ActEffect> ret = ImmutableList.builder();
     return ret.build();
   }
 }

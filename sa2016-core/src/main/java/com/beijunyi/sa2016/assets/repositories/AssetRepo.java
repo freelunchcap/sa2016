@@ -26,7 +26,7 @@ public abstract class AssetRepo<A extends Asset> {
   }
 
   public void put(A asset) throws IOException {
-    int id = asset.getId();
+    int id = asset.id();
     Path assetDir = dir.resolve(Integer.toString(id));
     Files.createDirectories(assetDir);
     serializer.serialize(asset, assetDir);
