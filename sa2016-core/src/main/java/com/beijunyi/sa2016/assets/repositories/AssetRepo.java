@@ -39,7 +39,7 @@ public abstract class AssetRepo<A extends Asset> {
       return null;
     }
 
-    return serializer.deserialize(assetDir);
+    return serializer.deserialize(id, assetDir);
   }
 
   @Nonnull

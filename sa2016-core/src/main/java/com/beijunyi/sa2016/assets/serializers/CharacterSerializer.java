@@ -12,7 +12,7 @@ public final class CharacterSerializer implements AssetSerializer<Character> {
   public void serialize(Character asset, Path dir) {}
 
   @Override
-  public Character deserialize(Path dir) {
+  public Character deserialize(int id, Path dir) {
     return null;
   }
 }
